@@ -13,12 +13,13 @@
 \usepackage{amssymb}
 \usepackage{lstlinebgrd}
 \usepackage{graphicx}
+\usepackage{wasysym}
 \author{Lista Encadeada}
 \title{Estruturas de Dados}
 %\setbeamercovered{transparent}
 \setbeamertemplate{navigation symbols}{}
 %\logo{\includegraphics[scale=0.015]{Brasao_UFSC.png}\includegraphics[scale=0.2]{brasao_PPGCC.jpg}}
-\institute{Departamento de Informática e de Estatística \\ Prof. Jean Everson Martina \\ Prof. Aldo von Wangenheim}
+\institute{Departamento de Computação \\ Prof. Martín Vigil \\ Adaptado de \url{https://github.com/jeanmartina/data_structures}}
 \date{2016.2}
 \subject{}
 \usebackgroundtemplate{\includegraphics[width=\paperwidth,
@@ -30,11 +31,12 @@ height=\paperheight]{../reusable_images/fundo_UFSC.png}}
 height=\paperheight]{../reusable_images/fundo_capa.png}}
 \begin{frame}
 \titlepage
-\includegraphics[scale=0.3]{../reusable_images/brasao_INE.png}
+%\includegraphics[scale=0.3]{../reusable_images/brasao_INE.png}
 \end{frame}
 }
 
-\begin{frame}[fragile]{Listas Usando Vetores: Desvantagens}
+%TODO removido
+\begin{frame}<0>[fragile]{Listas Usando Vetores: Desvantagens}
 \begin{columns}
 \column{.5\textwidth}
 \begin{itemize}
@@ -61,16 +63,34 @@ height=\paperheight]{../reusable_images/fundo_capa.png}}
 \end{columns}
 \end{frame}
 
+\begin{frame}[fragile]{Definição de Lista}
+	\begin{itemize}
+		\item É uma \textit{\textbf{sequência}} de dados
+		\item Exemplos:
+		\begin{itemize}
+			\item $<$Pedro, João, Maria, Ivan$>$
+			\item $<$5, 9, 70, 3$>$
+			\item $<$\smiley, \phone, \davidsstar, \twonotes$>$
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
 \begin{frame}[fragile]{Definições de Lista Encadeada}
 \begin{itemize}
-\item São listas onde cada elemento está armazenado em um objeto chamada elemento de lista;
-\item Cada elemento de lista referencia o próximo e só é alocado dinamicamente quando necessário;
-\item Para referenciar o primeiro elemento utilizamos um objeto cabeça de lista.
+\item É uma estrutura de dados que simula uma lista de dados
+\item É composta por objetos (instâncias) do tipo \textbf{\textit{elemento}}
+\item Cada elemento 
+\begin{itemize}
+\item contém um dado da lista 
+\item referencia o próximo elemento
+\item é alocado dinamicamente somente quando necessário
+\end{itemize}
+\item Para referenciar o primeiro elemento utilizamos um objeto do tipo \textbf{\textit{cabeça de lista}}.
 \end{itemize}
 \end{frame}
 
 
-\begin{frame}[fragile]{Lista Encadeada}
+\begin{frame}<0>[fragile]{Lista Encadeada}
 \setbeamercovered{invisible}
 \begin{center}
 \begin{tikzpicture}[list/.style={rectangle split, rectangle split parts=2,
@@ -89,7 +109,7 @@ height=\paperheight]{../reusable_images/fundo_capa.png}}
 \end{center}
 \end{frame}
 
-\begin{frame}[fragile]{Lista Encadeada}
+\begin{frame}<0>[fragile]{Lista Encadeada}
 \setbeamercovered{invisible}
 \begin{center}
 \begin{tikzpicture}[list/.style={rectangle split, rectangle split parts=2,
@@ -110,7 +130,7 @@ height=\paperheight]{../reusable_images/fundo_capa.png}}
 \end{center}
 \end{frame}
 
-\begin{frame}[fragile]{Lista Encadeada}
+\begin{frame}<0>[fragile]{Lista Encadeada}
 \setbeamercovered{invisible}
 \begin{center}
 \begin{tikzpicture}[list/.style={rectangle split, rectangle split parts=2,
@@ -175,7 +195,7 @@ height=\paperheight]{../reusable_images/fundo_capa.png}}
 \item Necessitamos um inteiro para indicar quantos elementos a lista possui.
 \end{itemize}
 \begin{lstlisting}
-classe Lista {
+estrutura Lista {
  Elemento *_dados;
  inteiro _tamanho;
 };
@@ -197,18 +217,18 @@ classe Lista {
 \item Aspecto Estrutural:
 \begin{itemize}
 \item Necessitamos um ponteiro para o próximo elemento da lista;
-\item Necessitamos um campo do tipo da informação que vamos armazenar.
+\item Necessitamos um ponteiro \textbf{genérico} T* para o dado que vamos armazenar.
 \end{itemize}
 \begin{lstlisting}
-classe Elemento {
+estrutura Elemento {
  Elemento *_proximo;
- T _info;
+ T *_dado;
 };
 \end{lstlisting}
 \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Modelagem de Lista Encadeada}
+\begin{frame}<0>[fragile]{Modelagem de Lista Encadeada}
 \setbeamercovered{invisible}
 \begin{center}
 \begin{tikzpicture}[list/.style={rectangle split, rectangle split parts=2,
@@ -253,9 +273,9 @@ classe Elemento {
   \node[element] (CP) [below=of C] {uva};
   \draw[*->] let \p1 = (C.one), \p2 = (C.center) in (\x1+2,\y2+2) -- (CP);
  
-\end{tikzpicture}\pause
+\end{tikzpicture}
 \end{center}
-Para tornar todos os algoritmos da lista mais genéricos, fazemos o campo info ser um ponteiro para um elemento de informação.
+%Para tornar todos os algoritmos da lista mais genéricos, fazemos o campo info ser um ponteiro para um elemento de informação.
 \end{frame}
 
 \begin{frame}[fragile]{Modelagem da Elemento de Lista}
@@ -275,9 +295,9 @@ Para tornar todos os algoritmos da lista mais genéricos, fazemos o campo info s
 \item T necessita de um destrutor próprio, assim como a lista (neste caso a cabeça) vai precisar de um também;
 \end{itemize}
 \begin{lstlisting}
-classe Elemento {
+estrutura Elemento {
  Elemento *_proximo;
- T *_info;
+ T *_dado;
 };
 \end{lstlisting}
 \end{itemize}
@@ -314,15 +334,15 @@ classe Elemento {
 \begin{itemize}
 \item Inicializar ou limpar:
 \begin{itemize}
-\item Lista();
+\item iniciaLista();
 \item limpaLista();
-\item \~{}Lista();
+\item destroiLista(umaLista);
 \end{itemize}
 \item Testar se a lista está vazia ou cheia e outros testes:
 \begin{itemize}
-\item bool listaVazia();
-\item int posicao(dado);
-\item bool contem(dado);
+\item bool listaVazia(umaLista);
+\item int posicao(umaLista, umDado);
+\item bool contem(umaLista, umDado);
 \end{itemize}
 \end{itemize}
 \end{frame}
@@ -339,19 +359,19 @@ classe Elemento {
 \begin{itemize}
 \item Colocar e retirar dados da lista:
 \begin{itemize}
-\item adiciona(T dado);
-\item adicionaNoInicio(T dado);
-\item adicionaNaPosicao(T dado, int posicao);
-\item adicionaEmOrdem(T dado);
-\item T retira();
-\item T retiraDoInicio();
-\item T retiraDaPosicao(int posicao);
-\item T retiraEspecifico(dado);
+\item adiciona(umaLista, umDado);
+\item adicionaNoInicio(umaLista, umDado);
+\item adicionaNaPosicao(umaLista, umDado, umaPosicao);
+\item adicionaEmOrdem(umaLista, umDado);
+\item T retira(umaLista);
+\item T retiraDoInicio(umaLista);
+\item T retiraDaPosicao(umaLista, umaPosicao);
+\item T retiraEspecifico(umaLista, umDado);
 \end{itemize}
 \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Método \textit{Lista()}}
+\begin{frame}[fragile]{Função \textit{iniciaLista()}}
 \lstset{language=C++,
           keywordstyle=\color{blue}\ttfamily,
           stringstyle=\color{red}\ttfamily,
@@ -365,15 +385,17 @@ classe Elemento {
 \item Inicializamos o tamanho para ``0'';
 \end{itemize}
 \begin{lstlisting}
-Lista()
+iniciaLista()
 inicio
-  _dados = null;
-  _tamanho <- 0;
+  umaLista <- aloque(Lista);
+  umaLista._dados <- null;
+  umaLista._tamanho <- 0;
+  retorne umaLista;
 fim;
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]{Método \textit{\~{}Lista()}}
+\begin{frame}<0>[fragile]{Função \textit{\~{}Lista()}}
 \lstset{language=C++,
           keywordstyle=\color{blue}\ttfamily,
           stringstyle=\color{red}\ttfamily,
@@ -393,7 +415,7 @@ fim;
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]{Método \textit{listaVazia()}}
+\begin{frame}[fragile]{Função \textit{listaVazia(umaLista)}}
 \lstset{language=C++,
           keywordstyle=\color{blue}\ttfamily,
           stringstyle=\color{red}\ttfamily,
@@ -402,49 +424,49 @@ fim;
           basicstyle=\ttfamily\footnotesize
           }
 \begin{lstlisting}
-bool listaVazia()
+bool listaVazia(umaLista)
 inicio
-SE (_tamanho = 0) ENTAO
+SE (umaLista._tamanho = 0) ENTAO
  RETORNE(Verdadeiro)
 SENAO
  RETORNE(Falso);
 fim;
 \end{lstlisting}
-\begin{itemize}
-\item Um algoritmo ListaCheia não existe na Lista Encadeada;\pause
-\item Verificar se houve espaço na memória para um novo elemento será responsabilidade de cada operação de adição.
-\end{itemize}
+%\begin{itemize}
+%\item Um algoritmo ListaCheia não existe na Lista Encadeada;
+%\item Verificar se houve espaço na memória para um novo elemento será responsabilidade de cada operação de adição.
+%\end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Método \textit{adicionaNoInicio(T dado)}}
+\begin{frame}[fragile]{Função \normalsize\textit{adicionaNoInicio(umaLista, umDado)}}
 \setbeamercovered{invisible}
-\begin{itemize}
-\item Testamos se é possível alocar um elemento;\pause
-\item Fazemos o próximo deste novo elemento ser o primeiro da lista;\pause
-\item Fazemos a cabeça de lista apontar para o novo elemento.\pause
-\end{itemize}
+\begin{enumerate}
+\item Teste se é possível alocar um novo elemento;
+\item Faça o próximo do novo elemento ser o primeiro da lista;
+\item Faça a cabeça de lista apontar para o novo elemento.
+\end{enumerate}
 \begin{center}
 \begin{tikzpicture}[list/.style={rectangle split, rectangle split parts=2,
     draw=green!60, fill=green!5, rectangle split horizontal}, 
     element/.style={rectangle, draw=yellow!60, fill=yellow!5,},    
     >=stealth, start chain]
 
-  \node<8->[list] (H) {3};
-  \node<4-7>[list,on chain] (H) {2};
+  \node<5->[list] (H) {3};
+  \node<1-4>[list,on chain] (H) {2};
 
-  \node<5->[list,draw=blue!60, fill=blue!5,on chain] (N) [below left=of H] {Novo}; 
-  \draw<5->[*->] let \p1 = (N.two), \p2 = (N.center) in (\x1,\y2) -- (A);  
+  \node<2->[list,draw=blue!60, fill=blue!5,on chain] (N) [below left=of H] {Novo}; 
+  \draw<2->[*->] let \p1 = (N.two), \p2 = (N.center) in (\x1,\y2) -- (A);  
   
-  \node<5->[list,on chain] (A) [below=of H] {};
-  \draw<5->[*->] let \p1 = (A.one), \p2 = (A.center) in (\x1+2,\y2+2) -- (AP);
-  \node<5->[element] (AP) [below=of A] {melão};
-  \draw<6->[*->] let \p1 = (A.two), \p2 = (A.center) in (\x1,\y2) -- (B);
+  \node<2->[list,on chain] (A) [below=of H] {};
+  \draw<2->[*->] let \p1 = (A.one), \p2 = (A.center) in (\x1+2,\y2+2) -- (AP);
+  \node<2->[element] (AP) [below=of A] {melão};
+  \draw<3->[*->] let \p1 = (A.two), \p2 = (A.center) in (\x1,\y2) -- (B);
   
-  \node<4>[list,on chain] (B) [below right=of H] {};
-  \node<5->[list,on chain] (B) {};
+  \node<1>[list,on chain] (B) [below right=of H] {};
+  \node<2->[list,on chain] (B) {};
   
-  \draw<4-6>[*->] let \p1 = (H.two), \p2 = (H.center) in (\x1+2,\y2+2) -- (B);
-  \draw<7->[*->] let \p1 = (H.two), \p2 = (H.center) in (\x1+2,\y2+2) -- (A);
+  \draw<1-3>[*->] let \p1 = (H.two), \p2 = (H.center) in (\x1+2,\y2+2) -- (B);
+  \draw<4->[*->] let \p1 = (H.two), \p2 = (H.center) in (\x1+2,\y2+2) -- (A);
   
   
   \node[list,on chain] (C) {};
@@ -461,7 +483,7 @@ fim;
 \end{center}
 \end{frame}
 
-\begin{frame}[fragile]{Método \textit{adicionaNoInicio(T dado)}}
+\begin{frame}[fragile]{Função \normalsize\textit{adicionaNoInicio(umaLista, umDado)}}
 \lstset{language=C++,
           keywordstyle=\color{blue}\ttfamily,
           stringstyle=\color{red}\ttfamily,
@@ -471,24 +493,23 @@ fim;
           basicstyle=\ttfamily\footnotesize
           }
 \begin{lstlisting}
-adicionaNoInicio(T dado)
- Elemento *novo; //Variável auxiliar.
- início
-  novo <- aloque(Elemento);
+adicionaNoInicio(umaLista, umDado)
+ inicio
+  novo <- aloque(Elemento); //Variável auxiliar.
   SE (novo = NULO) ENTAO
-   THROW(ERROLISTACHEIA);
+   THROW(ERROSEMMEMORIA);
   SENAO
-   novo->_proximo <- _dados;
-   novo->_info <- dado;
-   _dados <- novo;
-   _tamanho <- _tamanho + 1;
+   novo._proximo <- umaLista._dados;
+   novo._dado <- umDado;
+   umaLista._dados <- novo;
+   umaLista._tamanho <- umaLista._tamanho + 1;
   FIM SE
   fim;
 (*@  \textcolor{red}{}  @*)
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]{Método \textit{adicionaNoInicio(T dado)}}
+\begin{frame}<0>[fragile]{Função \textit{adicionaNoInicio(umaLista, umDado)}}
 \lstset{language=C++,
           keywordstyle=\color{blue}\ttfamily,
           stringstyle=\color{red}\ttfamily,
@@ -515,7 +536,7 @@ adicionaNoInicio(T dado)
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]{Método \textit{adicionaNoInicio(T dado)}}
+\begin{frame}<0>[fragile]{Função \textit{adicionaNoInicio(T dado)}}
 \lstset{language=C++,
           keywordstyle=\color{blue}\ttfamily,
           stringstyle=\color{red}\ttfamily,
@@ -528,7 +549,7 @@ adicionaNoInicio(T dado)
 adicionaNoInicio(T dado)
  Elemento *novo; //Variável auxiliar.
  início
-  novo <- aloque(Elemento);
+  novo <- ALOQUE(Elemento);
   SE (novo = NULO) ENTAO
    THROW(ERROLISTACHEIA);
   (*@  \textcolor{red}{SENAO}  @*)
@@ -542,13 +563,13 @@ adicionaNoInicio(T dado)
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]{Método \textit{T retiraDoInicio()}}
+\begin{frame}[fragile]{Função \textit{T retiraDoInicio(umaLista)}}
 \setbeamercovered{invisible}
 \begin{itemize}
-\item Testamos se há elementos;\pause
-\item Decrementamos o tamanho;\pause
-\item Liberamos a memória do elemento;\pause
-\item Devolvemos a informação.\pause
+\item Teste se há elementos;
+\item Decremente o tamanho;
+\item Libere a memória do elemento;
+\item Devolva o dado retirado.
 \end{itemize}
 \begin{center}
 \begin{tikzpicture}[list/.style={rectangle split, rectangle split parts=2,
@@ -556,25 +577,25 @@ adicionaNoInicio(T dado)
     element/.style={rectangle, draw=yellow!60, fill=yellow!5,},    
     >=stealth, start chain]
 
-  \node<5-6>[list] (H) {3};
-  \node<7->[list,on chain] (H) {2};
+  \node<1-2>[list] (H) {3};
+  \node<3->[list,on chain] (H) {2};
 
-  \node<6-8>[list,draw=blue!60, fill=blue!5,on chain] (S) [below left=of H] {Saiu}; 
-  \draw<6-8>[*->] let \p1 = (S.two), \p2 = (S.center) in (\x1,\y2) -- (A);  
+  \node<2-4>[list,draw=blue!60, fill=blue!5,on chain] (S) [below left=of H] {Saiu}; 
+  \draw<2-4>[*->] let \p1 = (S.two), \p2 = (S.center) in (\x1,\y2) -- (A);  
   
-  \node<6->[list,draw=blue!60, fill=blue!5,on chain] (V) [left=of AP] {Volta}; 
-  \draw<6->[*->] let \p1 = (V.two), \p2 = (V.center) in (\x1,\y2) -- (AP);  
+  \node<2->[list,draw=blue!60, fill=blue!5,on chain] (V) [left=of AP] {Volta}; 
+  \draw<2->[*->] let \p1 = (V.two), \p2 = (V.center) in (\x1,\y2) -- (AP);  
   
-  \node<5-7>[list,on chain] (A) [below=of H] {};
-  \draw<5-7>[*->] let \p1 = (A.one), \p2 = (A.center) in (\x1+2,\y2+2) -- (AP);
-  \node<5-8>[element] (AP) [below=of A] {melão};
-  \draw<5-7>[*->] let \p1 = (A.two), \p2 = (A.center) in (\x1,\y2) -- (B);
+  \node<1-3>[list,on chain] (A) [below=of H] {};
+  \draw<1-3>[*->] let \p1 = (A.one), \p2 = (A.center) in (\x1+2,\y2+2) -- (AP);
+  \node<1-4>[element] (AP) [below=of A] {melão};
+  \draw<1-3>[*->] let \p1 = (A.two), \p2 = (A.center) in (\x1,\y2) -- (B);
   
-  \node<7->[list,on chain] (B) [below right=of H] {};
-  \node<5-6>[list,on chain] (B) {};
+  \node<3->[list,on chain] (B) [below right=of H] {};
+  \node<1-2>[list,on chain] (B) {};
   
-  \draw<7->[*->] let \p1 = (H.two), \p2 = (H.center) in (\x1+2,\y2+2) -- (B);
-  \draw<5-6>[*->] let \p1 = (H.two), \p2 = (H.center) in (\x1+2,\y2+2) -- (A);
+  \draw<3->[*->] let \p1 = (H.two), \p2 = (H.center) in (\x1+2,\y2+2) -- (B);
+  \draw<1-2>[*->] let \p1 = (H.two), \p2 = (H.center) in (\x1+2,\y2+2) -- (A);
   
   
   \node[list,on chain] (C) {};
@@ -591,7 +612,7 @@ adicionaNoInicio(T dado)
 \end{center}
 \end{frame}
 
-\begin{frame}[fragile]{Método \textit{T retiraDoInicio()}}
+\begin{frame}[fragile]{Função \textit{T retiraDoInicio(umaLista)}}
 \lstset{language=C++,
           keywordstyle=\color{blue}\ttfamily,
           stringstyle=\color{red}\ttfamily,
@@ -604,23 +625,23 @@ adicionaNoInicio(T dado)
 T retiraDoInicio()
  Elemento *saiu; //Variável auxiliar elemento.
  T *volta; //Variável auxiliar tipo T.
-	início
-		SE (listaVazia()) ENTAO
-		  THROW(ERROLISTAVAZIA);
-		SENAO
-		  saiu <- _dados;
-		  volta <- saiu->info;
-		  _dados <- saiu->próximo;
-		  _tamanho <- _tamanho - 1;
-		  LIBERE(saiu);
-		  RETORNE(volta);
-		FIM SE
-	fim;
+    início
+        SE (listaVazia(umaLista)) ENTAO
+            THROW(ERROLISTAVAZIA);
+        SENAO
+            saiu <- umaLista._dados;
+            volta <- saiu->dado;
+            umaLista._dados <- saiu->próximo;
+            umaLista._tamanho <- umaLista._tamanho - 1;
+            LIBERE(saiu);
+            RETORNE(volta);
+        FIM SE
+    fim;
 (*@  \textcolor{red}{}  @*)
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]{Método \textit{T retiraDoInicio()}}
+\begin{frame}[fragile]{Função \textit{T retiraDoInicio()}}
 \lstset{language=C++,
           keywordstyle=\color{blue}\ttfamily,
           stringstyle=\color{red}\ttfamily,
@@ -649,7 +670,7 @@ T retiraDoInicio()
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]{Método \textit{T retiraDoInicio()}}
+\begin{frame}[fragile]{Função \textit{T retiraDoInicio()}}
 \lstset{language=C++,
           keywordstyle=\color{blue}\ttfamily,
           stringstyle=\color{red}\ttfamily,
@@ -678,7 +699,7 @@ T retiraDoInicio()
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]{Método \textit{T retiraDoInicio()}}
+\begin{frame}[fragile]{Função \textit{T retiraDoInicio()}}
 \lstset{language=C++,
           keywordstyle=\color{blue}\ttfamily,
           stringstyle=\color{red}\ttfamily,
@@ -707,7 +728,7 @@ T retiraDoInicio()
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]{Método \textit{eliminaDoInicio()}}
+\begin{frame}[fragile]{Função \textit{eliminaDoInicio()}}
 \lstset{language=C++,
           keywordstyle=\color{blue}\ttfamily,
           stringstyle=\color{red}\ttfamily,
@@ -769,7 +790,7 @@ T retiraDoInicio()
 \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Método \textit{adicionaNaPosicao(T dado, int posicao)}}
+\begin{frame}[fragile]{Função \textit{adicionaNaPosicao(T dado, int posicao)}}
 \setbeamercovered{invisible}
 \begin{itemize}
 \item Testamos se a posição existe e se é possível alocar;\pause
@@ -830,7 +851,7 @@ T retiraDoInicio()
 \end{center}
 \end{frame}
 
-\begin{frame}[fragile]{Método \textit{adicionaNaPosicao(T dado, int posicao)}}
+\begin{frame}[fragile]{Função \textit{adicionaNaPosicao(T dado, int posicao)}}
 \lstset{language=C++,
           keywordstyle=\color{blue}\ttfamily,
           stringstyle=\color{red}\ttfamily,
@@ -865,7 +886,7 @@ fim;
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]{Método \textit{adicionaNaPosicao(T dado, int posicao)}}
+\begin{frame}[fragile]{Função \textit{adicionaNaPosicao(T dado, int posicao)}}
 \lstset{language=C++,
           keywordstyle=\color{blue}\ttfamily,
           stringstyle=\color{red}\ttfamily,
@@ -900,7 +921,7 @@ fim;
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]{Método \textit{adicionaNaPosicao(T dado, int posicao)}}
+\begin{frame}[fragile]{Função \textit{adicionaNaPosicao(T dado, int posicao)}}
 \lstset{language=C++,
           keywordstyle=\color{blue}\ttfamily,
           stringstyle=\color{red}\ttfamily,
@@ -935,7 +956,7 @@ fim;
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]{Método \textit{adicionaNaPosicao(T dado, int posicao)}}
+\begin{frame}[fragile]{Função \textit{adicionaNaPosicao(T dado, int posicao)}}
 \lstset{language=C++,
           keywordstyle=\color{blue}\ttfamily,
           stringstyle=\color{red}\ttfamily,
@@ -970,7 +991,7 @@ fim;
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]{Método \textit{adicionaNaPosicao(T dado, int posicao)}}
+\begin{frame}[fragile]{Função \textit{adicionaNaPosicao(T dado, int posicao)}}
 \lstset{language=C++,
           keywordstyle=\color{blue}\ttfamily,
           stringstyle=\color{red}\ttfamily,
@@ -1005,7 +1026,7 @@ fim;
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]{Método \textit{adicionaNaPosicao(T dado, int posicao)}}
+\begin{frame}[fragile]{Função \textit{adicionaNaPosicao(T dado, int posicao)}}
 \lstset{language=C++,
           keywordstyle=\color{blue}\ttfamily,
           stringstyle=\color{red}\ttfamily,
@@ -1040,7 +1061,7 @@ fim;
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]{Método \textit{T retiraDaPosicao(int posicao)}}
+\begin{frame}[fragile]{Função \textit{T retiraDaPosicao(int posicao)}}
 \setbeamercovered{invisible}
 \begin{itemize}
 \item Testamos se a posição existe;\pause
@@ -1104,7 +1125,7 @@ fim;
 \end{center}
 \end{frame}
 
-\begin{frame}[fragile]{Método \textit{T retiraDaPosicao(int posicao)}}
+\begin{frame}[fragile]{Função \textit{T retiraDaPosicao(int posicao)}}
 \lstset{language=C++,
           keywordstyle=\color{blue}\ttfamily,
           stringstyle=\color{red}\ttfamily,
@@ -1138,7 +1159,7 @@ T retiraDaPosicao(int posicao)
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]{Método \textit{T retiraDaPosicao(int posicao)}}
+\begin{frame}[fragile]{Função \textit{T retiraDaPosicao(int posicao)}}
 \lstset{language=C++,
           keywordstyle=\color{blue}\ttfamily,
           stringstyle=\color{red}\ttfamily,
@@ -1172,7 +1193,7 @@ T retiraDaPosicao(int posicao)
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]{Método \textit{T retiraDaPosicao(int posicao)}}
+\begin{frame}[fragile]{Função \textit{T retiraDaPosicao(int posicao)}}
 \lstset{language=C++,
           keywordstyle=\color{blue}\ttfamily,
           stringstyle=\color{red}\ttfamily,
@@ -1206,7 +1227,7 @@ T retiraDaPosicao(int posicao)
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]{Método \textit{T retiraDaPosicao(int posicao)}}
+\begin{frame}[fragile]{Função \textit{T retiraDaPosicao(int posicao)}}
 \lstset{language=C++,
           keywordstyle=\color{blue}\ttfamily,
           stringstyle=\color{red}\ttfamily,
@@ -1240,7 +1261,7 @@ T retiraDaPosicao(int posicao)
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]{Método \textit{T retiraDaPosicao(int posicao)}}
+\begin{frame}[fragile]{Função \textit{T retiraDaPosicao(int posicao)}}
 \lstset{language=C++,
           keywordstyle=\color{blue}\ttfamily,
           stringstyle=\color{red}\ttfamily,
@@ -1274,10 +1295,10 @@ T retiraDaPosicao(int posicao)
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]{Método \textit{adicionaEmOrdem(T dado)}}
+\begin{frame}[fragile]{Função \textit{adicionaEmOrdem(T dado)}}
 \setbeamercovered{invisible}
 \begin{itemize}
-\item Necessitamos de um método para comparar os dados (operator::>);
+\item Necessitamos de uma função para comparar os dados (operator::>);
 \item Procuramos pela posição onde inserir comparando dados;
 \item Chamamos adicionaNaPosicao(T dado, int posicao).
 \end{itemize}
@@ -1286,7 +1307,7 @@ Podemos implementar um versão polimórfica de adicionaNaPosicao(T dado, int pos
 \end{block}
 \end{frame}
 
-\begin{frame}[fragile]{Método \textit{adicionaEmOrdem(T dado)}}
+\begin{frame}[fragile]{Função \textit{adicionaEmOrdem(T dado)}}
 \lstset{language=C++,
           keywordstyle=\color{blue}\ttfamily,
           stringstyle=\color{red}\ttfamily,
@@ -1321,7 +1342,7 @@ adicionaEmOrdem(T dado)
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]{Método \textit{adicionaEmOrdem(T dado)}}
+\begin{frame}[fragile]{Função \textit{adicionaEmOrdem(T dado)}}
 \lstset{language=C++,
           keywordstyle=\color{blue}\ttfamily,
           stringstyle=\color{red}\ttfamily,
@@ -1356,7 +1377,7 @@ adicionaEmOrdem(T dado)
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]{Método \textit{adicionaEmOrdem(T dado)}}
+\begin{frame}[fragile]{Função \textit{adicionaEmOrdem(T dado)}}
 \lstset{language=C++,
           keywordstyle=\color{blue}\ttfamily,
           stringstyle=\color{red}\ttfamily,
@@ -1391,7 +1412,7 @@ adicionaEmOrdem(T dado)
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]{Método \textit{adicionaEmOrdem(T dado)}}
+\begin{frame}[fragile]{Função \textit{adicionaEmOrdem(T dado)}}
 \lstset{language=C++,
           keywordstyle=\color{blue}\ttfamily,
           stringstyle=\color{red}\ttfamily,
@@ -1426,7 +1447,7 @@ adicionaEmOrdem(T dado)
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]{Método \textit{adicionaEmOrdem(T dado)}}
+\begin{frame}[fragile]{Função \textit{adicionaEmOrdem(T dado)}}
 \lstset{language=C++,
           keywordstyle=\color{blue}\ttfamily,
           stringstyle=\color{red}\ttfamily,
@@ -1479,7 +1500,7 @@ adicionaEmOrdem(T dado)
 \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Método \textit{destroiLista()}}
+\begin{frame}[fragile]{Função \textit{destroiLista()}}
 \lstset{language=C++,
           keywordstyle=\color{blue}\ttfamily,
           stringstyle=\color{red}\ttfamily,
@@ -1546,7 +1567,7 @@ destroiLista()
 \item Implemente uma classe Lista todas as operações vistas;
 \item Implemente a lista usando Templates;
 \item Use as melhores práticas de orientação a objetos;
-\item Documente todas as classes, métodos e atributos;
+\item Documente todas as classes, funções e atributos;
 \item Aplique os testes unitários disponíveis no moodle da disciplina para validar sua estrutura de dados;
 \item Entregue até a data definida no moodle.
 \end{itemize}

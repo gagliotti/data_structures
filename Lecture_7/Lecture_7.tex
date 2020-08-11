@@ -383,6 +383,7 @@ estrutura Elemento {
 \begin{itemize}
 \item Inicializamos o ponteiro para nulo;
 \item Inicializamos o tamanho para ``0'';
+\item Complexidade de tempo: $\Theta(1)$
 \end{itemize}
 \begin{lstlisting}
 iniciaLista()
@@ -423,6 +424,9 @@ fim;
           breaklines=true,
           basicstyle=\ttfamily\footnotesize
           }
+\begin{itemize}
+	\item Complexidade de tempo: $\Theta(1)$
+\end{itemize}
 \begin{lstlisting}
 bool listaVazia(umaLista)
 inicio
@@ -507,6 +511,9 @@ adicionaNoInicio(umaLista, umDado)
   fim;
 (*@  \textcolor{red}{}  @*)
 \end{lstlisting}
+\begin{itemize}
+	\item Complexidade de tempo: ?
+\end{itemize}
 \end{frame}
 
 \begin{frame}<0>[fragile]{Função \textit{adicionaNoInicio(umaLista, umDado)}}
@@ -526,8 +533,8 @@ adicionaNoInicio(T dado)
   (*@  \textcolor{red}{SE (novo = NULO) ENTAO}  @*)
    (*@  \textcolor{red}{THROW(ERROLISTACHEIA);}  @*)
   SENAO
-   novo->_proximo <- _dados;
-   novo->_info <- dado;
+   novo._proximo <- _dados;
+   novo._info <- dado;
    _dados <- novo;
    _tamanho <- _tamanho + 1;
   FIM SE
@@ -536,32 +543,6 @@ adicionaNoInicio(T dado)
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}<0>[fragile]{Função \textit{adicionaNoInicio(T dado)}}
-\lstset{language=C++,
-          keywordstyle=\color{blue}\ttfamily,
-          stringstyle=\color{red}\ttfamily,
-          commentstyle=\color{OliveGreen}\ttfamily,
-          breaklines=true,
-          escapeinside={(*@}{@*)},
-          basicstyle=\ttfamily\footnotesize
-          }
-\begin{lstlisting}
-adicionaNoInicio(T dado)
- Elemento *novo; //Variável auxiliar.
- início
-  novo <- ALOQUE(Elemento);
-  SE (novo = NULO) ENTAO
-   THROW(ERROLISTACHEIA);
-  (*@  \textcolor{red}{SENAO}  @*)
-   (*@  \textcolor{red}{novo->\_proximo <- \_dados;}  @*)
-   (*@  \textcolor{red}{novo->\_info <- dado;}  @*)
-   (*@  \textcolor{red}{\_dados <- novo;}  @*)
-   (*@  \textcolor{red}{\_tamanho <- \_tamanho + 1;}  @*)
-  (*@  \textcolor{red}{FIM SE}  @*)
-  fim;
-(*@  \textcolor{red}{}  @*)
-\end{lstlisting}
-\end{frame}
 
 \begin{frame}[fragile]{Função \textit{T retiraDoInicio(umaLista)}}
 \setbeamercovered{invisible}
@@ -623,8 +604,8 @@ adicionaNoInicio(T dado)
           }
 \begin{lstlisting}
 T retiraDoInicio()
- Elemento *saiu; //Variável auxiliar elemento.
- T *volta; //Variável auxiliar tipo T.
+ Elemento saiu; //Variável auxiliar elemento.
+ T volta; //Variável auxiliar tipo T.
     início
         SE (listaVazia(umaLista)) ENTAO
             THROW(ERROLISTAVAZIA);
@@ -639,6 +620,9 @@ T retiraDoInicio()
     fim;
 (*@  \textcolor{red}{}  @*)
 \end{lstlisting}
+\begin{itemize}
+	\item Complexidade de tempo: ?
+\end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{Função \textit{T retiraDoInicio()}}
@@ -659,8 +643,8 @@ T retiraDoInicio()
 		  (*@  \textcolor{red}{THROW(ERROLISTAVAZIA);}  @*)
 		(*@  \textcolor{red}{SENAO}  @*)
 		  saiu <- _dados;
-		  volta <- saiu->info;
-		  _dados <- saiu->próximo;
+		  volta <- saiu.info;
+		  _dados <- saiu.próximo;
 		  _tamanho <- _tamanho - 1;
 		  LIBERE(saiu);
 		  RETORNE(volta);
@@ -688,8 +672,8 @@ T retiraDoInicio()
 		  THROW(ERROLISTAVAZIA);
 		SENAO
 		  (*@  \textcolor{red}{saiu <- \_dados;}  @*)
-		  (*@  \textcolor{red}{volta <- saiu->info;}  @*)
-		  (*@  \textcolor{red}{\_dados <- saiu->próximo;}  @*)
+		  (*@  \textcolor{red}{volta <- saiu.info;}  @*)
+		  (*@  \textcolor{red}{\_dados <- saiu.próximo;}  @*)
 		  (*@  \textcolor{red}{\_tamanho <- \_tamanho - 1;}  @*)
 		  LIBERE(saiu);
 		  RETORNE(volta);
@@ -717,8 +701,8 @@ T retiraDoInicio()
 		  THROW(ERROLISTAVAZIA);
 		SENAO
 		  saiu <- _dados;
-		  volta <- saiu->info;
-		  _dados <- saiu->próximo;
+		  volta <- saiu.info;
+		  _dados <- saiu.próximo;
 		  _tamanho <- _tamanho - 1;
 		  (*@  \textcolor{red}{LIBERE(saiu);}  @*)
 		  (*@  \textcolor{red}{RETORNE(volta);}  @*)
@@ -745,11 +729,11 @@ T retiraDoInicio()
 		  THROW(ERROLISTAVAZIA);
 		SENAO
 		  saiu <- _dados;
-		  volta <- saiu->info;
-		  _dados <- saiu->próximo;
+		  volta <- saiu.info;
+		  _dados <- saiu.próximo;
 		  _tamanho <- _tamanho - 1;
 		  LIBERE(saiu);
-		  LIBERE(saiu->info);
+		  LIBERE(saiu.info);
 		FIM SE
 	fim;
 (*@  \textcolor{red}{}  @*)
@@ -765,9 +749,9 @@ T retiraDoInicio()
           basicstyle=\ttfamily\footnotesize
           }
 \begin{itemize}
-\item Observe que a linha LIBERE(saiu->info) possui um perigo:
+\item Observe que a linha LIBERE(saiu.info) possui um perigo:
 \begin{itemize}
-\item Se o T for por sua vez um conjunto estruturado de dados com referências internas através de ponteiros (outra lista, por exemplo), a chamada à função LIBERE(saiu->info) só liberará o primeiro nível da estrutura (aquele apontado diretamente);
+\item Se o T for por sua vez um conjunto estruturado de dados com referências internas através de ponteiros (outra lista, por exemplo), a chamada à função LIBERE(saiu.info) só liberará o primeiro nível da estrutura (aquele apontado diretamente);
 \item Tudo o que for referenciado através de ponteiros em info permanecerá em algum lugar da memória, provavelmente inatingível (garbage);
 \item Para evitar isto pode-se criar uma função destrói(info) para o T que será chamada no lugar de LIBERE.
 \end{itemize}
@@ -873,10 +857,10 @@ adicionaNaPosicao(T dado, int posicao)
     SENAO
      anterior <- _dados;
      REPITA (posicao - 2) VEZES
-      anterior <- anterior->_proximo;
-     novo->_proximo <- anterior->_proximo;
-     novo->_info <- info;
-     anterior->_proximo <- novo;
+      anterior <- anterior._proximo;
+     novo._proximo <- anterior._proximo;
+     novo._dado <- info;
+     anterior._proximo <- novo;
      _tamanho <- _tamanho + 1;
     FIM SE
    FIM SE
@@ -886,180 +870,6 @@ fim;
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]{Função \textit{adicionaNaPosicao(T dado, int posicao)}}
-\lstset{language=C++,
-          keywordstyle=\color{blue}\ttfamily,
-          stringstyle=\color{red}\ttfamily,
-          commentstyle=\color{OliveGreen}\ttfamily,
-          breaklines=true,
-          escapeinside={(*@}{@*)},
-          basicstyle=\ttfamily\scriptsize
-          }
-\begin{lstlisting}
-adicionaNaPosicao(T dado, int posicao)
- Elemento *novo, *anterior; // auxiliares.
- inicio
-(*@  \textcolor{red}{  SE (posicao > \_tamanho + 1) ENTAO THROW(ERROPOSICAO);}  @*)
-  SENAO
-   SE (posicao = 1) ENTAO RETORNE(adicionaNoInício(info));
-   SENAO
-    novo <- aloque(Elemento);
-    SE (novo = NULO) ENTÃO THROW(ERROLISTACHEIA);
-    SENAO
-     anterior <- _dados;
-     REPITA (posicao - 2) VEZES
-      anterior <- anterior->_proximo;
-     novo->_proximo <- anterior->_proximo;
-     novo->_info <- info;
-     anterior->_proximo <- novo;
-     _tamanho <- _tamanho + 1;
-    FIM SE
-   FIM SE
-  FIM SE
-fim;
-(*@  \textcolor{red}{}  @*)
-\end{lstlisting}
-\end{frame}
-
-\begin{frame}[fragile]{Função \textit{adicionaNaPosicao(T dado, int posicao)}}
-\lstset{language=C++,
-          keywordstyle=\color{blue}\ttfamily,
-          stringstyle=\color{red}\ttfamily,
-          commentstyle=\color{OliveGreen}\ttfamily,
-          breaklines=true,
-          escapeinside={(*@}{@*)},
-          basicstyle=\ttfamily\scriptsize
-          }
-\begin{lstlisting}
-adicionaNaPosicao(T dado, int posicao)
- Elemento *novo, *anterior; // auxiliares.
- inicio
-  SE (posicao > _tamanho + 1) ENTAO THROW(ERROPOSICAO);
-  (*@  \textcolor{red}{SENAO}  @*)
-   (*@  \textcolor{red}{SE (posicao = 1) ENTAO RETORNE(adicionaNoInício(info));}  @*)
-   SENAO
-    novo <- aloque(Elemento);
-    SE (novo = NULO) ENTÃO THROW(ERROLISTACHEIA);
-    SENAO
-     anterior <- _dados;
-     REPITA (posicao - 2) VEZES
-      anterior <- anterior->_proximo;
-     novo->_proximo <- anterior->_proximo;
-     novo->_info <- info;
-     anterior->_proximo <- novo;
-     _tamanho <- _tamanho + 1;
-    FIM SE
-   FIM SE
-  FIM SE
-fim;
-(*@  \textcolor{red}{}  @*)
-\end{lstlisting}
-\end{frame}
-
-\begin{frame}[fragile]{Função \textit{adicionaNaPosicao(T dado, int posicao)}}
-\lstset{language=C++,
-          keywordstyle=\color{blue}\ttfamily,
-          stringstyle=\color{red}\ttfamily,
-          commentstyle=\color{OliveGreen}\ttfamily,
-          breaklines=true,
-          escapeinside={(*@}{@*)},
-          basicstyle=\ttfamily\scriptsize
-          }
-\begin{lstlisting}
-adicionaNaPosicao(T dado, int posicao)
- Elemento *novo, *anterior; // auxiliares.
- inicio
-  SE (posicao > _tamanho + 1) ENTAO THROW(ERROPOSICAO);
-  SENAO
-   SE (posicao = 1) ENTAO RETORNE(adicionaNoInício(info));
-   (*@  \textcolor{red}{SENAO}  @*)
-    (*@  \textcolor{red}{novo <- aloque(Elemento);}  @*)
-    (*@  \textcolor{red}{SE (novo = NULO) ENTÃO THROW(ERROLISTACHEIA);}  @*)
-    SENAO
-     anterior <- _dados;
-     REPITA (posicao - 2) VEZES
-      anterior <- anterior->_proximo;
-     novo->_proximo <- anterior->_proximo;
-     novo->_info <- info;
-     anterior->_proximo <- novo;
-     _tamanho <- _tamanho + 1;
-    FIM SE
-   FIM SE
-  FIM SE
-fim;
-(*@  \textcolor{red}{}  @*)
-\end{lstlisting}
-\end{frame}
-
-\begin{frame}[fragile]{Função \textit{adicionaNaPosicao(T dado, int posicao)}}
-\lstset{language=C++,
-          keywordstyle=\color{blue}\ttfamily,
-          stringstyle=\color{red}\ttfamily,
-          commentstyle=\color{OliveGreen}\ttfamily,
-          breaklines=true,
-          escapeinside={(*@}{@*)},
-          basicstyle=\ttfamily\scriptsize
-          }
-\begin{lstlisting}
-adicionaNaPosicao(T dado, int posicao)
- Elemento *novo, *anterior; // auxiliares.
- inicio
-  SE (posicao > _tamanho + 1) ENTAO THROW(ERROPOSICAO);
-  SENAO
-   SE (posicao = 1) ENTAO RETORNE(adicionaNoInício(info));
-   SENAO
-    novo <- aloque(Elemento);
-    SE (novo = NULO) ENTÃO THROW(ERROLISTACHEIA);
-    (*@  \textcolor{red}{SENAO}  @*)
-     (*@  \textcolor{red}{anterior <- \_dados;}  @*)
-     (*@  \textcolor{red}{REPITA (posicao - 2) VEZES}  @*)
-      (*@  \textcolor{red}{anterior <- anterior->\_proximo;}  @*)
-     novo->_proximo <- anterior->_proximo;
-     novo->_info <- info;
-     anterior->_proximo <- novo;
-     _tamanho <- _tamanho + 1;
-    FIM SE
-   FIM SE
-  FIM SE
-fim;
-(*@  \textcolor{red}{}  @*)
-\end{lstlisting}
-\end{frame}
-
-\begin{frame}[fragile]{Função \textit{adicionaNaPosicao(T dado, int posicao)}}
-\lstset{language=C++,
-          keywordstyle=\color{blue}\ttfamily,
-          stringstyle=\color{red}\ttfamily,
-          commentstyle=\color{OliveGreen}\ttfamily,
-          breaklines=true,
-          escapeinside={(*@}{@*)},
-          basicstyle=\ttfamily\scriptsize
-          }
-\begin{lstlisting}
-adicionaNaPosicao(T dado, int posicao)
- Elemento *novo, *anterior; // auxiliares.
- inicio
-  SE (posicao > _tamanho + 1) ENTAO THROW(ERROPOSICAO);
-  SENAO
-   SE (posicao = 1) ENTAO RETORNE(adicionaNoInício(info));
-   SENAO
-    novo <- aloque(Elemento);
-    SE (novo = NULO) ENTÃO THROW(ERROLISTACHEIA);
-    SENAO
-     anterior <- _dados;
-     REPITA (posicao - 2) VEZES
-      anterior <- anterior->_proximo;
-     (*@  \textcolor{red}{novo->\_proximo <- anterior->\_proximo;}  @*)
-     (*@  \textcolor{red}{novo->\_info <- info;}  @*)
-     (*@  \textcolor{red}{anterior->\_proximo <- novo;}  @*)
-     (*@  \textcolor{red}{\_tamanho <- \_tamanho + 1;}  @*)
-    FIM SE
-   FIM SE
-  FIM SE
-fim;
-(*@  \textcolor{red}{}  @*)
-\end{lstlisting}
-\end{frame}
 
 \begin{frame}[fragile]{Função \textit{T retiraDaPosicao(int posicao)}}
 \setbeamercovered{invisible}
@@ -1145,10 +955,10 @@ T retiraDaPosicao(int posicao)
    SENAO
     anterior <- _dados;
     REPITA (posicao - 2) VEZES
-     anterior <- anterior->_proximo;
-    eliminar <- anterior->_proximo;
-    volta <- eliminar->_info;
-    anterior->_proximo <- eliminar->_proximo;
+     anterior <- anterior._proximo;
+    eliminar <- anterior._proximo;
+    volta <- eliminar._dado;
+    anterior._proximo <- eliminar._proximo;
     _tamanho <- _tamanho - 1;
     LIBERE(eliminar);
     RETORNE(volta);
@@ -1159,141 +969,6 @@ T retiraDaPosicao(int posicao)
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]{Função \textit{T retiraDaPosicao(int posicao)}}
-\lstset{language=C++,
-          keywordstyle=\color{blue}\ttfamily,
-          stringstyle=\color{red}\ttfamily,
-          commentstyle=\color{OliveGreen}\ttfamily,
-          breaklines=true,
-          escapeinside={(*@}{@*)},
-          basicstyle=\ttfamily\scriptsize
-          }
-\begin{lstlisting}
-T retiraDaPosicao(int posicao)
- Elemento *anterior, *eliminar; //Variáveis elemento.
- T *volta; //Variável tipo T.
- inicio
-  (*@  \textcolor{red}{SE (posicao > \_tamanho) ENTAO THROW(ERROPOSICAO);}  @*)
-  SENAO
-   SE (posicao = 1) ENTAO RETORNE(retiraDoInicio());
-   SENAO
-    anterior <- _dados;
-    REPITA (posicao - 2) VEZES
-     anterior <- anterior->_proximo;
-    eliminar <- anterior->_proximo;
-    volta <- eliminar->_info;
-    anterior->_proximo <- eliminar->_proximo;
-    _tamanho <- _tamanho - 1;
-    LIBERE(eliminar);
-    RETORNE(volta);
-   FIM SE
-  FIM SE
- fim;
-(*@  \textcolor{red}{}  @*)
-\end{lstlisting}
-\end{frame}
-
-\begin{frame}[fragile]{Função \textit{T retiraDaPosicao(int posicao)}}
-\lstset{language=C++,
-          keywordstyle=\color{blue}\ttfamily,
-          stringstyle=\color{red}\ttfamily,
-          commentstyle=\color{OliveGreen}\ttfamily,
-          breaklines=true,
-          escapeinside={(*@}{@*)},
-          basicstyle=\ttfamily\scriptsize
-          }
-\begin{lstlisting}
-T retiraDaPosicao(int posicao)
- Elemento *anterior, *eliminar; //Variáveis elemento.
- T *volta; //Variável tipo T.
- inicio
-  SE (posicao > _tamanho) ENTAO THROW(ERROPOSICAO);
-  (*@  \textcolor{red}{SENAO}  @*)
-   (*@  \textcolor{red}{SE (posicao = 1) ENTAO RETORNE(retiraDoInicio());}  @*)
-   SENAO
-    anterior <- _dados;
-    REPITA (posicao - 2) VEZES
-     anterior <- anterior->_proximo;
-    eliminar <- anterior->_proximo;
-    volta <- eliminar->_info;
-    anterior->_proximo <- eliminar->_proximo;
-    _tamanho <- _tamanho - 1;
-    LIBERE(eliminar);
-    RETORNE(volta);
-   FIM SE
-  FIM SE
- fim;
-(*@  \textcolor{red}{}  @*)
-\end{lstlisting}
-\end{frame}
-
-\begin{frame}[fragile]{Função \textit{T retiraDaPosicao(int posicao)}}
-\lstset{language=C++,
-          keywordstyle=\color{blue}\ttfamily,
-          stringstyle=\color{red}\ttfamily,
-          commentstyle=\color{OliveGreen}\ttfamily,
-          breaklines=true,
-          escapeinside={(*@}{@*)},
-          basicstyle=\ttfamily\scriptsize
-          }
-\begin{lstlisting}
-T retiraDaPosicao(int posicao)
- Elemento *anterior, *eliminar; //Variáveis elemento.
- T *volta; //Variável tipo T.
- inicio
-  SE (posicao > _tamanho) ENTAO THROW(ERROPOSICAO);
-  SENAO
-   SE (posicao = 1) ENTAO RETORNE(retiraDoInicio());
-   (*@  \textcolor{red}{SENAO}  @*)
-    (*@  \textcolor{red}{anterior <- \_dados;}  @*)
-    (*@  \textcolor{red}{REPITA (posicao - 2) VEZES}  @*)
-     (*@  \textcolor{red}{anterior <- anterior->\_proximo;}  @*)
-    eliminar <- anterior->_proximo;
-    volta <- eliminar->_info;
-    anterior->_proximo <- eliminar->_proximo;
-    _tamanho <- _tamanho - 1;
-    LIBERE(eliminar);
-    RETORNE(volta);
-   FIM SE
-  FIM SE
- fim;
-(*@  \textcolor{red}{}  @*)
-\end{lstlisting}
-\end{frame}
-
-\begin{frame}[fragile]{Função \textit{T retiraDaPosicao(int posicao)}}
-\lstset{language=C++,
-          keywordstyle=\color{blue}\ttfamily,
-          stringstyle=\color{red}\ttfamily,
-          commentstyle=\color{OliveGreen}\ttfamily,
-          breaklines=true,
-          escapeinside={(*@}{@*)},
-          basicstyle=\ttfamily\scriptsize
-          }
-\begin{lstlisting}
-T retiraDaPosicao(int posicao)
- Elemento *anterior, *eliminar; //Variáveis elemento.
- T *volta; //Variável tipo T.
- inicio
-  SE (posicao > _tamanho) ENTAO THROW(ERROPOSICAO);
-  SENAO
-   SE (posicao = 1) ENTAO RETORNE(retiraDoInicio());
-   SENAO
-    anterior <- _dados;
-    REPITA (posicao - 2) VEZES
-     anterior <- anterior->_proximo;
-    (*@  \textcolor{red}{eliminar <- anterior->\_proximo;}  @*)
-    (*@  \textcolor{red}{volta <- eliminar->\_info;}  @*)
-    (*@  \textcolor{red}{anterior->\_proximo <- eliminar->\_proximo;}  @*)
-    (*@  \textcolor{red}{\_tamanho <- \_tamanho - 1;}  @*)
-    (*@  \textcolor{red}{LIBERE(eliminar);}  @*)
-    (*@  \textcolor{red}{RETORNE(volta);}  @*)
-   FIM SE
-  FIM SE
- fim;
-(*@  \textcolor{red}{}  @*)
-\end{lstlisting}
-\end{frame}
 
 \begin{frame}[fragile]{Função \textit{adicionaEmOrdem(T dado)}}
 \setbeamercovered{invisible}
@@ -1325,13 +1000,13 @@ adicionaEmOrdem(T dado)
   SENAO
    atual <- _dados;
    posicao <- 1;
-   ENQUANTO (atual->_proximo ~= NULO E
-             dado > atual->_info)) FACA 
+   ENQUANTO (atual._proximo ~= NULO E
+             dado > atual._dado)) FACA 
     //Encontrar posição para inserir.
-    atual <- atual->_proximo;
+    atual <- atual._proximo;
     posicao <- posicao + 1;
    FIM ENQUANTO
-   SE (dado > atual->_info) ENTAO //Parou porque acabou a lista.
+   SE (dado > atual._dado) ENTAO //Parou porque acabou a lista.
     RETORNE(adicionaNaPosicao(dado, posicao + 1));
    SENAO
     RETORNE(adicionaNaPosicao(dado, posicao));
@@ -1342,145 +1017,6 @@ adicionaEmOrdem(T dado)
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]{Função \textit{adicionaEmOrdem(T dado)}}
-\lstset{language=C++,
-          keywordstyle=\color{blue}\ttfamily,
-          stringstyle=\color{red}\ttfamily,
-          commentstyle=\color{OliveGreen}\ttfamily,
-          breaklines=true,
-          escapeinside={(*@}{@*)},
-          basicstyle=\ttfamily\scriptsize
-          }
-\begin{lstlisting}
-adicionaEmOrdem(T dado)
- Elemento *atual; //Variável para caminhar.
- int posicao; // Posicao de Insercao.
- inicio
-  (*@  \textcolor{red}{SE (listaVazia()) ENTAO RETORNE(adicionaNoInicio(dado));}  @*)
-  SENAO
-   atual <- _dados;
-   posicao <- 1;
-   ENQUANTO (atual->_proximo ~= NULO E
-             dado > atual->_info)) FACA 
-    //Encontrar posição para inserir.
-    atual <- atual->_proximo;
-    posicao <- posicao + 1;
-   FIM ENQUANTO
-   SE (dado > atual->_info) ENTAO //Parou porque acabou a lista.
-    RETORNE(adicionaNaPosicao(dado, posicao + 1));
-   SENAO
-    RETORNE(adicionaNaPosicao(dado, posicao));
-   FIM SE
-  FIM SE
- fim;
-(*@  \textcolor{red}{}  @*)
-\end{lstlisting}
-\end{frame}
-
-\begin{frame}[fragile]{Função \textit{adicionaEmOrdem(T dado)}}
-\lstset{language=C++,
-          keywordstyle=\color{blue}\ttfamily,
-          stringstyle=\color{red}\ttfamily,
-          commentstyle=\color{OliveGreen}\ttfamily,
-          breaklines=true,
-          escapeinside={(*@}{@*)},
-          basicstyle=\ttfamily\scriptsize
-          }
-\begin{lstlisting}
-adicionaEmOrdem(T dado)
- Elemento *atual; //Variável para caminhar.
- int posicao; // Posicao de Insercao.
- inicio
-  SE (listaVazia()) ENTAO RETORNE(adicionaNoInicio(dado));
-  (*@  \textcolor{red}{SENAO}  @*)
-   (*@  \textcolor{red}{atual <- \_dados;}  @*)
-   (*@  \textcolor{red}{posicao <- 1;}  @*)
-   (*@  \textcolor{red}{ENQUANTO (atual->\_proximo ~= NULO E}  @*)
-             (*@  \textcolor{red}{dado > atual->\_info)) FACA }  @*)
-    (*@  \textcolor{red}{//Encontrar posição para inserir.}  @*)
-    (*@  \textcolor{red}{atual <- atual->\_proximo;}  @*)
-    (*@  \textcolor{red}{posicao <- posicao + 1;}  @*)
-   FIM ENQUANTO
-   SE (dado > atual->_info) ENTAO //Parou porque acabou a lista.
-    RETORNE(adicionaNaPosicao(dado, posicao + 1));
-   SENAO
-    RETORNE(adicionaNaPosicao(dado, posicao));
-   FIM SE
-  FIM SE
- fim;
-(*@  \textcolor{red}{}  @*)
-\end{lstlisting}
-\end{frame}
-
-\begin{frame}[fragile]{Função \textit{adicionaEmOrdem(T dado)}}
-\lstset{language=C++,
-          keywordstyle=\color{blue}\ttfamily,
-          stringstyle=\color{red}\ttfamily,
-          commentstyle=\color{OliveGreen}\ttfamily,
-          breaklines=true,
-          escapeinside={(*@}{@*)},
-          basicstyle=\ttfamily\scriptsize
-          }
-\begin{lstlisting}
-adicionaEmOrdem(T dado)
- Elemento *atual; //Variável para caminhar.
- int posicao; // Posicao de Insercao.
- inicio
-  SE (listaVazia()) ENTAO RETORNE(adicionaNoInicio(dado));
-  SENAO
-   atual <- _dados;
-   posicao <- 1;
-   ENQUANTO (atual->_proximo ~= NULO E
-             dado > atual->_info)) FACA 
-    //Encontrar posição para inserir.
-    atual <- atual->_proximo;
-    posicao <- posicao + 1;
-   FIM ENQUANTO
-   (*@  \textcolor{red}{SE (dado > atual->\_info) ENTAO //Parou porque acabou a lista.}  @*)
-    (*@  \textcolor{red}{RETORNE(adicionaNaPosicao(dado, posicao + 1));}  @*)
-   SENAO
-    RETORNE(adicionaNaPosicao(dado, posicao));
-   FIM SE
-  FIM SE
- fim;
-(*@  \textcolor{red}{}  @*)
-\end{lstlisting}
-\end{frame}
-
-\begin{frame}[fragile]{Função \textit{adicionaEmOrdem(T dado)}}
-\lstset{language=C++,
-          keywordstyle=\color{blue}\ttfamily,
-          stringstyle=\color{red}\ttfamily,
-          commentstyle=\color{OliveGreen}\ttfamily,
-          breaklines=true,
-          escapeinside={(*@}{@*)},
-          basicstyle=\ttfamily\scriptsize
-          }
-\begin{lstlisting}
-adicionaEmOrdem(T dado)
- Elemento *atual; //Variável para caminhar.
- int posicao; // Posicao de Insercao.
- inicio
-  SE (listaVazia()) ENTAO RETORNE(adicionaNoInicio(dado));
-  SENAO
-   atual <- _dados;
-   posicao <- 1;
-   ENQUANTO (atual->_proximo ~= NULO E
-             dado > atual->_info)) FACA 
-    //Encontrar posição para inserir.
-    atual <- atual->_proximo;
-    posicao <- posicao + 1;
-   FIM ENQUANTO
-   SE (dado > atual->_info) ENTAO //Parou porque acabou a lista.
-    RETORNE(adicionaNaPosicao(dado, posicao + 1));
-   (*@  \textcolor{red}{SENAO}  @*)
-    (*@  \textcolor{red}{RETORNE(adicionaNaPosicao(dado, posicao));}  @*)
-   FIM SE
-  FIM SE
- fim;
-(*@  \textcolor{red}{}  @*)
-\end{lstlisting}
-\end{frame}
 
 \begin{frame}[fragile]{Algoritmos Restantes - Por conta do aluno}
 \setbeamercovered{invisible}
@@ -1520,9 +1056,9 @@ destroiLista()
     //Eliminar até o fim.
     anterior <- atual;
     //Vou para o próximo mesmo que seja nulo.
-    atual <- atual->_proximo;
+    atual <- atual._proximo;
     //Liberar primeiro a Info.
-    LIBERE(anterior->_info);
+    LIBERE(anterior._dado);
     //Liberar o elemento que acabei de visitar.
     LIBERE(anterior);
    FIM ENQUANTO

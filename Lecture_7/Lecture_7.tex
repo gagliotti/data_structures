@@ -345,7 +345,7 @@ estrutura Elemento {
 \item adicionaNoInicio(umaLista, umDado);
 \item adicionaNaPosicao(umaLista, umDado, umaPosicao);
 %\item adicionaEmOrdem(umaLista, umDado);
-\item T retira(umaLista);
+%\item T retira(umaLista);
 \item T retiraDoInicio(umaLista);
 \item T retiraDaPosicao(umaLista, umaPosicao);
 \item T retiraEspecifico(umaLista, umDado);
@@ -378,70 +378,6 @@ fim;
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]{Função \textit{destroiLista()}}
-	\begin{itemize}
-	\item Percorrer a lista desalocando na seguinte ordem:
-	\begin{enumerate} 
-		\item dado
-		\item elemento
-	\end{enumerate}
-	\item Manter referência para próximo elemento
-	\item Repetir enquanto não chegar ao fim (elemento nulo)
-	\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Função \textit{destroiLista()}}
-	\lstset{language=C++,
-		keywordstyle=\color{blue}\ttfamily,
-		stringstyle=\color{red}\ttfamily,
-		commentstyle=\color{OliveGreen}\ttfamily,
-		breaklines=true,
-		escapeinside={(*@}{@*)},
-		basicstyle=\ttfamily\scriptsize
-	}
-	\begin{lstlisting}
- destroiLista(umaLista)
-  Elemento *atual, *anterior; //Variável auxiliar para caminhar.
-  inicio
-   SE (listaVazia(umaLista)) ENTAO THROW(ERROLISTAVAZIA);
-   SENAO
-    atual <- umaLista._primeiro;    
-    ENQUANTO (atual != NULO) FACA 
-     //Eliminar até o fim.
-     anterior <- atual;
-     //Vou para o próximo mesmo que seja nulo.
-     atual <- atual._proximo;
-     //Liberar primeiro a Info.
-     DESALOQUE(anterior._dado);
-     //Liberar o elemento que acabei de visitar.
-     DESALOQUE(anterior);
-    FIM ENQUANTO
-   FIM SE
- fim;
-(*@  \textcolor{red}{}  @*)
-\end{lstlisting}
-\end{frame}
-
-
-\begin{frame}<0>[fragile]{Função \textit{\~{}Lista}}
-\lstset{language=C++,
-          keywordstyle=\color{blue}\ttfamily,
-          stringstyle=\color{red}\ttfamily,
-          commentstyle=\color{OliveGreen}\ttfamily,
-          breaklines=true,
-          basicstyle=\ttfamily\footnotesize
-          }
-
-\begin{itemize}
-\item Chamamos DestroiLista();
-\end{itemize}
-\begin{lstlisting}
-~Lista()
-inicio
-  DestroiLista();
-fim;
-\end{lstlisting}
-\end{frame}
 
 \begin{frame}[fragile]{Função \textit{listaVazia}}
 \lstset{language=C++,
@@ -1046,25 +982,70 @@ adicionaEmOrdem(T dado)
 \end{frame}
 
 
-\begin{frame}[fragile]{Algoritmos Restantes - Por conta do aluno}
-\setbeamercovered{invisible}
-\begin{itemize}
-\item Adiciona(dado):
-\begin{itemize}
-\item AdicionaNaPosicao(tamanho);
-\end{itemize}
-\item Retira():
-\begin{itemize}
-\item T RetiraDaPosicao(tamanho);
-\end{itemize}
-\item T RetiraEspecifico(dado).
-\item int posicao(dado);
-\item Elemento* posicao(dado);
-\item bool contem(dado);
-\end{itemize}
+\begin{frame}[fragile]{Função \textit{destroiLista()}}
+	\begin{itemize}
+		\item Retirar e desalocar cada elemento e respectivo dado até que a lista esteja vazia
+		\item Desalocar a lista
+		\item Dúvida: por que não escrever uma única função em C que desaloque elemento, dado e lista?
+	\end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Função \textit{destroiLista()}}
+
+\begin{frame}<0>[fragile]{Função \textit{destroiLista()}}
+	\lstset{language=C++,
+		keywordstyle=\color{blue}\ttfamily,
+		stringstyle=\color{red}\ttfamily,
+		commentstyle=\color{OliveGreen}\ttfamily,
+		breaklines=true,
+		escapeinside={(*@}{@*)},
+		basicstyle=\ttfamily\scriptsize
+	}
+	\begin{lstlisting}
+	destroiLista(umaLista)
+	Elemento *atual, *anterior; //Variável auxiliar para caminhar.
+	inicio
+	SE (listaVazia(umaLista)) ENTAO THROW(ERROLISTAVAZIA);
+	SENAO
+	atual <- umaLista._primeiro;    
+	ENQUANTO (atual != NULO) FACA 
+	//Eliminar até o fim.
+	anterior <- atual;
+	//Vou para o próximo mesmo que seja nulo.
+	atual <- atual._proximo;
+	//Liberar primeiro a Info.
+	DESALOQUE(anterior._dado);
+	//Liberar o elemento que acabei de visitar.
+	DESALOQUE(anterior);
+	FIM ENQUANTO
+	FIM SE
+	fim;
+	(*@  \textcolor{red}{}  @*)
+	\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}<0>[fragile]{Função \textit{\~{}Lista}}
+	\lstset{language=C++,
+		keywordstyle=\color{blue}\ttfamily,
+		stringstyle=\color{red}\ttfamily,
+		commentstyle=\color{OliveGreen}\ttfamily,
+		breaklines=true,
+		basicstyle=\ttfamily\footnotesize
+	}
+	
+	\begin{itemize}
+		\item Chamamos DestroiLista();
+	\end{itemize}
+	\begin{lstlisting}
+	~Lista()
+	inicio
+	DestroiLista();
+	fim;
+	\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}<0>[fragile]{Função \textit{destroiLista()}}
 \lstset{language=C++,
           keywordstyle=\color{blue}\ttfamily,
           stringstyle=\color{red}\ttfamily,
@@ -1097,7 +1078,17 @@ destroiLista(umaLista)
 \end{frame}
 
 
-
+\begin{frame}[fragile]{Algoritmos Restantes - Por conta do aluno}
+	\setbeamercovered{invisible}
+	\begin{itemize}
+		\item limpaLista(Lista* lista, T* dado);
+		\item destroiLista(Lista* lista);
+		\item posicao(Lista* lista, T* dado);
+		\item contem(Lista* lista, T* dado);
+		\item adiciona(Lista* lista, T* dado)
+		\item retiraEspecifico(Lista * lista, T* dado);
+	\end{itemize}
+\end{frame}
 
 
 

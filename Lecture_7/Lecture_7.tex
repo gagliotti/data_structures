@@ -222,7 +222,7 @@ estrutura Lista {
 \item Aspecto Estrutural:
 \begin{itemize}
 \item Necessitamos um ponteiro para o próximo elemento da lista;
-\item Necessitamos um ponteiro \textbf{genérico} T para o dado que vamos armazenar.
+\item Necessitamos um ponteiro \textbf{genérico} T* para o dado que vamos armazenar.
 \item O dado necessita de um destrutor próprio, assim como a lista vai precisar de um também;
 \end{itemize}
 \begin{lstlisting}
@@ -316,15 +316,15 @@ estrutura Elemento {
 \begin{itemize}
 \item Inicializar ou limpar:
 \begin{itemize}
-\item iniciaLista();
-\item limpaLista(umaLista);
-\item destroiLista(umaLista);
+\item Lista* iniciaLista();
+\item limpaLista(Lista* umaLista);
+\item destroiLista(Lista* umaLista);
 \end{itemize}
 \item Testar se a lista está vazia ou cheia e outros testes:
 \begin{itemize}
-\item bool listaVazia(umaLista);
-\item int posicao(umaLista, umDado);
-\item bool contem(umaLista, umDado);
+\item bool listaVazia(Lista* umaLista);
+\item int posicao(Lista* umaLista, T* umDado);
+\item bool contem(Lista* umaLista, T* umDado);
 \end{itemize}
 \end{itemize}
 \end{frame}
@@ -341,14 +341,14 @@ estrutura Elemento {
 \begin{itemize}
 \item Colocar e retirar dados da lista:
 \begin{itemize}
-\item adiciona(umaLista, umDado);
-\item adicionaNoInicio(umaLista, umDado);
-\item adicionaNaPosicao(umaLista, umDado, umaPosicao);
+\item adiciona(Lista* umaLista, T* umDado);
+\item adicionaNoInicio(Lista* umaLista, T* umDado);
+\item adicionaNaPosicao(Lista* umaLista, T* umDado, int umaPosicao);
 %\item adicionaEmOrdem(umaLista, umDado);
 %\item T retira(umaLista);
-\item T retiraDoInicio(umaLista);
-\item T retiraDaPosicao(umaLista, umaPosicao);
-\item T retiraEspecifico(umaLista, umDado);
+\item T* retiraDoInicio(Lista* umaLista);
+\item T* retiraDaPosicao(Lista* umaLista, int umaPosicao);
+\item T* retiraEspecifico(Lista* umaLista, T* umDado);
 \end{itemize}
 \end{itemize}
 \end{frame}
@@ -370,7 +370,7 @@ estrutura Elemento {
 \begin{lstlisting}
 iniciaLista()
 inicio
-  umaLista <- aloque(Lista);
+  Lista* umaLista <- aloque(Lista);
   umaLista._primeiro <- null;
   umaLista._quantidade <- 0;
   RETORNE umaLista;
@@ -389,7 +389,7 @@ fim;
           }
 
 \begin{lstlisting}
-bool listaVazia(umaLista)
+bool listaVazia(Lista* umaLista)
 inicio
 SE (umaLista._quantidade = 0) ENTAO
  RETORNE(Verdadeiro)
@@ -461,9 +461,9 @@ fim;
           basicstyle=\ttfamily\footnotesize
           }
 \begin{lstlisting}
-adicionaNoInicio(umaLista, umDado)
+adicionaNoInicio(Lista* umaLista, T* umDado)
  inicio
-  novo <- ALOQUE(Elemento); //Variável auxiliar.
+  Elemento* novo <- ALOQUE(Elemento); 
   SE (novo = NULO) ENTAO
    THROW(ERROSEMMEMORIA);
   SENAO
@@ -557,7 +557,7 @@ adicionaNoInicio(T dado)
 \end{center}
 \end{frame}
 
-\begin{frame}[fragile]{Função \textit{T retiraDoInicio}}
+\begin{frame}[fragile]{Função \textit{retiraDoInicio}}
 \lstset{language=C++,
           keywordstyle=\color{blue}\ttfamily,
           stringstyle=\color{red}\ttfamily,
@@ -567,7 +567,7 @@ adicionaNoInicio(T dado)
           basicstyle=\ttfamily\footnotesize
           }
 \begin{lstlisting}
-T* retiraDoInicio(umaLista)
+T* retiraDoInicio(Lista* umaLista)
  Elemento* saiu; //Variável auxiliar elemento.
  T* volta; //Variável auxiliar tipo T.
   início
@@ -601,7 +601,7 @@ fim;
 \begin{lstlisting}
 T* retiraDoInicio()
  Elemento *saiu; //Variável auxiliar elemento.
- T *volta; //Variável auxiliar tipo T.
+ T* volta; //Variável auxiliar tipo T.
 	início
 		(*@  \textcolor{red}{SE (listaVazia()) ENTAO}  @*)
 		  (*@  \textcolor{red}{THROW(ERROLISTAVAZIA);}  @*)
@@ -809,7 +809,7 @@ T retiraDoInicio()
           basicstyle=\ttfamily\scriptsize
           }
 \begin{lstlisting}
-adicionaNaPosicao(umaLista, umDado, umaPosicao)
+adicionaNaPosicao(Lista* umaLista, T* umDado, int umaPosicao)
  Elemento *novo, *anterior; // auxiliares.
  inicio
   SE (posicao > umaLista._quantidade + 1) ENTAO THROW(ERROPOSICAO);
@@ -909,9 +909,9 @@ fim;
           basicstyle=\ttfamily\scriptsize
           }
 \begin{lstlisting}
-T* retiraDaPosicao(umaLista, umaPosicao)
+T* retiraDaPosicao(Lista *umaLista, int umaPosicao)
  Elemento *anterior, *eliminar; //Variáveis elemento.
- T *volta; //Variável tipo T.
+ T* volta; //Variável tipo T.
  inicio
   SE (posicao > umaLista._quantidade) ENTAO THROW(ERROPOSICAO);
   SENAO

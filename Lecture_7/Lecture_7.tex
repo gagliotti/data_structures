@@ -19,7 +19,7 @@
 %\setbeamercovered{transparent}
 \setbeamertemplate{navigation symbols}{}
 %\logo{\includegraphics[scale=0.015]{Brasao_UFSC.png}\includegraphics[scale=0.2]{brasao_PPGCC.jpg}}
-\institute{Departamento de Computação \\ Prof. Martín Vigil \\ Adaptado de \url{https://github.com/jeanmartina/data_structures}}
+\institute{Departamento de Computação \\ Prof. Martín Vigil \\ Adaptado de \url{}}
 \date{2020.1}
 \subject{}
 \usebackgroundtemplate{\includegraphics[width=\paperwidth,
@@ -202,14 +202,14 @@ height=\paperheight]{../reusable_images/fundo_capa.png}}
 \begin{lstlisting}
 estrutura Lista {
  Elemento* _primeiro;
- inteiro _quantidade;
+ int _quantidade;
 };
 \end{lstlisting}
 \end{itemize}
 \end{frame}
 
 
-\begin{frame}[fragile]{Modelagem da Elemento de Lista}
+\begin{frame}[fragile]{Modelagem do Elemento de Lista}
 \lstset{language=C++,
           keywordstyle=\color{blue}\ttfamily,
           stringstyle=\color{red}\ttfamily,
@@ -317,7 +317,7 @@ estrutura Elemento {
 \item Inicializar ou limpar:
 \begin{itemize}
 \item Lista* iniciaLista();
-\item limpaLista(Lista* umaLista);
+%\item limpaLista(Lista* umaLista);
 \item destroiLista(Lista* umaLista);
 \end{itemize}
 \item Testar se a lista está vazia ou cheia e outros testes:
@@ -344,10 +344,12 @@ estrutura Elemento {
 \item adiciona(Lista* umaLista, T* umDado);
 \item adicionaNoInicio(Lista* umaLista, T* umDado);
 \item adicionaNaPosicao(Lista* umaLista, T* umDado, int umaPosicao);
+\item adicionaNoFim(Lista* umaLista, T* umDado);
 %\item adicionaEmOrdem(umaLista, umDado);
 %\item T retira(umaLista);
 \item T* retiraDoInicio(Lista* umaLista);
 \item T* retiraDaPosicao(Lista* umaLista, int umaPosicao);
+\item T* retiraDoFim(Lista* umaLista);
 \item T* retiraEspecifico(Lista* umaLista, T* umDado);
 \end{itemize}
 \end{itemize}
@@ -370,7 +372,7 @@ estrutura Elemento {
 \begin{lstlisting}
 iniciaLista()
 inicio
-  Lista* umaLista <- aloque(Lista);
+  Lista* umaLista <- ALOQUE(Lista);
   umaLista._primeiro <- null;
   umaLista._quantidade <- 0;
   RETORNE umaLista;
@@ -511,9 +513,10 @@ adicionaNoInicio(T dado)
 \begin{frame}[fragile]{Função \textit{retiraDoInicio}}
 \setbeamercovered{invisible}
 \begin{itemize}
-\item Teste se há elementos;
+\item Verifique que a lista não está vazia;
 \item Decremente o tamanho;
-\item Desaloque a memória do elemento;
+\item Faça a lista apontar para o segundo elemento
+\item Desaloque a memória do primeiro elemento;
 \item Devolva o dado retirado.
 \end{itemize}
 \begin{center}
@@ -984,9 +987,8 @@ adicionaEmOrdem(T dado)
 
 \begin{frame}[fragile]{Função \textit{destroiLista()}}
 	\begin{itemize}
-		\item Retirar e desalocar cada elemento e respectivo dado até que a lista esteja vazia
-		\item Desalocar a lista
-		\item Dúvida: por que não escrever uma única função em C que desaloque elemento, dado e lista?
+		\item A lista precisa estar vazia
+		\item Dúvida: por que não escrever uma única função em C que desaloque todos os elementos, dados e a lista?
 	\end{itemize}
 \end{frame}
 
@@ -1081,11 +1083,14 @@ destroiLista(umaLista)
 \begin{frame}[fragile]{Algoritmos Restantes - Por conta do aluno}
 	\setbeamercovered{invisible}
 	\begin{itemize}
-		\item limpaLista(Lista* lista, T* dado);
+		%\item limpaLista(Lista* lista, T* dado);
 		\item destroiLista(Lista* lista);
 		\item posicao(Lista* lista, T* dado);
 		\item contem(Lista* lista, T* dado);
-		\item adiciona(Lista* lista, T* dado)
+
+		\item adicionaNoFim(Lista* lista, T* dado)
+
+		\item retiraDoFim(Lista* lista, T* dado)
 		\item retiraEspecifico(Lista * lista, T* dado);
 	\end{itemize}
 \end{frame}

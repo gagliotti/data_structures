@@ -13,13 +13,13 @@
 \usepackage{amssymb}
 \usepackage{lstlinebgrd}
 \usepackage{graphicx}
-\author{Fila Encadeada, Pilha Encadeada e Lista Duplamente Encadeada}
+\subtitle{Pilhas e Filas}
 \title{Estruturas de Dados}
 %\setbeamercovered{transparent}
 \setbeamertemplate{navigation symbols}{}
 %\logo{\includegraphics[scale=0.015]{Brasao_UFSC.png}\includegraphics[scale=0.2]{brasao_PPGCC.jpg}}
-\institute{Departamento de Informática e de Estatística \\ Prof. Jean Everson Martina \\ Prof. Aldo von Wangenheim}
-\date{2016.2}
+\institute{Departamento de Computação \\ Prof. Martín Vigil \\ Adaptado de Prof. Jean Everson Martina e Prof. Aldo von Wangenheim}
+\date{2020.1}
 \subject{}
 \usebackgroundtemplate{\includegraphics[width=\paperwidth,
 height=\paperheight]{../reusable_images/fundo_UFSC.png}}
@@ -30,20 +30,20 @@ height=\paperheight]{../reusable_images/fundo_UFSC.png}}
 height=\paperheight]{../reusable_images/fundo_capa.png}}
 \begin{frame}
 \titlepage
-\includegraphics[scale=0.3]{../reusable_images/brasao_INE.png}
+%\includegraphics[scale=0.3]{../reusable_images/brasao_INE.png}
 \end{frame}
 }
 
 \begin{frame}[fragile]{Extensões do conceito de Lista Encadeada}
 \begin{itemize}
 \item A idéia da Lista Encadeada vista até agora é o modelo mais geral e simples;
-\item Pode ser especializada e extendida das mais variadas formas;
+\item Pode ser especializada e estendida das mais variadas formas;
 \item Especializada:
 \begin{itemize}
-\item Pilhas encadeadas;
+\item Pilhas;
 \item Filas;
 \end{itemize}
-\item Extendida:
+\item Estendida:
 \begin{itemize}
 \item Listas Duplamente Encadeadas;
 \item Listas Circulares Simples e Duplas.
@@ -55,7 +55,7 @@ height=\paperheight]{../reusable_images/fundo_capa.png}}
 \begin{columns}
 \column{.5\textwidth}
 \begin{block}{Pilha}
-É uma estrutura de dados cujo funcionamento é inspirado no conceito “natural” de empilhar, onde o primeiro a entrar é o último a sair (LIFO).
+É uma estrutura de dados cujo funcionamento é inspirado no conceito “natural” de empilhar, onde o \textcolor{blue}{primeiro a entrar é o último a sair} (LIFO = \textit{last in, first out}).
 \end{block}
 \column{.5\textwidth}
 \begin{center}
@@ -224,7 +224,79 @@ height=\paperheight]{../reusable_images/fundo_capa.png}}
 \end{columns}
 \end{frame}
 
-\begin{frame}[fragile]{Pilhas Usando Vetores}
+\begin{frame}{Conceito de Pilhas}
+	\begin{columns}
+		\column{.5\textwidth}
+		\begin{block}{Pilha}
+			É uma estrutura de dados cujo funcionamento é inspirado no conceito “natural” de empilhar, onde o primeiro a entrar é o último a sair (LIFO).
+		\end{block}
+		\column{.5\textwidth}
+		\begin{center}
+			{\rowcolors{1}{SpringGreen}{GreenYellow}
+				\begin{tabular}{ |p{.5cm}| }
+					\hline
+					\\ \hline
+					89 \\ \hline
+					12 \\ \hline
+					4 \\ \hline
+					55 \\ \hline
+					20  \\ \hline
+				\end{tabular}
+			}
+		\end{center}
+	\end{columns}
+\end{frame}
+
+\begin{frame}{Conceito de Pilhas}
+	\begin{columns}
+		\column{.5\textwidth}
+		\begin{block}{Pilha}
+			É uma estrutura de dados cujo funcionamento é inspirado no conceito “natural” de empilhar, onde o primeiro a entrar é o último a sair (LIFO).
+		\end{block}
+		\column{.5\textwidth}
+		\begin{center}
+			{\rowcolors{1}{SpringGreen}{GreenYellow}
+				\begin{tabular}{ |p{.5cm}| }
+					\hline
+					\\ \hline
+					 \\ \hline
+					12 \\ \hline
+					4 \\ \hline
+					55 \\ \hline
+					20  \\ \hline
+				\end{tabular}
+			}
+		\end{center}
+	\end{columns}
+\end{frame}
+
+\begin{frame}{Conceito de Pilhas}
+	\begin{columns}
+		\column{.5\textwidth}
+		\begin{block}{Pilha}
+			É uma estrutura de dados cujo funcionamento é inspirado no conceito “natural” de empilhar, onde o primeiro a entrar é o último a sair (LIFO).
+		\end{block}
+		\column{.5\textwidth}
+		\begin{center}
+			{\rowcolors{1}{SpringGreen}{GreenYellow}
+				\begin{tabular}{ |p{.5cm}| }
+					\hline
+					\\ \hline
+					 \\ \hline
+					 \\ \hline
+					4 \\ \hline
+					55 \\ \hline
+					20  \\ \hline
+				\end{tabular}
+			}
+		\end{center}
+	\end{columns}
+\end{frame}
+
+
+
+
+\begin{frame}<0>[fragile]{Pilhas Usando Vetores}
 \begin{columns}
 \column{.5\textwidth}
 \begin{itemize}
@@ -247,7 +319,7 @@ height=\paperheight]{../reusable_images/fundo_capa.png}}
 \end{columns}
 \end{frame}
 
-\begin{frame}[fragile]{Pilhas Usando Vetores}
+\begin{frame}<0>[fragile]{Pilhas Usando Vetores}
 \begin{columns}
 \column{.5\textwidth}
 \begin{itemize}
@@ -271,7 +343,7 @@ height=\paperheight]{../reusable_images/fundo_capa.png}}
 \end{columns}
 \end{frame}
 
-\begin{frame}[fragile]{Pilhas Usando Vetores}
+\begin{frame}<0>[fragile]{Pilhas Usando Vetores}
 \begin{columns}
 \column{.5\textwidth}
 \begin{itemize}
@@ -294,7 +366,7 @@ height=\paperheight]{../reusable_images/fundo_capa.png}}
 \end{columns}
 \end{frame}
 
-\begin{frame}[fragile]{Pilhas Usando Vetores}
+\begin{frame}<0>[fragile]{Pilhas Usando Vetores}
 \begin{columns}
 \column{.5\textwidth}
 \begin{itemize}
@@ -317,7 +389,7 @@ height=\paperheight]{../reusable_images/fundo_capa.png}}
 \end{columns}
 \end{frame}
 
-\begin{frame}[fragile]{Pilhas Usando Vetores}
+\begin{frame}<0>[fragile]{Pilhas Usando Vetores}
 \begin{columns}
 \column{.5\textwidth}
 \begin{itemize}
@@ -340,7 +412,7 @@ height=\paperheight]{../reusable_images/fundo_capa.png}}
 \end{columns}
 \end{frame}
 
-\begin{frame}[fragile]{Pilhas Usando Vetores}
+\begin{frame}<0>[fragile]{Pilhas Usando Vetores}
 \begin{columns}
 \column{.5\textwidth}
 \begin{itemize}
@@ -363,7 +435,7 @@ height=\paperheight]{../reusable_images/fundo_capa.png}}
 \end{columns}
 \end{frame}
 
-\begin{frame}[fragile]{Pilhas Usando Vetores}
+\begin{frame}<0>[fragile]{Pilhas Usando Vetores}
 \begin{columns}
 \column{.5\textwidth}
 \begin{itemize}
@@ -386,7 +458,7 @@ height=\paperheight]{../reusable_images/fundo_capa.png}}
 \end{columns}
 \end{frame}
 
-\begin{frame}[fragile]{Pilhas Usando Vetores}
+\begin{frame}<0>[fragile]{Pilhas Usando Vetores}
 \begin{columns}
 \column{.5\textwidth}
 \begin{itemize}
@@ -409,7 +481,7 @@ height=\paperheight]{../reusable_images/fundo_capa.png}}
 \end{columns}
 \end{frame}
 
-\begin{frame}[fragile]{Pilhas Usando Vetores}
+\begin{frame}<0>[fragile]{Pilhas Usando Vetores}
 \begin{columns}
 \column{.5\textwidth}
 \begin{itemize}
@@ -436,37 +508,70 @@ height=\paperheight]{../reusable_images/fundo_capa.png}}
 \begin{frame}[fragile]{Pilhas Encadeadas}
 \setbeamercovered{invisible}
 \begin{columns}
-\column{.5\textwidth}
-\begin{itemize}
-\item A estruturas é limitada pela memória disponível;
-\item Não é necessário definir um valor fixo para o tamanho da Pilha;
-\end{itemize}
-\column{.5\textwidth}
+\column{.25\textwidth}
+		\begin{center}
+	{\rowcolors{1}{SpringGreen}{GreenYellow}
+		\begin{tabular}{ |p{.5cm}| }
+			\hline
+			\\ \hline
+			\\ \hline
+			\\ \hline
+			4 \\ \hline
+			55 \\ \hline
+			20  \\ \hline
+		\end{tabular}
+	}
+\end{center}
+\column{.75\textwidth}
 \begin{center}
 \begin{tikzpicture}[list/.style={rectangle split, rectangle split parts=2,
     draw=green!60, fill=green!5, rectangle split horizontal}, >=stealth, start chain]
 
   \node[list,on chain] (H) {3};
-  \node<2-> at (2,0) (T) {\color{red}Cabeça};
-  \draw<2-> [red,<-] (H) -- (T.west);
-  \node[list,on chain] (A) [below right=of H] {melão};
-  \node<3-> (T2)[left=of A] {\color{red}Elemento};
-  \draw<3-> [red,<-] (A) -- (T2.east);
-  \node[list,on chain] (B) [below =of A] {maçã};
-  \node[list,on chain] (C) [below =of B] {uva};
+  \node at (2,0) (T) {\color{red}Cabeça};
+  \draw [red,<-] (H) -- (T);
+  \node[list,on chain] (A) [below right=of H] {};
+  
+  \node[draw,on chain] (E1) [left=of A]{4};
+  
+  
+  \node (T2)[align=left,right=of A] {\color{red}{Topo da pilha}};
+  \draw [red,<-] (A) -- (T2);
+  
+  
+  \node[list,on chain] (B) [below =of A] {};
+   \node[draw,on chain] (E2) [left=of B]{55};
+  \node[list,on chain] (C) [below =of B] {};
+    \node[draw,on chain] (E3) [left=of C]{20};
+  
+   \node (U1)[align=left,right=of B] {\color{red}Elemento};
+   \draw [red,<-] (A) -- (U1); 
+   \draw [red,<-] (B) -- (U1); 
+   \draw [red,<-] (C) -- (U1); 
+    
+    
+   \node (U2)[align=left,right=of C] {\color{red}{Base da pilha}};
+  \draw [red,<-] (C) -- (U2.west); 
+  
+    
   \node[on chain,draw=red!60, fill=red!5,inner sep=6pt] (D) [below =of C] {null*};
-  \node <4-> (T3)[left=of D] {\color{red}Marcador Fim};
-  \draw <4-> [red,<-] (D) -- (T3.east);  
-  \draw[*->] let \p1 = (H.two), \p2 = (H.center) in (\x1+2,\y2+2) -- (A);
+  \node  (T3)[left=of D] {\color{red}Marcador Fim};
+  \draw  [red,<-] (D) -- (T3);  
+  \draw[*->] let \p1 = (H.two), \p2 = (H.center) in (\x1,\y2) -- (A);
   \draw[*->] let \p1 = (A.two), \p2 = (A.center) in (\x1,\y2) -- (B);
   \draw[*->] let \p1 = (B.two), \p2 = (B.center) in (\x1,\y2) -- (C);
   \draw[*->] let \p1 = (C.two), \p2 = (C.center) in (\x1,\y2) -- (D);
+
+ \draw[*->] let \p1 = (A.one), \p2 = (A.center) in (\x1+5,\y2) -- (E1);  
+\draw[*->] let \p1 = (B.one), \p2 = (B.center) in (\x1+5,\y2) -- (E2); 
+\draw[*->] let \p1 = (C.one), \p2 = (C.center) in (\x1+5,\y2) -- (E3);
+  
 \end{tikzpicture}
 \end{center}
 \end{columns}
 \end{frame}
 
-\begin{frame}[fragile]{Modelagem da Cabeça de PIlha}
+\begin{frame}[fragile]{Modelagem da Pilha}
 \lstset{language=C++,
           keywordstyle=\color{blue}\ttfamily,
           stringstyle=\color{red}\ttfamily,
@@ -478,20 +583,18 @@ height=\paperheight]{../reusable_images/fundo_capa.png}}
 \begin{itemize}
 \item Aspecto Estrutural:
 \begin{itemize}
-\item Necessitamos um ponteiro para o primeiro elemento da pilha;
-\item Necessitamos um inteiro para indicar quantos elementos a pilha possui.
+\item Mesmas estruturas de uma lista encadeada:
+\begin{itemize}
+\item Estrutura Lista
+\item Estrutura Elemento
+\item Ponteiro genérico de dados.
 \end{itemize}
-\begin{lstlisting}
-classe PilhaEnc {
- Elemento *_dados;
- inteiro _tamanho;
-};
-\end{lstlisting}
+\end{itemize}
 \end{itemize}
 \end{frame}
 
 
-\begin{frame}[fragile]{Modelagem da Elemento de Pilha}
+\begin{frame}<0>[fragile]{Modelagem da Elemento de Pilha}
 \lstset{language=C++,
           keywordstyle=\color{blue}\ttfamily,
           stringstyle=\color{red}\ttfamily,
@@ -507,15 +610,15 @@ classe PilhaEnc {
 \item Necessitamos um campo do tipo da informação que vamos armazenar.
 \end{itemize}
 \begin{lstlisting}
-classe Elemento {
+estrutura Elemento {
  Elemento *_proximo;
- T _info;
+ T* _info;
 };
 \end{lstlisting}
 \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Modelagem da Elemento de Pilha}
+\begin{frame}<0>[fragile]{Modelagem da Elemento de Pilha}
 \lstset{language=C++,
           keywordstyle=\color{blue}\ttfamily,
           stringstyle=\color{red}\ttfamily,
@@ -552,9 +655,11 @@ classe Elemento {
 \begin{itemize}
 \item Aspecto Funcional:
 \begin{itemize}
-\item Temos que colocar e retirar dados da pilha;
-\item Temos que testar se a pilha está vazia;
-\item Temos que inicializar a pilha.
+\item Inicializar a pilha.
+\item Empilhar (\textit{\textbf{push}}) dado na pilha
+\item Desempilhar (\textit{\textbf{pop}}) dado da pilha;
+\item Testar se a pilha está vazia;
+
 \end{itemize}
 \end{itemize}
 \end{frame}
@@ -571,9 +676,8 @@ classe Elemento {
 \begin{itemize}
 \item Inicializar ou limpar:
 \begin{itemize}
-\item Pilha();
-\item \~{}Pilha();
-\item detroiPilha();
+\item inicializarPilha();
+\item destruirPilha()
 \end{itemize}
 \item Testar se a pilha está vazia:
 \begin{itemize}
@@ -581,129 +685,116 @@ classe Elemento {
 \end{itemize}
 \item Colocar e retirar dados da pilha:
 \begin{itemize}
-\item empilha(T dado);
-\item T desempilha();
-\item T topo();
+\item push();
+\item pop();
+\item topo();
 \end{itemize}
 \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Método \textit{Pilha()}}
-\lstset{language=C++,
-          keywordstyle=\color{blue}\ttfamily,
-          stringstyle=\color{red}\ttfamily,
-          commentstyle=\color{OliveGreen}\ttfamily,
-          breaklines=true,
-          basicstyle=\ttfamily\footnotesize
-          }
-\begin{itemize}
-\item Inicializamos o ponteiro para nulo;
-\item Inicializamos o tamanho para ``0'';
-\end{itemize}
-\begin{lstlisting}
-Pilha()
-inicio
-  _dados = null;
-  _tamanho <- 0;
-fim;
-\end{lstlisting}
+\begin{frame}[fragile]{Método \textit{inicializarPilha}}
+	\lstset{language=C++,
+		keywordstyle=\color{blue}\ttfamily,
+		stringstyle=\color{red}\ttfamily,
+		commentstyle=\color{OliveGreen}\ttfamily,
+		breaklines=true,
+		basicstyle=\ttfamily\footnotesize
+	}
+	\begin{itemize}
+		\item Equivalente ao inicializarLista()
+		\item Complexidade temporal $\Theta(1)$
+	\end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Método \textit{\~{}Pilha()}}
-\lstset{language=C++,
-          keywordstyle=\color{blue}\ttfamily,
-          stringstyle=\color{red}\ttfamily,
-          commentstyle=\color{OliveGreen}\ttfamily,
-          breaklines=true,
-          basicstyle=\ttfamily\footnotesize
-          }
-\begin{itemize}
-\item Chamamos DestroiPilha();
-\end{itemize}
-\begin{lstlisting}
-~Pilha()
-inicio
-  DestroiPilha();
-fim;
-\end{lstlisting}
+\begin{frame}[fragile]{Método \textit{destuirPilha}}
+	\lstset{language=C++,
+		keywordstyle=\color{blue}\ttfamily,
+		stringstyle=\color{red}\ttfamily,
+		commentstyle=\color{OliveGreen}\ttfamily,
+		breaklines=true,
+		basicstyle=\ttfamily\footnotesize
+	}
+	\begin{itemize}
+		\item Similar a destruirLista;
+		\item Função genérica em C não consegue desalocar qualquer tipo de dado na pilha
+		\item Complexidade temporal $\Theta(n)$
+	\end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Método \textit{pilhaVazia()}}
-\lstset{language=C++,
-          keywordstyle=\color{blue}\ttfamily,
-          stringstyle=\color{red}\ttfamily,
-          commentstyle=\color{OliveGreen}\ttfamily,
-          breaklines=true,
-          basicstyle=\ttfamily\footnotesize
-          }
-\begin{lstlisting}
-bool pilhaVazia()
-inicio
-SE (_tamanho = 0) ENTAO
- RETORNE(Verdadeiro)
-SENAO
- RETORNE(Falso);
-fim;
-\end{lstlisting}
-\begin{itemize}
-\item Um algoritmo pilhaCheia não existe na Pilha Encadeada;\pause
-\item Verificar se houve espaço na memória para um novo elemento será responsabilidade de cada operação de adição.
-\end{itemize}
+\begin{frame}[fragile]{Método \textit{pilhaVazia}}
+	\lstset{language=C++,
+		keywordstyle=\color{blue}\ttfamily,
+		stringstyle=\color{red}\ttfamily,
+		commentstyle=\color{OliveGreen}\ttfamily,
+		breaklines=true,
+		basicstyle=\ttfamily\footnotesize
+	}
+	\begin{itemize}
+		\item Equivalente a verificar se o tamanho da lista é nulo
+		\item Complexidade temporal $\Theta(1)$
+	\end{itemize}      
 \end{frame}
 
-\begin{frame}[fragile]{Método \textit{empilha(T dado)}}
-\begin{columns}
-\column{.5\textwidth}
-\setbeamercovered{invisible}
-\begin{itemize}
-\item Testamos se é possível alocar um elemento;\pause
-\item Fazemos o próximo deste novo elemento ser o topo da pilha;\pause
-\item Fazemos a cabeça de pilha apontar para o novo elemento.\pause
-\item <9-> {\color{red}Semelhanças??}
-\end{itemize}
-\column{.5\textwidth}
-\begin{center}
-\begin{tikzpicture}[list/.style={rectangle split, rectangle split parts=2,
-    draw=green!60, fill=green!5, rectangle split horizontal}, 
-    element/.style={rectangle, draw=yellow!60, fill=yellow!5,},    
-    >=stealth, start chain]
+\begin{frame}[fragile]{Método \textit{push}}
+	\begin{itemize}
+		\item Equivalente a adicionaNoInicio na lista encadeada.
+		\item Complexidade temporal $\Theta(1)$
+	\end{itemize}	
+\end{frame}	
 
-  \node<8->[list] (H) {3};
-  \node<4-7>[list] (H) {2};
-  \node<5->[list,on chain] (A) [below right=of H] {};
+%\begin{frame}[fragile]{Método \textit{empilha(T dado)}}
+%\begin{columns}
+%\column{.5\textwidth}
+%\setbeamercovered{invisible}
+%\begin{itemize}
+%\item Testamos se é possível alocar um elemento;\pause
+%\item Fazemos o próximo deste novo elemento ser o topo da pilha;\pause
+%\item Fazemos a cabeça de pilha apontar para o novo elemento.\pause
+%\item <9-> {\color{red}Semelhanças??}
+%\end{itemize}
+%\column{.5\textwidth}
+%\begin{center}
+%\begin{tikzpicture}[list/.style={rectangle split, rectangle split parts=2,
+%    draw=green!60, fill=green!5, rectangle split horizontal}, 
+%    element/.style={rectangle, draw=yellow!60, fill=yellow!5,},    
+%    >=stealth, start chain]
+%
+%  \node<8->[list] (H) {3};
+%  \node<4-7>[list] (H) {2};
+%  \node<5->[list,on chain] (A) [below right=of H] {};
+%
+%  \node<5->[list,draw=blue!60, fill=blue!5,on chain] (N) [right=of H] {Novo}; 
+% 
+%  \draw<5->[*->] let \p1 = (N.two), \p2 = (N.center) in (\x1+2,\y2) -- (A);  
+%  
+%  
+%  \node<5->[element] (AP) [left=of A] {melão};
+%  \draw<5->[*->] let \p1 = (A.one), \p2 = (A.center) in (\x1+4,\y2) -- (AP);
+%  \draw<6->[*->] let \p1 = (A.two), \p2 = (A.center) in (\x1+1,\y2+2) -- (B);
+%  
+%  \node<4>[list,on chain] (B) [below = of A] {};
+%  \node<5->[list,on chain] (B) [below = of A] {};
+%  
+%  \draw<4-6>[*->] let \p1 = (H.two), \p2 = (H.center) in (\x1,\y2) -- (B);
+%  \draw<7->[*->] let \p1 = (H.two), \p2 = (H.center) in (\x1,\y2) -- (A);
+%  
+%  
+%  \node[list,on chain] (C) [below = of B] {};
+%  \draw[*->] let \p1 = (B.two), \p2 = (B.center) in (\x1+1,\y2+2) -- (C);
+%  \node[on chain,draw=red!60, fill=red!5,inner sep=6pt] (D) [below = of C] {null*};
+%  \draw[*->] let \p1 = (C.two), \p2 = (C.center) in (\x1+1,\y2+2) -- (D);
+%  
+%  \node[element] (BP) [left=of B] {maçã}; 
+%  \draw[*->] let \p1 = (B.one), \p2 = (B.center) in (\x1+4,\y2) -- (BP);
+%  \node[element] (CP) [left=of C] {uva};
+%  \draw[*->] let \p1 = (C.one), \p2 = (C.center) in (\x1+4,\y2) -- (CP);
+% 
+%\end{tikzpicture}
+%\end{center}
+%\end{columns}
+%\end{frame}
 
-  \node<5->[list,draw=blue!60, fill=blue!5,on chain] (N) [right=of H] {Novo}; 
- 
-  \draw<5->[*->] let \p1 = (N.two), \p2 = (N.center) in (\x1+2,\y2) -- (A);  
-  
-  
-  \node<5->[element] (AP) [left=of A] {melão};
-  \draw<5->[*->] let \p1 = (A.one), \p2 = (A.center) in (\x1+4,\y2) -- (AP);
-  \draw<6->[*->] let \p1 = (A.two), \p2 = (A.center) in (\x1+1,\y2+2) -- (B);
-  
-  \node<4>[list,on chain] (B) [below = of A] {};
-  \node<5->[list,on chain] (B) [below = of A] {};
-  
-  \draw<4-6>[*->] let \p1 = (H.two), \p2 = (H.center) in (\x1,\y2) -- (B);
-  \draw<7->[*->] let \p1 = (H.two), \p2 = (H.center) in (\x1,\y2) -- (A);
-  
-  
-  \node[list,on chain] (C) [below = of B] {};
-  \draw[*->] let \p1 = (B.two), \p2 = (B.center) in (\x1+1,\y2+2) -- (C);
-  \node[on chain,draw=red!60, fill=red!5,inner sep=6pt] (D) [below = of C] {null*};
-  \draw[*->] let \p1 = (C.two), \p2 = (C.center) in (\x1+1,\y2+2) -- (D);
-  
-  \node[element] (BP) [left=of B] {maçã}; 
-  \draw[*->] let \p1 = (B.one), \p2 = (B.center) in (\x1+4,\y2) -- (BP);
-  \node[element] (CP) [left=of C] {uva};
-  \draw[*->] let \p1 = (C.one), \p2 = (C.center) in (\x1+4,\y2) -- (CP);
- 
-\end{tikzpicture}
-\end{center}
-\end{columns}
-\end{frame}
-
-\begin{frame}[fragile]{Método \textit{T desempilha()}}
+\begin{frame}<0>[fragile]{Método \textit{T desempilha()}}
 \lstset{language=C++,
           keywordstyle=\color{blue}\ttfamily,
           stringstyle=\color{red}\ttfamily,
@@ -765,7 +856,25 @@ fim;
 \end{columns}
 \end{frame}
 
-\begin{frame}[fragile]{Trabalho Pilha Encadeada}
+\begin{frame}[fragile]{Método \textit{pop}}
+	\begin{itemize}
+		\item Equivalente a retiraNoInicio na lista encadeada.
+		\item Complexidade temporal $\Theta(1)$
+	\end{itemize}	
+\end{frame}	
+
+\begin{frame}[fragile]{Aplicações de Pilhas}
+\begin{enumerate}
+	\item Algoritmos de Busca em Profundidade com \textit{Backtracking} 
+	\begin{itemize}
+		\item Busca pela saída em labirintos
+	\end{itemize}
+	\item Chamada e retorno de funções na execução de um software
+	\item Mais exemplos \tiny\url{http://jcsites.juniata.edu/faculty/kruse/cs240/stackapps.htm}
+\end{enumerate}
+\end{frame}
+
+\begin{frame}<0>[fragile]{Trabalho Pilha Encadeada}
 \lstset{language=C++,
           keywordstyle=\color{blue}\ttfamily,
           stringstyle=\color{red}\ttfamily,

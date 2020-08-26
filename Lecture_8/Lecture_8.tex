@@ -2,8 +2,8 @@
 \usetheme{Pittsburgh}
 \usecolortheme{seagull}
 %\usepackage[utf8]{inputenc}
-\usepackage{fontspec}
-\usepackage[brazilian]{babel}
+%\usepackage{fontspec}
+\usepackage[portuguese]{babel}
 \usepackage{amsmath}
 \usepackage{listings}
 \usepackage{tikz}
@@ -13,6 +13,7 @@
 \usepackage{amssymb}
 \usepackage{lstlinebgrd}
 \usepackage{graphicx}
+%\usepackage{wasysym}
 \subtitle{Pilhas e Filas}
 \title{Estruturas de Dados}
 %\setbeamercovered{transparent}
@@ -33,6 +34,8 @@ height=\paperheight]{../reusable_images/fundo_capa.png}}
 %\includegraphics[scale=0.3]{../reusable_images/brasao_INE.png}
 \end{frame}
 }
+
+
 
 \begin{frame}[fragile]{Extensões do conceito de Lista Encadeada}
 \begin{itemize}
@@ -57,7 +60,7 @@ height=\paperheight]{../reusable_images/fundo_capa.png}}
 \begin{frame}[fragile]{Conceito de Pilhas}
 	\setbeamercovered{invisible}
 	\begin{columns}
-		\column{.5\textwidth}
+\column{.5\textwidth}
 
 	
 	\begin{block}{Pilha}
@@ -65,7 +68,7 @@ height=\paperheight]{../reusable_images/fundo_capa.png}}
 	\end{block}
 	
 	
-		\column{.5\textwidth}
+\column{.5\textwidth}
 		\begin{center}
 			\begin{tikzpicture}[list/.style={rectangle,
 				draw=black, fill=green!5,minimum width=0.75cm,
@@ -724,7 +727,7 @@ classe Elemento {
 
 
 %%%%
-\begin{frame}[fragile]{Conceito de Pilhas}
+\begin{frame}[fragile]{Conceito de Filas}
 	\setbeamercovered{invisible}
 	\begin{columns}
 		\column{.5\textwidth}
@@ -820,29 +823,23 @@ classe Elemento {
 
 
 
-\begin{frame}{Conceito de Filas}
-\begin{columns}
-\column{.5\textwidth}
-\begin{block}{Fila}
-É uma estrutura de dados cujo funcionamento é inspirado no conceito “natural” de enfileiramento, onde o primeiro a entrar é o primeiro a sair (FIFO).
-\end{block}
-\column{.5\textwidth}
-\begin{center}
-{\rowcolors{1}{SpringGreen}{GreenYellow}
-\begin{tabular}{ |p{.5cm}|p{.5cm}|p{.5cm}|p{.5cm}|p{.5cm}|p{.5cm}| }
-\hline
-& & 24 & 89 & 12 & 4  \\ \hline
-\end{tabular}
-}
-\end{center}
+\begin{frame}{Fila}
+Modelagem funcional
 \begin{itemize}
-\item Duas operações:
-\begin{itemize}
-\item {\color{red}Incluir no Fim};
-\item {\color{red}Retirar do Inicio};
-\end{itemize}
-\end{itemize}
-\end{columns}
+	\item Inserir dado ao fim da fila (\textit{\textbf{enqueue}});
+	\item Remover dado do início da fila (\textit{\textbf{dequeue}});
+	\item Verificar tamanho da fila;
+\end{itemize}	
+\end{frame}
+
+
+\begin{frame}{Fila usando Lista Encadeada}
+	Modelagem funcional
+	\begin{itemize}
+		\item Inserir dado ao fim da fila (\textit{\textbf{enqueue}}) é \color{blue} $\Theta(1)$ \Large $\smiley$
+		\item \color{black} \normalsize Remover dado do início da fila (\textit{\textbf{dequeue}}) é \color{red} $\Theta(n)$ \Large $\frownie$
+		\item \color{black} \normalsize Verificar tamanho da fila é \color{blue}$\Theta(1)$ \Large $\smiley$
+	\end{itemize}	
 \end{frame}
 
 \begin{frame}<0>[fragile]{Filas Usando Vetores}
@@ -870,7 +867,7 @@ classe Elemento {
 \end{columns}
 \end{frame}
 
-\begin{frame}[fragile]{Modelagem de Fila Encadeada}
+\begin{frame}[fragile]{Fila usando Lista Encadeada Modificada}
 \setbeamercovered{invisible}
 \begin{center}
 \begin{tikzpicture}[list/.style={rectangle split, rectangle split parts=2,
@@ -901,6 +898,14 @@ classe Elemento {
 \end{center}
 \end{frame}
 
+\begin{frame}{Fila usando Lista Encadeada}
+	Modelagem funcional
+	\begin{itemize}
+		\item Inserir dado ao fim da fila (\textit{\textbf{enqueue}}) é \color{blue} $\Theta(1)$ \Large $\smiley$
+		\item \color{black} \normalsize Remover dado do início da fila (\textit{\textbf{dequeue}}) é \color{blue} $\Theta(1)$ \Large $\smiley$
+		\item \color{black} \normalsize Verificar tamanho da fila é \color{blue}$\Theta(1)$ \Large $\smiley$
+	\end{itemize}	
+\end{frame}
 
 \begin{frame}[fragile]{Modelagem da Cabeça de Fila Encadeada}
 \lstset{language=C++,
@@ -915,20 +920,20 @@ classe Elemento {
 \item Aspecto Estrutural:
 \begin{itemize}
 \item Necessitamos um ponteiro para o primeiro elemento da fila;
-\item Necessitamos um ponteiro para o Ultimo elemento da fila;
+\item Necessitamos um ponteiro para o último elemento da fila;
 \item Necessitamos um inteiro para indicar quantos elementos a fila possui.
 \end{itemize}
 \begin{lstlisting}
-classe Lista {
- Elemento *_dados;
- Elemento *_fim;
- inteiro _tamanho;
+estrutura Fila {
+ Elemento *_primeiro;
+ Elemento *_ultimo;
+ int _quantidade;
 };
 \end{lstlisting}
 \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Método \textit{Fila()}}
+\begin{frame}[fragile]{Método \textit{inicializaFila()}}
 \lstset{language=C++,
           keywordstyle=\color{blue}\ttfamily,
           stringstyle=\color{red}\ttfamily,
@@ -938,21 +943,29 @@ classe Lista {
           }
 
 \begin{itemize}
-\item Inicializamos o ponteiro para \_dados nulo;
-\item Inicializamos o ponteiro para \_fim nulo;
-\item Inicializamos o tamanho para ``0'';
+\item Inicializamos  \_primeiro como nulo;
+\item Inicializamos  \_ultimo como nulo;
+\item Inicializamos o \_quantidade como ``0'';
 \end{itemize}
 \begin{lstlisting}
-Fila()
+inicializaFila()
 inicio
-  _dados = null;
-  _fim = null;
-  _tamanho <- 0;
+  Fila* novo <- ALOQUE(Fila)
+  novo._primeiro <- null;
+  novo._ultimo <- null;
+  novo._quantidade <- 0;
+  RETORNE Fila;
 fim;
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]{Método \textit{adiciona(T dado)}}
+\begin{frame}{Método adiciona(T* dado)}
+Ilustração simplificada em \\ 
+\center\url{https://www.cs.usfca.edu/~galles/visualization/QueueLL.html}
+\end{frame}
+
+
+\begin{frame}[fragile]{Método \textit{adiciona}}
 \setbeamercovered{invisible}
 \begin{center}
 \begin{tikzpicture}[list/.style={rectangle split, rectangle split parts=2,
@@ -1004,12 +1017,9 @@ fim;
   
 \end{tikzpicture}
 \end{center}
-\begin{itemize}
-\item <7>{\color{red}Semelhanças??}
-\end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Método \textit{adiciona(T dado)} - Caso Especial Fila Vazia}
+\begin{frame}[fragile]{Método \textit{adiciona} - Caso Especial Fila Vazia}
 \setbeamercovered{invisible}
 \begin{center}
 \begin{tikzpicture}[list/.style={rectangle split, rectangle split parts=2,
@@ -1040,7 +1050,7 @@ fim;
 \end{center}
 \end{frame}
 
-\begin{frame}[fragile]{Método \textit{adiciona(T dado)}}
+\begin{frame}[fragile]{Método \textit{adiciona}}
 \lstset{language=C++,
           keywordstyle=\color{blue}\ttfamily,
           stringstyle=\color{red}\ttfamily,
@@ -1050,20 +1060,20 @@ fim;
           basicstyle=\ttfamily\scriptsize
           }
 \begin{lstlisting}
-adicionaNaPosicao(T dado, int posicao)
+adiciona(Fila* fila, T* dado)
  Elemento *novo; // auxiliar.
  inicio
-  novo <- aloque(Elemento);
+  novo <- ALOQUE(Elemento);
   SE ( novo == NULO) THROW(ERROFILACHEIA);
-   SE filaVazia() ENTAO
-    _dados <- novo
+   SE filaVazia(fila) ENTAO
+    fila._primeiro <- novo
    SENAO
-    _fim->_proximo <- novo;
+    fila._ultimo._proximo <- novo;
    FIM SE
-   novo->_proximo <- NULO;
-   novo->_info <- dado;
-   _fim <- novo;
-   _tamanho <- _tamanho + 1;
+   novo._proximo <- NULO;
+   novo._dado <- dado;
+   lista._ultimo <- novo;
+   lista._quantidade <- lista._quantidade + 1;
   FIM SE
 fim;
 (*@  \textcolor{red}{}  @*)
@@ -1174,11 +1184,11 @@ T retira()
 		  volta <- saiu->_info;
 		  _dados <- saiu->_próximo;
           //Se SAIU for o único, próximo é NULO e está certo.
-          SE (_tamanho = 1) ENTAO
+          SE (_quantidade = 1) ENTAO
            //Fila unitária: devo anular o _fim também.
            _fim <- NULO;
           FIM SE
-		  _tamanho <- _tamanho - 1;
+		  _quantidade <- _quantidade - 1;
 		  LIBERE(saiu);
 		  RETORNE(volta);
 		FIM SE
@@ -1198,8 +1208,9 @@ T retira()
 		\begin{itemize}
 			\item chão de fábrica: fila de camisetas a serem estampadas;
 			\item comércio: simulação de fluxo de um caixa de supermercado;
-			\item tráfego: simulação de um cruzamento com um semáforo.
+			\item tráfego: simulação de um cruzamento com um semáforo;
 		\end{itemize}
+		\item Útil para algoritmos de busca em largura.
 	\end{itemize}
 \end{frame}
 

@@ -876,13 +876,13 @@ adiciona(Fila* fila, T* dado)
  Elemento *novo; // auxiliar.
  inicio
   novo <- ALOQUE(Elemento);
-  SE ( novo == NULO) THROW(ERROFILACHEIA);
+  SE ( novo == null) THROW(ERROFILACHEIA);
    SE filaVazia(fila) ENTAO
     fila._primeiro <- novo
    SENAO
     fila._ultimo._proximo <- novo;
    FIM SE
-   novo._proximo <- NULO;
+   novo._proximo <- null;
    novo._dado <- dado;
    lista._ultimo <- novo;
    lista._quantidade <- lista._quantidade + 1;

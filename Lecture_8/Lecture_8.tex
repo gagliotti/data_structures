@@ -1,9 +1,9 @@
 \documentclass[12pt,table,xcolor={dvipsnames}]{beamer}
-\usetheme{Pittsburgh}
+%\usetheme{Pittsburgh}
 \usecolortheme{seagull}
 %\usepackage[utf8]{inputenc}
-%\usepackage{fontspec}
-\usepackage[portuguese]{babel}
+\usepackage{fontspec}
+\usepackage[brazilian]{babel}
 \usepackage{amsmath}
 \usepackage{listings}
 \usepackage{tikz}
@@ -11,35 +11,34 @@
 \usepackage{multirow}
 \usepackage{amsfonts}
 \usepackage{amssymb}
-\usepackage{lstlinebgrd}
+%\usepackage{lstlinebgrd}
 \usepackage{graphicx}
-%\usepackage{wasysym}
-\subtitle{Pilhas e Filas}
+\usepackage{wasysym}
+\subtitle{Pilha Encadeada e Fila}
 \title{Estruturas de Dados}
 %\setbeamercovered{transparent}
 \setbeamertemplate{navigation symbols}{}
 %\logo{\includegraphics[scale=0.015]{Brasao_UFSC.png}\includegraphics[scale=0.2]{brasao_PPGCC.jpg}}
-\institute{Departamento de Computação \\ Prof. Martín Vigil \\ Adaptado de Prof. Jean Everson Martina e Prof. Aldo von Wangenheim}
+\institute{Departamento de Computação \\ Prof. Martín Vigil \\ Adaptado de prof. Jean Martina e Aldo Wangenheim}
 \date{2020.1}
 \subject{}
 \usebackgroundtemplate{\includegraphics[width=\paperwidth,
-height=\paperheight]{../reusable_images/fundo_UFSC.png}}
+ height=\paperheight]{../reusable_images/fundo_UFSC.png}}
 \begin{document}
-
-{
-\usebackgroundtemplate{\includegraphics[width=\paperwidth,
-height=\paperheight]{../reusable_images/fundo_capa.png}}
-\begin{frame}
-\titlepage
-%\includegraphics[scale=0.3]{../reusable_images/brasao_INE.png}
-\end{frame}
-}
-
+ 
+ {
+  \usebackgroundtemplate{\includegraphics[width=\paperwidth,
+   height=\paperheight]{../reusable_images/fundo_capa.png}}
+  \begin{frame}
+   \titlepage
+   %\includegraphics[scale=0.3]{../reusable_images/brasao_INE.png}
+  \end{frame}
+ }
 
 
 \begin{frame}[fragile]{Extensões do conceito de Lista Encadeada}
 \begin{itemize}
-\item A idéia da Lista Encadeada vista até agora é o modelo mais geral e simples;
+\item A ideia da Lista Encadeada vista até agora é o modelo mais geral e simples;
 \item Pode ser especializada e estendida das mais variadas formas;
 \item Especializada:
 \begin{itemize}
@@ -58,95 +57,74 @@ height=\paperheight]{../reusable_images/fundo_capa.png}}
 
 %%%%
 \begin{frame}[fragile]{Conceito de Pilhas}
-	\setbeamercovered{invisible}
-	\begin{columns}
+ \setbeamercovered{invisible}
+ \begin{columns}
 \column{.5\textwidth}
 
-	
-	\begin{block}{Pilha}
-		É uma estrutura de dados cujo funcionamento é inspirado no conceito “natural” de empilhar, onde o \textcolor{blue}{primeiro a entrar é o último a sair} (LIFO = \textit{last in, first out}).
-	\end{block}
-	
-	
+ 
+ \begin{block}{Pilha}
+  É uma estrutura de dados cujo funcionamento é inspirado no conceito “natural” de empilhar, onde o \textcolor{blue}{primeiro a entrar é o último a sair} (LIFO = \textit{last in, first out}).
+ \end{block}
+ 
+ 
 \column{.5\textwidth}
-		\begin{center}
-			\begin{tikzpicture}[list/.style={rectangle,
-				draw=black, fill=green!5,minimum width=0.75cm,
-				minimum height = .5cm}, >=stealth, start chain]
-			
-			\node<1-13>[list,on chain]  (B1)  {};
-			\node<1-13>[list,on chain] (B2) [below =0cm of B1] {};
-			\node<1-13>[list,on chain] (B3)  [below =0cm of B2] {};
-			\node<1-13>[list,on chain] (B4)  [below =0cm of B3] {};
-			\node<1-13>[list,on chain] (B5) [below =0cm of B4] {};
-			\node<1,13>[] (PV) [above= of B1] {Pilha Vazia};
-			
-			\node<2>[] (C1) [above left= of B1] {Empilhar 20};
-			\draw<2>[->] (C1.east) to [out=45, in=90] (B5.center);
-			
-			\node<3-12>[list,on chain] (B5) [below =0cm of B4] {20};
-			\node<3>[] (C1) [above left= of B1] {Empilhar 55};
-			\draw<3>[->] (C1.east) to [out=45, in=90] (B4.center);
-			
-			\node<4-11>[list,on chain] (B4) [below =0cm of B3] {55};
-			\node<4>[] (C1) [above left= of B1] {Empilhar 4};
-			\draw<4>[->] (C1.east) to [out=45, in=90] (B3.center);
+  \begin{center}
+   \begin{tikzpicture}[list/.style={rectangle,
+    draw=black, fill=green!5,minimum width=0.75cm,
+    minimum height = .5cm}, >=stealth, start chain]
+   
+   \node<1-13>[list,on chain]  (B1)  {};
+   \node<1-13>[list,on chain] (B2) [below =0cm of B1] {};
+   \node<1-13>[list,on chain] (B3)  [below =0cm of B2] {};
+   \node<1-13>[list,on chain] (B4)  [below =0cm of B3] {};
+   \node<1-13>[list,on chain] (B5) [below =0cm of B4] {};
+   \node<1,13>[] (PV) [above= of B1] {Pilha Vazia};
+   
+   \node<2>[] (C1) [above left= of B1] {Empilhar 20};
+   \draw<2>[->] (C1.east) to [out=45, in=90] (B5.center);
+   
+   \node<3-12>[list,on chain] (B5) [below =0cm of B4] {20};
+   \node<3>[] (C1) [above left= of B1] {Empilhar 55};
+   \draw<3>[->] (C1.east) to [out=45, in=90] (B4.center);
+   
+   \node<4-11>[list,on chain] (B4) [below =0cm of B3] {55};
+   \node<4>[] (C1) [above left= of B1] {Empilhar 4};
+   \draw<4>[->] (C1.east) to [out=45, in=90] (B3.center);
 
-			\node<5-10>[list,on chain] (B3) [below =0cm of B2] {4};
-			\node<5>[] (C1) [above left= of B1] {Empilhar 12};
-			\draw<5>[->] (C1.east) to [out=45, in=90] (B2.center);
+   \node<5-10>[list,on chain] (B3) [below =0cm of B2] {4};
+   \node<5>[] (C1) [above left= of B1] {Empilhar 12};
+   \draw<5>[->] (C1.east) to [out=45, in=90] (B2.center);
 
-			\node<6-9>[list,on chain] (B2) [below =0cm of B1] {12};
-			\node<6>[] (C1) [above left= of B1] {Empilhar 7};
-			\draw<6>[->] (C1.east) to [out=45, in=90] (B1.center);
+   \node<6-9>[list,on chain] (B2) [below =0cm of B1] {12};
+   \node<6>[] (C1) [above left= of B1] {Empilhar 7};
+   \draw<6>[->] (C1.east) to [out=45, in=90] (B1.center);
 
-			\node<7-8>[list,on chain] (B1) [above =0cm of B2] {7};
-			\node<8>[] (D1) [above right= of B1] {Desempilhar 7};
-			\draw<8>[->] (B1.north) to [out=90, in=180] (D1.west);
-			
-			\node<9>[] (D1) [above right= of B1] {Desempilhar 12};
-			\draw<9>[->] (B2.north) to [out=90, in=180] (D1.west);
-			
-			\node<10>[] (D1) [above right= of B1] {Desempilhar 4};
-			\draw<10>[->] (B3.north) to [out=90, in=180] (D1.west);
-			
-			\node<11>[] (D1) [above right= of B1] {Desempilhar 55};
-			\draw<11>[->] (B4.north) to [out=90, in=180] (D1.west);			
-			
-			\node<12>[] (D1) [above right= of B1] {Desempilhar 20};
-			\draw<12>[->] (B5.north) to [out=90, in=180] (D1.west);			
+   \node<7-8>[list,on chain] (B1) [above =0cm of B2] {7};
+   \node<8>[] (D1) [above right= of B1] {Desempilhar 7};
+   \draw<8>[->] (B1.north) to [out=90, in=180] (D1.west);
+   
+   \node<9>[] (D1) [above right= of B1] {Desempilhar 12};
+   \draw<9>[->] (B2.north) to [out=90, in=180] (D1.west);
+   
+   \node<10>[] (D1) [above right= of B1] {Desempilhar 4};
+   \draw<10>[->] (B3.north) to [out=90, in=180] (D1.west);
+   
+   \node<11>[] (D1) [above right= of B1] {Desempilhar 55};
+   \draw<11>[->] (B4.north) to [out=90, in=180] (D1.west);   
+   
+   \node<12>[] (D1) [above right= of B1] {Desempilhar 20};
+   \draw<12>[->] (B5.north) to [out=90, in=180] (D1.west);   
 
-			\end{tikzpicture}
-		\end{center}
-	\end{columns}
+   \end{tikzpicture}
+  \end{center}
+ \end{columns}
 \end{frame}
 
 %%%%
 
 
 
-\begin{frame}<0>[fragile]{Pilhas Usando Vetores}
-\begin{columns}
-\column{.5\textwidth}
-\begin{itemize}
-\item Vetores possuem um espaço limitado para armazenar dados;
-\item Necessitamos definir um espaço grande o suficiente para a nossa pilha;
-\item Necessitamos de um indicador de qual elemento do vetor é o atual topo da pilha.
-\end{itemize}
-\column{.5\textwidth}
-\begin{center}
-\begin{tabular}{| p{.5cm} |p{.5cm}c }
-\cline{1-1}
- \cellcolor{SpringGreen}  & &\\ \cline{1-1}
-\cellcolor{GreenYellow}  & &\\ \cline{1-1}
-\cellcolor{SpringGreen}  & &\\ \cline{1-1}
-\cellcolor{GreenYellow}   & &\\ \cline{1-1}
-\cellcolor{SpringGreen}  & &\\ \cline{1-2}
-\cellcolor{GreenYellow}  & \multicolumn{1}{|p{.5cm}|} {int} & \\ \cline{1-2}
-\end{tabular}
-\end{center}
-\end{columns}
-\end{frame}
+
 
 \begin{frame}<0>[fragile]{Pilhas Usando Vetores}
 \begin{columns}
@@ -338,10 +316,10 @@ height=\paperheight]{../reusable_images/fundo_capa.png}}
 \setbeamercovered{invisible}
 \begin{columns}
 \column{.25\textwidth}
-		\begin{center}
-			\begin{tikzpicture}[list/.style={rectangle,
-	draw=black, fill=green!5,minimum width=0.75cm,
-	minimum height = .5cm}, >=stealth, start chain]
+  \begin{center}
+   \begin{tikzpicture}[list/.style={rectangle,
+ draw=black, fill=green!5,minimum width=0.75cm,
+ minimum height = .5cm}, >=stealth, start chain]
 
 \node<1>[list,on chain]  (B1)  {};
 \node<1>[list,on chain] (B2) [below =0cm of B1] {};
@@ -428,54 +406,7 @@ height=\paperheight]{../reusable_images/fundo_capa.png}}
 \end{frame}
 
 
-\begin{frame}<0>[fragile]{Modelagem da Elemento de Pilha}
-\lstset{language=C++,
-          keywordstyle=\color{blue}\ttfamily,
-          stringstyle=\color{red}\ttfamily,
-          commentstyle=\color{OliveGreen}\ttfamily,
-          breaklines=true,
-          basicstyle=\ttfamily\footnotesize
-          }
 
-\begin{itemize}
-\item Aspecto Estrutural:
-\begin{itemize}
-\item Necessitamos um ponteiro para o próximo elemento da pilha;
-\item Necessitamos um campo do tipo da informação que vamos armazenar.
-\end{itemize}
-\begin{lstlisting}
-estrutura Elemento {
- Elemento *_proximo;
- T* _info;
-};
-\end{lstlisting}
-\end{itemize}
-\end{frame}
-
-\begin{frame}<0>[fragile]{Modelagem da Elemento de Pilha}
-\lstset{language=C++,
-          keywordstyle=\color{blue}\ttfamily,
-          stringstyle=\color{red}\ttfamily,
-          commentstyle=\color{OliveGreen}\ttfamily,
-          breaklines=true,
-          basicstyle=\ttfamily\footnotesize
-          }
-
-\begin{itemize}
-\item Aspecto Estrutural:
-\begin{itemize}
-\item Necessitamos um ponteiro para o próximo elemento da pilha;
-\item Necessitamos um ponteiro do tipo da informação que vamos armazenar.
-\item T necessita de um destrutor próprio, assim como a pilha (neste caso a cabeça) vai precisar de um também;
-\end{itemize}
-\begin{lstlisting}
-classe Elemento {
- Elemento *_proximo;
- T *_info;
-};
-\end{lstlisting}
-\end{itemize}
-\end{frame}
 
 \begin{frame}[fragile]{Modelagem da Pilha Encadeada}
 \lstset{language=C++,
@@ -526,186 +457,67 @@ classe Elemento {
 \end{frame}
 
 \begin{frame}[fragile]{Método \textit{inicializarPilha}}
-	\lstset{language=C++,
-		keywordstyle=\color{blue}\ttfamily,
-		stringstyle=\color{red}\ttfamily,
-		commentstyle=\color{OliveGreen}\ttfamily,
-		breaklines=true,
-		basicstyle=\ttfamily\footnotesize
-	}
-	\begin{itemize}
-		\item Equivalente ao inicializarLista()
-		\item Complexidade temporal $\Theta(1)$
-	\end{itemize}
+ \lstset{language=C++,
+  keywordstyle=\color{blue}\ttfamily,
+  stringstyle=\color{red}\ttfamily,
+  commentstyle=\color{OliveGreen}\ttfamily,
+  breaklines=true,
+  basicstyle=\ttfamily\footnotesize
+ }
+ \begin{itemize}
+  \item Equivalente ao inicializarLista()
+  \item Complexidade temporal $\Theta(1)$
+ \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{Método \textit{destruirPilha}}
-	\lstset{language=C++,
-		keywordstyle=\color{blue}\ttfamily,
-		stringstyle=\color{red}\ttfamily,
-		commentstyle=\color{OliveGreen}\ttfamily,
-		breaklines=true,
-		basicstyle=\ttfamily\footnotesize
-	}
-	\begin{itemize}
-		\item Similar a destruirLista;
-		\item Função genérica em C não consegue desalocar qualquer tipo de dado na pilha
-		\item Complexidade temporal $\Theta(n)$
-	\end{itemize}
+ \lstset{language=C++,
+  keywordstyle=\color{blue}\ttfamily,
+  stringstyle=\color{red}\ttfamily,
+  commentstyle=\color{OliveGreen}\ttfamily,
+  breaklines=true,
+  basicstyle=\ttfamily\footnotesize
+ }
+ \begin{itemize}
+  \item Similar a destruirLista;
+  \item Função genérica em C não consegue desalocar qualquer tipo de dado na pilha
+  \item Complexidade temporal $\Theta(n)$
+ \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{Método \textit{pilhaVazia}}
-	\lstset{language=C++,
-		keywordstyle=\color{blue}\ttfamily,
-		stringstyle=\color{red}\ttfamily,
-		commentstyle=\color{OliveGreen}\ttfamily,
-		breaklines=true,
-		basicstyle=\ttfamily\footnotesize
-	}
-	\begin{itemize}
-		\item Equivalente a verificar se o tamanho da lista é nulo
-		\item Complexidade temporal $\Theta(1)$
-	\end{itemize}      
+ \begin{itemize}
+  \item Equivalente a verificar se o tamanho da lista é nulo
+  \item Complexidade temporal $\Theta(1)$
+ \end{itemize}      
 \end{frame}
 
 \begin{frame}[fragile]{Método \textit{push}}
-	\begin{itemize}
-		\item Equivalente a adicionaNoInicio na lista encadeada.
-		\item Complexidade temporal $\Theta(1)$
-	\end{itemize}	
-\end{frame}	
-
-%\begin{frame}[fragile]{Método \textit{empilha(T dado)}}
-%\begin{columns}
-%\column{.5\textwidth}
-%\setbeamercovered{invisible}
-%\begin{itemize}
-%\item Testamos se é possível alocar um elemento;\pause
-%\item Fazemos o próximo deste novo elemento ser o topo da pilha;\pause
-%\item Fazemos a cabeça de pilha apontar para o novo elemento.\pause
-%\item <9-> {\color{red}Semelhanças??}
-%\end{itemize}
-%\column{.5\textwidth}
-%\begin{center}
-%\begin{tikzpicture}[list/.style={rectangle split, rectangle split parts=2,
-%    draw=green!60, fill=green!5, rectangle split horizontal}, 
-%    element/.style={rectangle, draw=yellow!60, fill=yellow!5,},    
-%    >=stealth, start chain]
-%
-%  \node<8->[list] (H) {3};
-%  \node<4-7>[list] (H) {2};
-%  \node<5->[list,on chain] (A) [below right=of H] {};
-%
-%  \node<5->[list,draw=blue!60, fill=blue!5,on chain] (N) [right=of H] {Novo}; 
-% 
-%  \draw<5->[*->] let \p1 = (N.two), \p2 = (N.center) in (\x1+2,\y2) -- (A);  
-%  
-%  
-%  \node<5->[element] (AP) [left=of A] {melão};
-%  \draw<5->[*->] let \p1 = (A.one), \p2 = (A.center) in (\x1+4,\y2) -- (AP);
-%  \draw<6->[*->] let \p1 = (A.two), \p2 = (A.center) in (\x1+1,\y2+2) -- (B);
-%  
-%  \node<4>[list,on chain] (B) [below = of A] {};
-%  \node<5->[list,on chain] (B) [below = of A] {};
-%  
-%  \draw<4-6>[*->] let \p1 = (H.two), \p2 = (H.center) in (\x1,\y2) -- (B);
-%  \draw<7->[*->] let \p1 = (H.two), \p2 = (H.center) in (\x1,\y2) -- (A);
-%  
-%  
-%  \node[list,on chain] (C) [below = of B] {};
-%  \draw[*->] let \p1 = (B.two), \p2 = (B.center) in (\x1+1,\y2+2) -- (C);
-%  \node[on chain,draw=red!60, fill=red!5,inner sep=6pt] (D) [below = of C] {null*};
-%  \draw[*->] let \p1 = (C.two), \p2 = (C.center) in (\x1+1,\y2+2) -- (D);
-%  
-%  \node[element] (BP) [left=of B] {maçã}; 
-%  \draw[*->] let \p1 = (B.one), \p2 = (B.center) in (\x1+4,\y2) -- (BP);
-%  \node[element] (CP) [left=of C] {uva};
-%  \draw[*->] let \p1 = (C.one), \p2 = (C.center) in (\x1+4,\y2) -- (CP);
-% 
-%\end{tikzpicture}
-%\end{center}
-%\end{columns}
-%\end{frame}
-
-\begin{frame}<0>[fragile]{Método \textit{T desempilha()}}
-\lstset{language=C++,
-          keywordstyle=\color{blue}\ttfamily,
-          stringstyle=\color{red}\ttfamily,
-          commentstyle=\color{OliveGreen}\ttfamily,
-          breaklines=true,
-          basicstyle=\ttfamily\footnotesize
-          }
-\setbeamercovered{invisible}
-\begin{columns}
-\column{.5\textwidth}
-\begin{itemize}
-\item Testamos se há elementos;\pause
-\item Decrementamos o tamanho;\pause
-\item Liberamos a memória do elemento;\pause
-\item Devolvemos a informação.\pause
-\item <9-> {\color{red}Semelhanças??}
-\end{itemize}
-\column{.5\textwidth}
-\begin{center}
-\begin{tikzpicture}[list/.style={rectangle split, rectangle split parts=2,
-    draw=green!60, fill=green!5, rectangle split horizontal}, 
-    element/.style={rectangle, draw=yellow!60, fill=yellow!5,},    
-    >=stealth, start chain]
-
-  \node<5-6>[list] (H) {3};
-  \node<7->[list,on chain] (H) {2};
-
-  \node<6->[list,draw=blue!60, fill=blue!5,on chain] (V) [right=of H] {Volta}; 
-  \draw<6->[*->] let \p1 = (V.two), \p2 = (V.center) in (\x1+3,\y2) -- (AP);  
-    
-  \node<5-7>[list,on chain] (A) [below right=of H] {};
-  \draw<5-7>[*->] let \p1 = (A.one), \p2 = (A.center) in (\x1+4,\y2) -- (AP);
-  \node<5-8>[element] (AP) [left=of A] {melão};
-  \draw<5-7>[*->] let \p1 = (A.two), \p2 = (A.center) in (\x1+1,\y2+2) -- (B);
-
-  \node<6-8>[list,draw=blue!60, fill=blue!5,on chain] (S) [right=of A] {\nodepart{two} Saiu}; 
-  \draw<6-8>[*->] let \p1 = (S.one), \p2 = (S.center) in (\x1+4,\y2) -- (A);  
-
-  
-  \node<7->[list,on chain] (B) [below=of A] {};
-  \node<5-6>[list,on chain] (B) [below=of A]{};
-  
-  \draw<7->[*->] let \p1 = (H.two), \p2 = (H.center) in (\x1,\y2+2) -- (B);
-  \draw<5-6>[*->] let \p1 = (H.two), \p2 = (H.center) in (\x1,\y2+2) -- (A);
-  
-  
-  \node[list,on chain] (C)[below=of B] {};
-  \draw[*->] let \p1 = (B.two), \p2 = (B.center) in (\x1+1,\y2+2) -- (C);
-  \node[on chain,draw=red!60, fill=red!5,inner sep=6pt] (D) [below=of C] {null*};
-  \draw[*->] let \p1 = (C.two), \p2 = (C.center) in (\x1+1,\y2+2) -- (D);
-  
-  \node[element] (BP) [left=of B] {maçã}; 
-  \draw[*->] let \p1 = (B.one), \p2 = (B.center) in (\x1+4,\y2) -- (BP);
-  \node[element] (CP) [left=of C] {uva};
-  \draw[*->] let \p1 = (C.one), \p2 = (C.center) in (\x1+4,\y2) -- (CP);
- 
-\end{tikzpicture}
-\end{center}
-\end{columns}
-\end{frame}
+ \begin{itemize}
+  \item Equivalente a adicionaNoInicio na lista encadeada.
+  \item Complexidade temporal $\Theta(1)$
+ \end{itemize} 
+\end{frame} 
 
 \begin{frame}[fragile]{Método \textit{pop}}
-	\begin{itemize}
-		\item Equivalente a retiraNoInicio na lista encadeada.
-		\item Complexidade temporal $\Theta(1)$
-	\end{itemize}	
-\end{frame}	
+ \begin{itemize}
+  \item Equivalente a retiraNoInicio na lista encadeada.
+  \item Complexidade temporal $\Theta(1)$
+ \end{itemize} 
+\end{frame} 
 
 \begin{frame}[fragile]{Aplicações de Pilhas}
 \begin{enumerate}
-	\item Algoritmos de Busca em Profundidade com \textit{Backtracking} 
-	\begin{itemize}
-		\item Busca pela saída em labirintos
-	\end{itemize}
-	\item Chamada e retorno de funções na execução de um software
-	\item Mais exemplos \tiny\url{http://jcsites.juniata.edu/faculty/kruse/cs240/stackapps.htm}
+ \item Algoritmos de Busca em Profundidade com \textit{Backtracking} 
+ \begin{itemize}
+  \item Busca pela saída em labirintos
+ \end{itemize}
+ \item Chamada e retorno de funções na execução de um software
+ \item Mais exemplos \tiny\url{http://jcsites.juniata.edu/faculty/kruse/cs240/stackapps.htm}
 \end{enumerate}
 \end{frame}
+
+%voltar daqui pra cima
 
 \begin{frame}<0>[fragile]{Trabalho Pilha Encadeada}
 \lstset{language=C++,
@@ -728,95 +540,95 @@ classe Elemento {
 
 %%%%
 \begin{frame}[fragile]{Conceito de Filas}
-	\setbeamercovered{invisible}
-	\begin{columns}
-		\column{.5\textwidth}
-		
-		
+ \setbeamercovered{invisible}
+ \begin{columns}
+  \column{.5\textwidth}
+  
+  
 \begin{block}{Fila}
-	É uma estrutura de dados cujo funcionamento é inspirado no conceito “natural” de enfileiramento, onde o \color{blue}{primeiro a entrar é o primeiro a sair} \color{black}(FIFO = \textit{first in, first out}).
+ É uma estrutura de dados cujo funcionamento é inspirado no conceito “natural” de enfileiramento, onde o \color{blue}{primeiro a entrar é o primeiro a sair} \color{black}(FIFO = \textit{first in, first out}).
 \end{block}
-		
-		\column{.5\textwidth}
-		\begin{center}
-			\begin{tikzpicture}[list/.style={rectangle,
-				draw=black, fill=green!5,minimum width=0.75cm,
-				minimum height = .75cm}, >=stealth, start chain]
-			
-			\node<1-7>[list,on chain]  (B1)  {{\uncover<3-7>{20}}};
-			\node<1-8>[list,on chain] (B2) [right =0cm of B1] {{\uncover<4-8>{55}}};
-			\node<1-9>[list,on chain] (B3)  [right =0cm of B2] {{\uncover<5-9>{4}}};
-			\node<1-10>[list,on chain] (B4)  [right =0cm of B3] {{\uncover<6-10>{12}}};
-			\node<1-11>[list,on chain] (B5) [right =0cm of B4] {{\uncover<7-11>{7}}};
-			\node<1>[] (PV) [above= of B3] {Fila Vazia};
-			
-			\node<2>[] (C1) [below = of B3] {Enfilerar 20};
-			\draw<2>[->] (C1.north) to [out=90, in=270] (B1.center);
-			
-			\node<3>[] (C1) [below = of B3] {Enfilerar 55};
-			\draw<3>[->] (C1.north) to [out=90, in=270] (B2.center);
+  
+  \column{.5\textwidth}
+  \begin{center}
+   \begin{tikzpicture}[list/.style={rectangle,
+    draw=black, fill=green!5,minimum width=0.75cm,
+    minimum height = .75cm}, >=stealth, start chain]
+   
+   \node<1-7>[list,on chain]  (B1)  {{\uncover<3-7>{20}}};
+   \node<1-8>[list,on chain] (B2) [right =0cm of B1] {{\uncover<4-8>{55}}};
+   \node<1-9>[list,on chain] (B3)  [right =0cm of B2] {{\uncover<5-9>{4}}};
+   \node<1-10>[list,on chain] (B4)  [right =0cm of B3] {{\uncover<6-10>{12}}};
+   \node<1-11>[list,on chain] (B5) [right =0cm of B4] {{\uncover<7-11>{7}}};
+   \node<1>[] (PV) [above= of B3] {Fila Vazia};
+   
+   \node<2>[] (C1) [below = of B3] {Enfilerar 20};
+   \draw<2>[->] (C1.north) to [out=90, in=270] (B1.center);
+   
+   \node<3>[] (C1) [below = of B3] {Enfilerar 55};
+   \draw<3>[->] (C1.north) to [out=90, in=270] (B2.center);
 
-			\node<4>[] (C1) [below = of B3] {Enfilerar 4};
-			\draw<4>[->] (C1.north) to [out=90, in=270] (B3.center);
+   \node<4>[] (C1) [below = of B3] {Enfilerar 4};
+   \draw<4>[->] (C1.north) to [out=90, in=270] (B3.center);
 
-			\node<5>[] (C1) [below = of B3] {Enfilerar 12};
-			\draw<5>[->] (C1.north) to [out=90, in=270] (B4.center);
-			
-			\node<6>[] (C1) [below = of B3] {Enfilerar 7};
-			\draw<6>[->] (C1.north) to [out=90, in=270] (B5.center);
+   \node<5>[] (C1) [below = of B3] {Enfilerar 12};
+   \draw<5>[->] (C1.north) to [out=90, in=270] (B4.center);
+   
+   \node<6>[] (C1) [below = of B3] {Enfilerar 7};
+   \draw<6>[->] (C1.north) to [out=90, in=270] (B5.center);
 
-			\node<7>[] (C1) [below = of B3] {Desenfilerar 20};
-			\draw<7>[<-] (C1.north) to [out=90, in=270] (B1.south);
+   \node<7>[] (C1) [below = of B3] {Desenfilerar 20};
+   \draw<7>[<-] (C1.north) to [out=90, in=270] (B1.south);
 
-			\node<8->[list,on chain] (B6) [right =0cm of B5] {};
-			\node<8>[] (C1) [below = of B4] {Desenfilerar 55};
-			\draw<8>[<-] (C1.north) to [out=90, in=270] (B2.south);
+   \node<8->[list,on chain] (B6) [right =0cm of B5] {};
+   \node<8>[] (C1) [below = of B4] {Desenfilerar 55};
+   \draw<8>[<-] (C1.north) to [out=90, in=270] (B2.south);
 
-			\node<9->[list,on chain] (B7) [right =0cm of B6] {};
-			\node<9>[] (C1) [below = of B5] {Desenfilerar 4};
-			\draw<9>[<-] (C1.north) to [out=90, in=270] (B3.south);
-			
-			\node<10->[list,on chain] (B8) [right =0cm of B7] {};
-			\node<10>[] (C1) [below = of B6] {Desenfilerar 12};
-			\draw<10>[<-] (C1.north) to [out=90, in=270] (B4.south);
+   \node<9->[list,on chain] (B7) [right =0cm of B6] {};
+   \node<9>[] (C1) [below = of B5] {Desenfilerar 4};
+   \draw<9>[<-] (C1.north) to [out=90, in=270] (B3.south);
+   
+   \node<10->[list,on chain] (B8) [right =0cm of B7] {};
+   \node<10>[] (C1) [below = of B6] {Desenfilerar 12};
+   \draw<10>[<-] (C1.north) to [out=90, in=270] (B4.south);
 
-			\node<11->[list,on chain] (B9) [right =0cm of B8] {};
-			\node<11>[] (C1) [below = of B7] {Desenfilerar 7};
-			\draw<11>[<-] (C1.north) to [out=90, in=270] (B5.south);
+   \node<11->[list,on chain] (B9) [right =0cm of B8] {};
+   \node<11>[] (C1) [below = of B7] {Desenfilerar 7};
+   \draw<11>[<-] (C1.north) to [out=90, in=270] (B5.south);
 
-			\node<12>[] (PV) [above= of B7] {Fila Vazia};
+   \node<12>[] (PV) [above= of B7] {Fila Vazia};
 
-			%\node<4-11>[list,on chain] (B4) [below =0cm of B3] {55};
-			%\node<4>[] (C1) [above left= of B1] {Empilhar 4};
-			%\draw<4>[->] (C1.east) to [out=45, in=90] (B3.center);
-			
-			%\node<5-10>[list,on chain] (B3) [below =0cm of B2] {4};
-			%\node<5>[] (C1) [above left= of B1] {Empilhar 12};
-			%\draw<5>[->] (C1.east) to [out=45, in=90] (B2.center);
-			
-			%\node<6-9>[list,on chain] (B2) [below =0cm of B1] {12};
-			%\node<6>[] (C1) [above left= of B1] {Empilhar 7};
-			%\draw<6>[->] (C1.east) to [out=45, in=90] (B1.center);
-			
-			%\node<7-8>[list,on chain] (B1) [above =0cm of B2] {7};
-			%\node<8>[] (D1) [above right= of B1] {Desempilhar 7};
-			%\draw<8>[->] (B1.north) to [out=90, in=180] (D1.west);
-			
-			%\node<9>[] (D1) [above right= of B1] {Desempilhar 12};
-			%\draw<9>[->] (B2.north) to [out=90, in=180] (D1.west);
-			
-			%\node<10>[] (D1) [above right= of B1] {Desempilhar 4};
-			%\draw<10>[->] (B3.north) to [out=90, in=180] (D1.west);
-			
-			%\node<11>[] (D1) [above right= of B1] {Desempilhar 55};
-			%\draw<11>[->] (B4.north) to [out=90, in=180] (D1.west);			
-			
-			%\node<12>[] (D1) [above right= of B1] {Desempilhar 20};
-			%\draw<12>[->] (B5.north) to [out=90, in=180] (D1.west);			
-			
-			\end{tikzpicture}
-		\end{center}
-	\end{columns}
+   %\node<4-11>[list,on chain] (B4) [below =0cm of B3] {55};
+   %\node<4>[] (C1) [above left= of B1] {Empilhar 4};
+   %\draw<4>[->] (C1.east) to [out=45, in=90] (B3.center);
+   
+   %\node<5-10>[list,on chain] (B3) [below =0cm of B2] {4};
+   %\node<5>[] (C1) [above left= of B1] {Empilhar 12};
+   %\draw<5>[->] (C1.east) to [out=45, in=90] (B2.center);
+   
+   %\node<6-9>[list,on chain] (B2) [below =0cm of B1] {12};
+   %\node<6>[] (C1) [above left= of B1] {Empilhar 7};
+   %\draw<6>[->] (C1.east) to [out=45, in=90] (B1.center);
+   
+   %\node<7-8>[list,on chain] (B1) [above =0cm of B2] {7};
+   %\node<8>[] (D1) [above right= of B1] {Desempilhar 7};
+   %\draw<8>[->] (B1.north) to [out=90, in=180] (D1.west);
+   
+   %\node<9>[] (D1) [above right= of B1] {Desempilhar 12};
+   %\draw<9>[->] (B2.north) to [out=90, in=180] (D1.west);
+   
+   %\node<10>[] (D1) [above right= of B1] {Desempilhar 4};
+   %\draw<10>[->] (B3.north) to [out=90, in=180] (D1.west);
+   
+   %\node<11>[] (D1) [above right= of B1] {Desempilhar 55};
+   %\draw<11>[->] (B4.north) to [out=90, in=180] (D1.west);   
+   
+   %\node<12>[] (D1) [above right= of B1] {Desempilhar 20};
+   %\draw<12>[->] (B5.north) to [out=90, in=180] (D1.west);   
+   
+   \end{tikzpicture}
+  \end{center}
+ \end{columns}
 \end{frame}
 
 
@@ -826,20 +638,20 @@ classe Elemento {
 \begin{frame}{Fila}
 Modelagem funcional
 \begin{itemize}
-	\item Inserir dado ao fim da fila (\textit{\textbf{enqueue}});
-	\item Remover dado do início da fila (\textit{\textbf{dequeue}});
-	\item Verificar tamanho da fila;
-\end{itemize}	
+ \item Inserir dado ao fim da fila (\textit{\textbf{enqueue}});
+ \item Remover dado do início da fila (\textit{\textbf{dequeue}});
+ \item Verificar tamanho da fila;
+\end{itemize} 
 \end{frame}
 
 
 \begin{frame}{Fila usando Lista Encadeada}
-	Modelagem funcional
-	\begin{itemize}
-		\item Inserir dado ao fim da fila (\textit{\textbf{enqueue}}) é \color{blue} $\Theta(1)$ \Large $\smiley$
-		\item \color{black} \normalsize Remover dado do início da fila (\textit{\textbf{dequeue}}) é \color{red} $\Theta(n)$ \Large $\frownie$
-		\item \color{black} \normalsize Verificar tamanho da fila é \color{blue}$\Theta(1)$ \Large $\smiley$
-	\end{itemize}	
+ Modelagem funcional
+ \begin{itemize}
+  \item Inserir dado ao fim da fila (\textit{\textbf{enqueue}}) é \color{blue} $\Theta(1)$ \Large $\smiley$
+  \item \color{black} \normalsize Remover dado do início da fila (\textit{\textbf{dequeue}}) é \color{red} $\Theta(n)$ \Large $\frownie$
+  \item \color{black} \normalsize Verificar tamanho da fila é \color{blue}$\Theta(1)$ \Large $\smiley$
+ \end{itemize} 
 \end{frame}
 
 \begin{frame}<0>[fragile]{Filas Usando Vetores}
@@ -899,12 +711,12 @@ Modelagem funcional
 \end{frame}
 
 \begin{frame}{Fila usando Lista Encadeada}
-	Modelagem funcional
-	\begin{itemize}
-		\item Inserir dado ao fim da fila (\textit{\textbf{enqueue}}) é \color{blue} $\Theta(1)$ \Large $\smiley$
-		\item \color{black} \normalsize Remover dado do início da fila (\textit{\textbf{dequeue}}) é \color{blue} $\Theta(1)$ \Large $\smiley$
-		\item \color{black} \normalsize Verificar tamanho da fila é \color{blue}$\Theta(1)$ \Large $\smiley$
-	\end{itemize}	
+ Modelagem funcional
+ \begin{itemize}
+  \item Inserir dado ao fim da fila (\textit{\textbf{enqueue}}) é \color{blue} $\Theta(1)$ \Large $\smiley$
+  \item \color{black} \normalsize Remover dado do início da fila (\textit{\textbf{dequeue}}) é \color{blue} $\Theta(1)$ \Large $\smiley$
+  \item \color{black} \normalsize Verificar tamanho da fila é \color{blue}$\Theta(1)$ \Large $\smiley$
+ \end{itemize} 
 \end{frame}
 
 \begin{frame}[fragile]{Modelagem da Cabeça de Fila Encadeada}
@@ -1176,42 +988,42 @@ fim;
 T retira()
  Elemento *saiu; //Variável auxiliar elemento.
  T *volta; //Variável auxiliar tipo T.
-	início
-		SE (listaVazia()) ENTAO
-		  THROW(ERROLISTAVAZIA);
-		SENAO
-		  saiu <- _dados;
-		  volta <- saiu->_info;
-		  _dados <- saiu->_próximo;
+ início
+  SE (listaVazia()) ENTAO
+    THROW(ERROLISTAVAZIA);
+  SENAO
+    saiu <- _dados;
+    volta <- saiu->_info;
+    _dados <- saiu->_próximo;
           //Se SAIU for o único, próximo é NULO e está certo.
           SE (_quantidade = 1) ENTAO
            //Fila unitária: devo anular o _fim também.
            _fim <- NULO;
           FIM SE
-		  _quantidade <- _quantidade - 1;
-		  LIBERE(saiu);
-		  RETORNE(volta);
-		FIM SE
-	fim;
+    _quantidade <- _quantidade - 1;
+    LIBERE(saiu);
+    RETORNE(volta);
+  FIM SE
+ fim;
 (*@  \textcolor{red}{}  @*)
 \end{lstlisting}
 \end{frame}
 
 \begin{frame}{Aplicações de Filas}
-	\begin{itemize}
-		\item É importante para gerência de dados/processos por ordem cronológica:
-		\begin{itemize}
-			\item Fila de impressão em uma impressora de rede;
-			\item Fila de pedidos de uma expedição ou tele-entrega;
-		\end{itemize}
-		\item É importante para simulação de processos sequenciais:
-		\begin{itemize}
-			\item chão de fábrica: fila de camisetas a serem estampadas;
-			\item comércio: simulação de fluxo de um caixa de supermercado;
-			\item tráfego: simulação de um cruzamento com um semáforo;
-		\end{itemize}
-		\item Útil para algoritmos de busca em largura.
-	\end{itemize}
+ \begin{itemize}
+  \item É importante para gerência de dados/processos por ordem cronológica:
+  \begin{itemize}
+   \item Fila de impressão em uma impressora de rede;
+   \item Fila de pedidos de uma expedição ou tele-entrega;
+  \end{itemize}
+  \item É importante para simulação de processos sequenciais:
+  \begin{itemize}
+   \item chão de fábrica: fila de camisetas a serem estampadas;
+   \item comércio: simulação de fluxo de um caixa de supermercado;
+   \item tráfego: simulação de um cruzamento com um semáforo;
+  \end{itemize}
+  \item Útil para algoritmos de busca em largura.
+ \end{itemize}
 \end{frame}
 
 
@@ -1626,21 +1438,21 @@ adicionaNoInicioDupla(T dado)
 T retiraDoInicioDupla()
  ElementoDuplo *saiu; //Variável auxiliar elemento.
  T *volta; //Variável auxiliar tipo T.
-	início
-		SE (listaVaziaDupla()) ENTAO
-		  THROW(ERROLISTAVAZIA);
-		SENAO
-		  saiu <- _dados;
-		  volta <- saiu->_info;
-		  _dados <- saiu->_proximo;
-		  SE (_dados ~= NULO) ENTAO
-			dados->_anterior <- NULO;
-		  FIM SE
-		  _tamanho <- _tamanho - 1;
-		  LIBERE(saiu);
-		  RETORNE(volta);
-		FIM SE
-	fim;
+ início
+  SE (listaVaziaDupla()) ENTAO
+    THROW(ERROLISTAVAZIA);
+  SENAO
+    saiu <- _dados;
+    volta <- saiu->_info;
+    _dados <- saiu->_proximo;
+    SE (_dados ~= NULO) ENTAO
+   dados->_anterior <- NULO;
+    FIM SE
+    _tamanho <- _tamanho - 1;
+    LIBERE(saiu);
+    RETORNE(volta);
+  FIM SE
+ fim;
 (*@  \textcolor{red}{}  @*)
 \end{lstlisting}
 \end{frame}

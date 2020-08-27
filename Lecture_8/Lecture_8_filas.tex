@@ -14,7 +14,7 @@
 %\usepackage{lstlinebgrd}
 \usepackage{graphicx}
 \usepackage{wasysym}
-\subtitle{Pilha Encadeada e Fila}
+\subtitle{Filas}
 \title{Estruturas de Dados}
 %\setbeamercovered{transparent}
 \setbeamertemplate{navigation symbols}{}
@@ -53,7 +53,7 @@
 \end{itemize}
 \end{frame}
 
-
+\iffalse
 
 %%%%
 \begin{frame}[fragile]{Conceito de Pilhas}
@@ -537,6 +537,7 @@
 \end{itemize}
 \end{frame}
 
+\fi
 
 %%%%
 \begin{frame}[fragile]{Conceito de Filas}
@@ -648,8 +649,8 @@ Modelagem funcional
 \begin{frame}{Fila usando Lista Encadeada}
  Modelagem funcional
  \begin{itemize}
-  \item Inserir dado ao fim da fila (\textit{\textbf{enqueue}}) é \color{blue} $\Theta(1)$ \Large $\smiley$
-  \item \color{black} \normalsize Remover dado do início da fila (\textit{\textbf{dequeue}}) é \color{red} $\Theta(n)$ \Large $\frownie$
+  \item Inserir dado ao fim da fila (\textit{\textbf{enqueue}}) é \color{red} $\Theta(n)$ \Large $\frownie$
+  \item \color{black} \normalsize Remover dado do início da fila (\textit{\textbf{dequeue}}) é \color{blue} $\Theta(1)$ \Large $\smiley$
   \item \color{black} \normalsize Verificar tamanho da fila é \color{blue}$\Theta(1)$ \Large $\smiley$
  \end{itemize} 
 \end{frame}
@@ -713,7 +714,7 @@ Modelagem funcional
 \begin{frame}{Fila usando Lista Encadeada}
  Modelagem funcional
  \begin{itemize}
-  \item Inserir dado ao fim da fila (\textit{\textbf{enqueue}}) é \color{red} $\Theta(n)$ \Large $\frownie$
+  \item Inserir dado ao fim da fila (\textit{\textbf{enqueue}}) é \color{blue} $\Theta(1)$ \Large $\smiley$
   \item \color{black} \normalsize Remover dado do início da fila (\textit{\textbf{dequeue}}) é \color{blue}$\Theta(1)$ \Large $\smiley$ 
   \item \color{black} \normalsize Verificar tamanho da fila é \color{blue}$\Theta(1)$ \Large $\smiley$
  \end{itemize} 

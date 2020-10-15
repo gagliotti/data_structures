@@ -1,5 +1,5 @@
 \documentclass[12pt,table,xcolor={dvipsnames}]{beamer}
-\usetheme{Pittsburgh}
+%\usetheme{Pittsburgh}
 \usecolortheme{seagull}
 %\usepackage[utf8]{inputenc}
 \usepackage{fontspec}
@@ -7,32 +7,34 @@
 \usepackage{amsmath}
 \usepackage{listings}
 \usepackage{tikz}
-\usetikzlibrary{calc,shapes.multipart,chains,arrows, positioning, automata}
+\usetikzlibrary{calc,shapes.multipart,chains,arrows, positioning}
 \usepackage{multirow}
 \usepackage{amsfonts}
 \usepackage{amssymb}
-\usepackage{lstlinebgrd}
+%\usepackage{lstlinebgrd}
 \usepackage{graphicx}
-\author{Árvores Binárias de Busca}
+\usepackage{wasysym}
+\subtitle{Árvores}
 \title{Estruturas de Dados}
 %\setbeamercovered{transparent}
 \setbeamertemplate{navigation symbols}{}
 %\logo{\includegraphics[scale=0.015]{Brasao_UFSC.png}\includegraphics[scale=0.2]{brasao_PPGCC.jpg}}
-\institute{Departamento de Informática e de Estatística \\ Prof. Jean Everson Martina \\ Prof. Aldo von Wangenheim}
-\date{2016.2}
+\institute{Departamento de Computação \\ Prof. Martín Vigil \\ Adaptado de prof. Jean Martina e Aldo Wangenheim}
+\date{2020.1}
 \subject{}
 \usebackgroundtemplate{\includegraphics[width=\paperwidth,
-height=\paperheight]{../reusable_images/fundo_UFSC.png}}
+	height=\paperheight]{../reusable_images/fundo_UFSC.png}}
 \begin{document}
+	
+	{
+		\usebackgroundtemplate{\includegraphics[width=\paperwidth,
+			height=\paperheight]{../reusable_images/fundo_capa.png}}
+		\begin{frame}
+			\titlepage
+			%\includegraphics[scale=0.3]{../reusable_images/brasao_INE.png}
+		\end{frame}
+	}
 
-{
-\usebackgroundtemplate{\includegraphics[width=\paperwidth,
-height=\paperheight]{../reusable_images/fundo_capa.png}}
-\begin{frame}
-\titlepage
-\includegraphics[scale=0.3]{../reusable_images/brasao_INE.png}
-\end{frame}
-}
 
 \begin{frame}[fragile]{Introdução}
 \lstset{language=C++,
@@ -43,7 +45,7 @@ height=\paperheight]{../reusable_images/fundo_capa.png}}
           basicstyle=\ttfamily\footnotesize
           }
 \begin{block}{Árvores}
-são estruturas de dados que se caracterizam por uma organização hierárquica – relação hierárquica – entre seus elementos. Essa organização permite a definição de algoritmos relativamente simples, recursivos e de eficiência bastante razoável.
+são estruturas de dados que se caracterizam por uma organização hierárquica entre seus elementos. Essa organização permite a definição de algoritmos relativamente simples, recursivos e de eficiência bastante razoável.
 \end{block}
 \end{frame}
 
@@ -143,7 +145,7 @@ são estruturas de dados que se caracterizam por uma organização hierárquica 
 \end{itemize}
 \end{itemize}
 \begin{center}
-\textbf{( A ( B ( D ( ) E ( ) ) ) ( C ( F ( ) ) ) )}
+ ( A ( \color{red} B ( \color{blue} D ( ) E ( ) \color{red}) \color{black} ) ( \color{red} C ( \color{blue}F ( ) \color{red} ) \color{black} ) )
 \end{center}
 \end{frame}
 
@@ -162,7 +164,7 @@ são estruturas de dados que se caracterizam por uma organização hierárquica 
 \end{itemize}
 \end{itemize}
 \begin{center}
-\textbf{A 2 B 2 D 0 E 0 C 1 F 0}
+\textbf{A 2 \color{red} B 2 \color{blue} D 0 E 0 \color{red} C 1 \color{blue} F 0} 
 \end{center}
 \end{frame}
 

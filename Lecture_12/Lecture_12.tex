@@ -293,7 +293,7 @@ são estruturas de dados que se caracterizam por uma organização hierárquica 
           }
           \begin{itemize}
           \item A inclusão de limitações estruturais define tipos específicos de árvores;
-          \item Até agora, as árvores vistas não possuíam nenhuma limitação quanto ao grau máximo de cada nodo;
+          \item Até agora, as árvores vistas possuíam nenhuma limitação quanto ao grau máximo de cada nodo;
           \item Uma árvore binária é uma árvore cujo grau máximo de cada nodo é 2. Essa limitação define uma nomenclatura específica: 
           \begin{itemize}
           \item As filhos de um nodo são classificados de acordo com sua posição relativa à raiz; 
@@ -341,7 +341,7 @@ são estruturas de dados que se caracterizam por uma organização hierárquica 
           \end{center}
 \end{frame} 
 
-\begin{frame}[fragile]{Transformações}
+\begin{frame}<0>[fragile]{Transformações}
 \lstset{language=C++,
           keywordstyle=\color{blue}\ttfamily,
           stringstyle=\color{red}\ttfamily,
@@ -360,7 +360,7 @@ são estruturas de dados que se caracterizam por uma organização hierárquica 
           \end{itemize}
 \end{frame} 
 
-\begin{frame}[fragile]{Árvores Binárias}
+\begin{frame}<0>[fragile]{Árvores Binárias}
 \lstset{language=C++,
           keywordstyle=\color{blue}\ttfamily,
           stringstyle=\color{red}\ttfamily,
@@ -408,7 +408,7 @@ são estruturas de dados que se caracterizam por uma organização hierárquica 
           \end{center}
 \end{frame} 
 
-\begin{frame}[fragile]{Árvores Binárias}
+\begin{frame}<0>[fragile]{Árvores Binárias}
 \lstset{language=C++,
           keywordstyle=\color{blue}\ttfamily,
           stringstyle=\color{red}\ttfamily,
@@ -484,20 +484,19 @@ são estruturas de dados que se caracterizam por uma organização hierárquica 
           \begin{itemize}
           \item Um ponteiro para o filho localizado à esquerda;
           \item Um ponteiro para o filho localizado à direita;
-          \item Um ponteiro para a informação que vamos armazenar.
+          \item Um ponteiro \textbf{genérico} o dado que vamos armazenar.
           \end{itemize}
           \item Pseudo-código:
           \begin{lstlisting}
-classe tNodo {
- tNodo *filhoEsquerda;
- tNodo *filhoDireita;
- TipoInfo *info;
-};
-		  \end{lstlisting}
+estrutura Nodo {
+ Nodo *_filhoEsquerda;
+ Nodo *_filhoDireita;
+ T    *_dado;
+};\end{lstlisting}
        	  \end{itemize}
 \end{frame} 
 
-\begin{frame}[fragile]{Construção de uma árvore binária}
+\begin{frame}<0>[fragile]{Construção de uma árvore binária}
 \lstset{language=C++,
           keywordstyle=\color{blue}\ttfamily,
           stringstyle=\color{red}\ttfamily,
@@ -521,7 +520,7 @@ classe tNodo {
        	  \end{itemize}
 \end{frame} 
 
-\begin{frame}[fragile]{Construção de uma árvore binária}
+\begin{frame}<0>[fragile]{Construção de uma árvore binária}
 \lstset{language=C++,
           keywordstyle=\color{blue}\ttfamily,
           stringstyle=\color{red}\ttfamily,
@@ -539,7 +538,7 @@ classe tNodo {
        	  \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Árvore Binária Balanceada}
+\begin{frame}<0>[fragile]{Árvore Binária Balanceada}
 \lstset{language=C++,
           keywordstyle=\color{blue}\ttfamily,
           stringstyle=\color{red}\ttfamily,
@@ -643,11 +642,11 @@ Expressão: (A + (B / X)) * (E - (C * P))
           basicstyle=\ttfamily\footnotesize
           }
           \begin{itemize}
-          \item Existem três ordens para se percorrer uma árvore binária que são consequência natural da estrutura da árvore:
+          \item Existem três ordens para se percorrer uma árvore binária que são consequência natural da estrutura da árvore, considerando filho à esquerda (e), filho à direita (a) e raiz (r):
           \begin{itemize}
-          \item Preordem(r,e,d) – Preorder;
-          \item Emordem(e,r,d) – Inorder;
-          \item Pósordem(e,d,r) – Postorder.
+          \item Preordem(r,e,d) – \textit{Preorder};
+          \item Emordem(e,r,d) – \textit{Inorder};
+          \item Pósordem(e,d,r) – \textit{Postorder}.
           \end{itemize}
        	  \end{itemize}
 \end{frame}
@@ -687,6 +686,42 @@ Expressão: (A + (B / X)) * (E - (C * P))
           \item Pósordem (notação posfixada) : A B X / + * E C P - *
           \end{itemize}
        	  \end{itemize}
+         
+\tikzset{
+	treenode/.style = {align=center, inner sep=0pt, text centered,
+		font=\sffamily},
+	node_b/.style = {treenode, circle, white, font=\sffamily\bfseries, draw=black,
+		fill=black, text width=1.5em},
+	node_r/.style = {treenode, circle, red, draw=red, 
+		text width=1.5em, very thick},
+	node_s/.style = {treenode, circle, black, draw=black, 
+		text width=1.5em, very thick},
+	node_nil/.style = {treenode, rectangle, draw=black,
+		minimum width=0.5em, minimum height=0.5em}
+}
+\begin{center}
+	\resizebox{!}{4cm}{\begin{tikzpicture}[->,>=stealth',level/.style={sibling distance = 5cm/#1, level distance = 1.5cm}] 
+	\node [node_s] {*}
+	child{ node [node_s] {+}
+		child{ node [node_s] {A}}
+		child{ node [node_s] {/}
+			child{ node [node_s] {B}}
+			child{ node [node_s] {X}}
+		}
+	}
+	child{ node [node_s] {-}
+		child{ node [node_s] {E}}
+		child{ node [node_s] {*}
+			child{ node [node_s] {C}}   
+			child{ node [node_s] {P}}   
+		}
+	}
+	
+	; 
+	\end{tikzpicture}}
+\end{center}
+
+         
 \end{frame}
 
 \begin{frame}[fragile]{Percurso em Preordem}
@@ -698,16 +733,16 @@ Expressão: (A + (B / X)) * (E - (C * P))
           basicstyle=\ttfamily\footnotesize
           }
           \begin{lstlisting}
-vector Preordem(tNodo *raiz)
+Lista* Preordem(Nodo *raiz)
  início
-  V[];
+  ListaEncadeada* lista = iniciaListaEncadeada();
   se raiz != NULO então
-   V.add(raiz->info);
-   Preordem(raiz->filhoEsquerda); 		 		
-   Preordem(raiz->filhoDireita);
+   adicionaNoFim(lista, raiz->_dado);
+   Preordem(raiz->_filhoEsquerda);
+   Preordem(raiz->_filhoDireita);
   fim se
  fim
-		  \end{lstlisting}
+ \end{lstlisting}
 \end{frame} 
 
 \begin{frame}[fragile]{Percurso em Emordem}
@@ -719,16 +754,16 @@ vector Preordem(tNodo *raiz)
           basicstyle=\ttfamily\footnotesize
           }
           \begin{lstlisting}
-vector Emordem(tNodo *raiz)
+Lista* EmOrdem(Nodo *raiz)
  início
-  V[];
+  ListaEncadeada* lista = iniciaListaEncadeada();
   se raiz != NULO então
-   Emordem(raiz->filhoEsquerda); 		 		
-   V.add(raiz->info);
-   Emordem(raiz->filhoDireita);
+   EmOrdem(raiz->_filhoEsquerda);
+   adicionaNoFim(lista, raiz->_dado);
+   EmOrdem(raiz->_filhoDireita);
   fim se
  fim
-		  \end{lstlisting}
+\end{lstlisting}
 \end{frame} 
 
 \begin{frame}[fragile]{Percurso em Posordem}
@@ -740,16 +775,16 @@ vector Emordem(tNodo *raiz)
           basicstyle=\ttfamily\footnotesize
           }
           \begin{lstlisting}
-vector Emordem(tNodo *raiz)
+Lista PosOrdem(tNodo *raiz)
  início
-  V[];
+  ListaEncadeada* lista = iniciaListaEncadeada();
   se raiz != NULO então
-   Posordem(raiz->filhoEsquerda); 		 		
-   Posordem(raiz->filhoDireita);
-   V.add(raiz->info);
+   PosOrdem(raiz->_filhoEsquerda);
+   PosOrdem(raiz->_filhoDireita);
+   adicionaNoFim(raiz->_dado);
   fim se
  fim
-		  \end{lstlisting}
+ \end{lstlisting}
 \end{frame} 
 
 \begin{frame}[fragile]{Árvores Binárias de Busca}
@@ -764,7 +799,7 @@ vector Emordem(tNodo *raiz)
           \item Árvores (binárias) são muito utilizadas para se representar um grande conjunto de dados onde se deseja encontrar um elemento de acordo com a sua chave.
           \item Definição - Árvore Binária de Busca (Niklaus Wirth):
           \begin{itemize}
-          \item “Uma árvore que se encontra organizada de tal forma que, para cada nodo $t_i$, todas as chaves (info) da subárvore à esquerda de $t_i$ são menores que (ou iguais a) $t_i$ e à direita são maiores que $t_i$";
+          \item “Uma árvore que se encontra organizada de tal forma que, para cada nodo $t_i$, todas as chaves (\_dado) da subárvore à esquerda de $t_i$ são menores que $t_i$ e à direita são maiores (ou iguais) que $t_i$";
           \end{itemize}
           \item Termo em Inglês: Search Tree.
        	  \end{itemize}
@@ -782,7 +817,7 @@ vector Emordem(tNodo *raiz)
           \item Em uma árvore binária de busca é possível encontrar-se qualquer chave existente descendo-se pela árvore:
           \begin{itemize}
           \item Sempre à esquerda toda vez que a chave procurada for menor do que a chave do nodo visitado;
-          \item Sempre à direita toda vez que for maior;
+          \item Sempre à direita toda vez que for maior ou igual;
           \end{itemize}
           \item A escolha da direção de busca só depende da chave que se procura e da chave que o nodo atual possui.
        	  \end{itemize}
@@ -818,20 +853,19 @@ vector Emordem(tNodo *raiz)
           basicstyle=\ttfamily\footnotesize
           }
           \begin{lstlisting}
-tNodo* busca (chave: tInfo, ptr: *tNodo)
+Nodo* busca (T dado, Nodo* raiz)
  início
-  enquanto (ptr ~= NULO 
-            E ptr->info ~= chave) faça
+  enquanto(raiz != NULO E raiz->_dado != dado) faça
    // Esquerda ou direita.
-   se (ptr->info < chave) então
-    ptr <- ptr->filhoÀDireita
+   se (raiz->_dado < dado) então
+    raiz <- raiz->filhoDireita
    senão
-    ptr <- ptr->filhoÀEsquerda;
+    raiz <- raiz->filhoEsquerda;
    fim se
   fim enquanto
-  retorne ptr;
+  retorne raiz;
  fim
-		  \end{lstlisting}
+ \end{lstlisting}
 \end{frame} 
 
 \begin{frame}[fragile]{Exemplo}
@@ -891,30 +925,29 @@ Inserção de um elemento com chave = 14
           basicstyle=\ttfamily\scriptsize
           }
           \begin{lstlisting}
-tNodo* inserção (info: tInfo)
- *tNodo oNovo:;
+void inserir(Nodo* raiz, T* dado)
  início
-  se (info < self->info) então
+  se (dado < raiz->_dado) então
   // Inserção à esquerda.
-   se (self->filhoÀEsquerda = NULO) então
-    oNovo <- aloque(tNodo); oNovo->info <- info;
-    oNovo->filhoÀEsquerda <- NULO; oNovo->filhoÀDireita <- NULO;
+   se (raiz->_filhoEsquerda = NULO) então
+    Nodo* oNovo <- aloque(Nodo); oNovo->_dado <- dado;
+    oNovo->filhoEsquerda <- NULO; oNovo->filhoDireita <- NULO;
     raiz->filhoÀEsquerda <- oNovo;
    senão
-    self <- inserção(self->filhoÀEsquerda, info);
+    inserir(raiz->_filhoEsquerda, dado);
    fim se
    senão
     // Inserção à direita.
-   se (self->filhoÀDireita = NULO) então
-    oNovo <- aloque(tNodo); oNovo->info <- info;
-    oNovo->filhoÀEsquerda <- NULO; oNovo->filhoÀDireita <- NULO;
+   se (raiz->filhoDireita = NULO) então
+    Nodo* oNovo <- aloque(Nodo); oNovo->_dado <- dado;
+    oNovo->filhoEsquerda <- NULO; oNovo->filhoDireita <- NULO;
     raiz->filhoÀDireita <- oNovo;
    senão
-    self <- inserção(self->filhoÀDireita, info);
+    inserir(raiz->filhoDireita, dado);
    fim se
   fim se  
  fim
-		  \end{lstlisting}
+ \end{lstlisting}
 \end{frame} 
 
 \begin{frame}[fragile]{Algoritmo de Deleção}

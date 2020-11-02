@@ -35,6 +35,19 @@
 		\end{frame}
 	}
 
+\AtBeginSection[]{
+	\begin{frame}
+		\vfill
+		\centering
+		\begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+			\usebeamerfont{title}\insertsectionhead\par%
+		\end{beamercolorbox}
+		\vfill
+	\end{frame}
+}
+
+
+\section{Introdução a Árvores}
 
 \begin{frame}[fragile]{Introdução}
 \lstset{language=C++,
@@ -177,8 +190,8 @@ são estruturas de dados que se caracterizam por uma organização hierárquica 
           basicstyle=\ttfamily\footnotesize
           }
 \begin{itemize}
-\item As duas primeiras representações permitem uma melhor visualização das árvores; 
-\item As duas últimas, por sua vez, facilitam a persistência dos nodos das árvores (em arquivos, por exemplo), possibilitando assim a sua reconstituição.
+\item As representações hierárquica e por conjuntos facilitam visualizar árvores; 
+\item As representações por expressões parametrizadas ou não facilitam a persistência dos nodos das árvores (em arquivos, por exemplo), possibilitando assim a sua reconstituição.
 \end{itemize}
 \end{frame}
 
@@ -282,6 +295,8 @@ são estruturas de dados que se caracterizam por uma organização hierárquica 
           \item Qual o grau do nodo A?
           \end{itemize}
 \end{frame} 
+
+\section{Árvores Binárias}
 
 \begin{frame}[fragile]{Árvores Binárias}
 \lstset{language=C++,
@@ -642,7 +657,7 @@ Expressão: (A + (B / X)) * (E - (C * P))
           basicstyle=\ttfamily\footnotesize
           }
           \begin{itemize}
-          \item Existem três ordens para se percorrer uma árvore binária que são consequência natural da estrutura da árvore, considerando filho à esquerda (e), filho à direita (a) e raiz (r):
+          \item Existem três ordens para se percorrer uma árvore binária que são consequência natural da estrutura da árvore, considerando filho à esquerda (e), filho à direita (d) e raiz (r):
           \begin{itemize}
           \item Preordem(r,e,d) – \textit{Preorder};
           \item Emordem(e,r,d) – \textit{Inorder};
@@ -733,13 +748,12 @@ Expressão: (A + (B / X)) * (E - (C * P))
           basicstyle=\ttfamily\footnotesize
           }
           \begin{lstlisting}
-Lista* Preordem(Nodo *raiz)
+void Preordem(Nodo *raiz, ListaEncadeada* lista)
  início
-  ListaEncadeada* lista = iniciaListaEncadeada();
   se raiz != NULO então
    adicionaNoFim(lista, raiz->_dado);
-   Preordem(raiz->_filhoEsquerda);
-   Preordem(raiz->_filhoDireita);
+   Preordem(raiz->_filhoEsquerda, lista);
+   Preordem(raiz->_filhoDireita, lista);
   fim se
  fim
  \end{lstlisting}
@@ -754,13 +768,12 @@ Lista* Preordem(Nodo *raiz)
           basicstyle=\ttfamily\footnotesize
           }
           \begin{lstlisting}
-Lista* EmOrdem(Nodo *raiz)
+Lista* EmOrdem(Nodo *raiz, ListaEncadeada* lista)
  início
-  ListaEncadeada* lista = iniciaListaEncadeada();
   se raiz != NULO então
-   EmOrdem(raiz->_filhoEsquerda);
+   EmOrdem(raiz->_filhoEsquerda, lista);
    adicionaNoFim(lista, raiz->_dado);
-   EmOrdem(raiz->_filhoDireita);
+   EmOrdem(raiz->_filhoDireita, lista);
   fim se
  fim
 \end{lstlisting}
@@ -775,17 +788,18 @@ Lista* EmOrdem(Nodo *raiz)
           basicstyle=\ttfamily\footnotesize
           }
           \begin{lstlisting}
-Lista PosOrdem(tNodo *raiz)
+Lista PosOrdem(Nodo *raiz, ListaEncadeada* lista)
  início
-  ListaEncadeada* lista = iniciaListaEncadeada();
   se raiz != NULO então
-   PosOrdem(raiz->_filhoEsquerda);
-   PosOrdem(raiz->_filhoDireita);
-   adicionaNoFim(raiz->_dado);
+   PosOrdem(raiz->_filhoEsquerda, lista);
+   PosOrdem(raiz->_filhoDireita, lista);
+   adicionaNoFim(lista, raiz->_dado);
   fim se
  fim
  \end{lstlisting}
 \end{frame} 
+
+\section{Árvores Binárias de Busca}
 
 \begin{frame}[fragile]{Árvores Binárias de Busca}
 \lstset{language=C++,
@@ -823,19 +837,7 @@ Lista PosOrdem(tNodo *raiz)
        	  \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Características de Árvores Binárias de Busca}
-\lstset{language=C++,
-          keywordstyle=\color{blue}\ttfamily,
-          stringstyle=\color{red}\ttfamily,
-          commentstyle=\color{OliveGreen}\ttfamily,
-          breaklines=true,
-          basicstyle=\ttfamily\footnotesize
-          }
-          \begin{itemize}
-          \item A busca de um elemento em uma árvore balanceada com n elementos toma tempo médio < log(n), sendo a busca então O(log n);
-          \item Graças à estrutura de árvore a busca poderá ser feita com apenas log(n) comparações de elementos.
-       	  \end{itemize}
-\end{frame}
+
 
 \begin{frame}[fragile]{Exemplo de árvore binária de busca}
 \setbeamercovered{invisible}
@@ -868,7 +870,74 @@ Nodo* busca (T dado, Nodo* raiz)
  \end{lstlisting}
 \end{frame} 
 
-\begin{frame}[fragile]{Exemplo}
+\begin{frame}[fragile]{Custo do Algoritmo da Busca}
+	\begin{itemize}
+		%\item No pior caso, a inserção ocorre nas folhas
+		\item Se árvore tem altura $h\geq 0$ e o dado procurado está em uma das \textcolor{red}{folhas mais distantes} da raiz, então o custo é $O(h)$
+		\item Um árvore balanceada com $n>1$ nodos tem altura $\lfloor \log_2n \rfloor$
+	\end{itemize}
+	
+	\tikzset{
+		treenode/.style = {align=center, inner sep=0pt, text centered,
+			font=\sffamily},
+		node_b/.style = {treenode, circle, white, font=\sffamily\bfseries, draw=black,
+			fill=black, text width=1.5em},
+		node_r/.style = {treenode, circle, red, draw=red, 
+			text width=1.5em, very thick},
+		node_s/.style = {treenode, circle, black, draw=black, 
+			text width=1.5em, very thick},
+		node_nil/.style = {treenode, rectangle, draw=black,
+			minimum width=0.5em, minimum height=0.5em}
+	}
+	
+	\begin{center}
+		\resizebox{!}{2.5cm}{\begin{tikzpicture}[->,>=stealth',level/.style={sibling distance = 5cm/#1, level distance = 1.5cm}] 
+			\node [node_s] {10}
+			child{ node [node_s,] {5}
+				child{ node [node_s,xshift=-30pt,fill=red] {1}}
+				%child{ node [node_s] {7}
+				%child{ node [node_s] {6}}
+				%child{ node [node_s] {9}}
+				%}
+			}
+			child{ node [node_s,] {15}
+				%child{ node [node_s] {14}}
+				%child{ node [node_s] {20}
+				%child{ node [node_s] {16}}   
+				%child{ node [node_s] {21}}   
+				%}
+			}		; 
+			\end{tikzpicture}}
+		\hspace{.25cm}
+		\resizebox{!}{2.5cm}{\begin{tikzpicture}[->,>=stealth',level/.style={sibling distance = 5cm/#1, level distance = 1.5cm}] 
+			\node [node_s] {10}
+			child{ node [node_s] {5}
+				child{ node [node_s,fill=red] {1} }
+				child{ node [node_s,fill=red] {7}
+					%child{ node [node_s] {6}}
+					%child{ node [node_s] {9}}
+				}
+			}
+			child{ node [node_s] {15}
+				child{ node [node_s,fill=red] {14}}
+				child{ node [node_s,fill=red] {20}
+					%child{ node [node_s] {16}}   
+					%child{ node [node_s] {21}}   
+				}
+			}		; 
+			\end{tikzpicture}}
+	\end{center}         
+	
+\end{frame}
+
+\begin{frame}[fragile]{Inserção de novas chaves na árvore binária de busca}
+	\begin{itemize}
+	\item Similar ao algoritmo de busca
+	\item Percorrer a árvore até encontrar nodo que possui um filho nulo onde a chave pode ser inserida respeitando as regras de comparação.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Exemplo de inserção}
 \setbeamercovered{invisible}
 Inserção de um elemento com chave = 14
 \begin{center}
@@ -916,6 +985,22 @@ Inserção de um elemento com chave = 14
 \end{center}
 \end{frame}
 
+
+
+\begin{frame}<0>[fragile]{Características de Árvores Binárias de Busca}
+	\lstset{language=C++,
+		keywordstyle=\color{blue}\ttfamily,
+		stringstyle=\color{red}\ttfamily,
+		commentstyle=\color{OliveGreen}\ttfamily,
+		breaklines=true,
+		basicstyle=\ttfamily\footnotesize
+	}
+	\begin{itemize}
+		\item A busca de um elemento em uma árvore balanceada com n elementos toma tempo médio < log(n), sendo a busca então O(log n);
+		\item Graças à estrutura de árvore a busca poderá ser feita com apenas log(n) comparações de elementos.
+	\end{itemize}
+\end{frame}
+
 \begin{frame}[fragile]{Algoritmo de Inserção}
 \lstset{language=C++,
           keywordstyle=\color{blue}\ttfamily,
@@ -932,7 +1017,7 @@ void inserir(Nodo* raiz, T* dado)
    se (raiz->_filhoEsquerda = NULO) então
     Nodo* oNovo <- aloque(Nodo); oNovo->_dado <- dado;
     oNovo->filhoEsquerda <- NULO; oNovo->filhoDireita <- NULO;
-    raiz->filhoÀEsquerda <- oNovo;
+    raiz->_filhoEsquerda <- oNovo;
    senão
     inserir(raiz->_filhoEsquerda, dado);
    fim se
@@ -941,7 +1026,7 @@ void inserir(Nodo* raiz, T* dado)
    se (raiz->filhoDireita = NULO) então
     Nodo* oNovo <- aloque(Nodo); oNovo->_dado <- dado;
     oNovo->filhoEsquerda <- NULO; oNovo->filhoDireita <- NULO;
-    raiz->filhoÀDireita <- oNovo;
+    raiz->_filhoDireita <- oNovo;
    senão
     inserir(raiz->filhoDireita, dado);
    fim se
@@ -949,6 +1034,66 @@ void inserir(Nodo* raiz, T* dado)
  fim
  \end{lstlisting}
 \end{frame} 
+
+\begin{frame}[fragile]{Custo do Algoritmo de Inserção}
+	\begin{itemize}
+		%\item No pior caso, a inserção ocorre nas folhas
+		\item Se árvore tem altura $h\geq 0$ e as inserções podem ocorrer nas \textcolor{red}{folhas mais distantes} da raiz, então o custo é $O(h)$
+		\item Um árvore balanceada com $n>1$ nodos tem altura $\lfloor \log_2n \rfloor$
+	\end{itemize}
+
+\tikzset{
+	treenode/.style = {align=center, inner sep=0pt, text centered,
+		font=\sffamily},
+	node_b/.style = {treenode, circle, white, font=\sffamily\bfseries, draw=black,
+		fill=black, text width=1.5em},
+	node_r/.style = {treenode, circle, red, draw=red, 
+		text width=1.5em, very thick},
+	node_s/.style = {treenode, circle, black, draw=black, 
+		text width=1.5em, very thick},
+	node_nil/.style = {treenode, rectangle, draw=black,
+		minimum width=0.5em, minimum height=0.5em}
+}
+
+\begin{center}
+	\resizebox{!}{2.5cm}{\begin{tikzpicture}[->,>=stealth',level/.style={sibling distance = 5cm/#1, level distance = 1.5cm}] 
+		\node [node_s] {10}
+		child{ node [node_s,] {5}
+			child{ node [node_s,xshift=-30pt,fill=gray] {1}}
+			%child{ node [node_s] {7}
+				%child{ node [node_s] {6}}
+				%child{ node [node_s] {9}}
+			%}
+		}
+		child{ node [node_s,] {15}
+			%child{ node [node_s] {14}}
+			%child{ node [node_s] {20}
+				%child{ node [node_s] {16}}   
+				%child{ node [node_s] {21}}   
+			%}
+		}		; 
+		\end{tikzpicture}}
+		\hspace{.25cm}
+		\resizebox{!}{2.5cm}{\begin{tikzpicture}[->,>=stealth',level/.style={sibling distance = 5cm/#1, level distance = 1.5cm}] 
+			\node [node_s] {10}
+			child{ node [node_s] {5}
+				child{ node [node_s,fill=gray,xshift=-30pt] {1} child {node [node_s,xshift=30pt, fill=red]{0}}}
+				%child{ node [node_s,fill=red] {7}
+					%child{ node [node_s] {6}}
+					%child{ node [node_s] {9}}
+				%}
+			}
+			child{ node [node_s] {15}
+				%child{ node [node_s,fill=red] {14}}
+				%child{ node [node_s,fill=red] {20}
+					%child{ node [node_s] {16}}   
+					%child{ node [node_s] {21}}   
+				%}
+			}		; 
+			\end{tikzpicture}}
+\end{center}         
+
+\end{frame}
 
 \begin{frame}[fragile]{Algoritmo de Deleção}
 \lstset{language=C++,
@@ -959,14 +1104,57 @@ void inserir(Nodo* raiz, T* dado)
           basicstyle=\ttfamily\footnotesize
           }
           \begin{itemize}
-          \item A deleção é mais complexa do que a inserção;
-		  \item A razão básica é que a característica organizacional da árvore não deve ser quebrada:
+          \item Substitui-se o nodo a ser removido por outro existente na árvore
+		  \item Precisa-se evitar que característica organizacional da árvore seja quebrada:
 		  \begin{itemize}
 		  \item A subárvore da direita de um nodo não deve possuir chaves menores do que o pai do nodo eliminado;
 		  \item A subárvore da esquerda de um nodo não deve possuir chaves maiores do que o pai do nodo eliminado.
 		  \end{itemize}
-		  \item Para garantir isso, o algoritmo de deleção deve remanejar os nodos.
+		  %\item Para garantir isso, o algoritmo de deleção deve remanejar os nodos.
        	  \end{itemize}
+
+\tikzset{
+	treenode/.style = {align=center, inner sep=0pt, text centered,
+		font=\sffamily},
+	node_b/.style = {treenode, circle, white, font=\sffamily\bfseries, draw=black,
+		fill=black, text width=1.5em},
+	node_r/.style = {treenode, circle, red, draw=red, 
+		text width=1.5em, very thick},
+	node_s/.style = {treenode, circle, black, draw=black, 
+		text width=1.5em, very thick},
+	node_nil/.style = {treenode, rectangle, draw=black,
+		minimum width=0.5em, minimum height=0.5em}
+}
+         
+\begin{center}
+	\resizebox{!}{3cm}{\begin{tikzpicture}[->,>=stealth',level/.style={sibling distance = 5cm/#1, level distance = 1.5cm}] 
+		\node [node_s] {10}
+		child{ node [node_s] {5}
+			child{ node [node_s] {1}}
+			child{ node [node_s] {7}
+				child{ node [node_s] {6}}
+				child{ node [node_s] {9}}
+			}
+		}
+		child{ node [node_s] {15}
+			child{ node [node_s] {14}}
+			child{ node [node_s] {20}
+				child{ node [node_s] {16}}   
+				child{ node [node_s] {21}}   
+			}
+		}
+		
+		; 
+		\end{tikzpicture}}
+\end{center}         
+         
+\end{frame}
+
+\begin{frame}[fragile]{Algoritmo de deleção}
+	\begin{itemize}
+		\item Se o nodo a ser removido é folha, simplesmente remova-o.
+		\item Lembre-se de atualizar o pai do nodo removido.
+	\end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{Exemplo}
@@ -985,7 +1173,7 @@ Deleção do nodo com chave = 15
 \end{center}
 \end{frame}
 
-\begin{frame}[fragile]{Deleção em uma Arvore de Busca Binária}
+\begin{frame}[fragile]{Deleção em uma Árvore de Busca Binária}
 \lstset{language=C++,
           keywordstyle=\color{blue}\ttfamily,
           stringstyle=\color{red}\ttfamily,
@@ -994,40 +1182,79 @@ Deleção do nodo com chave = 15
           basicstyle=\ttfamily\footnotesize
           }
           \begin{itemize}
-          \item Se o nodo possuir somente uma subárvore filha:
-		  \begin{itemize}
-		  \item Podemos simplesmente mover esta subárvore toda para cima;
-		  \item O único sucessor do nodo a ser excluído será um dos sucessores diretos do pai do nodo a ser eliminado;
-		  \item Se o nodo a ser excluído é filho esquerdo de seu pai, o seu filho será o novo filho esquerdo deste e vice-versa.
-		  \end{itemize}
+          \item Se o \textcolor{gray}{nodo a ser excluído} tem \textbf{somente} \textcolor{red}{filho à esquerda}, então substitua \textcolor{gray}{o nodo} pelo \textcolor{red}{seu filho}.
+		  %\begin{itemize}
+%		  \item filho à esquerda, então substitua o nodo pelo \textbf{filho}.
+		  %\item filho à direita, então substitua o nodo pelo \textbf{descendente mínimo}.
+		  %O único sucessor do nodo a ser excluído será \textbf{\textit{um}} dos sucessores diretos do pai do nodo a ser excluído;
+ 		  %\item Se o nodo a ser excluído é filho direito de seu pai, este pai ``adota'' um descendente do nodo a ser excluído como novo filho direito.
+		  %\item Análogo quando nodo excluído é filho esquerdo.
+		  %\end{itemize}
        	  \end{itemize}
-\end{frame}
+         
+\tikzset{
+	treenode/.style = {align=center, inner sep=0pt, text centered,
+		font=\sffamily},
+	node_b/.style = {treenode, circle, white, font=\sffamily\bfseries, draw=black,
+		fill=black, text width=1.5em},
+	node_r/.style = {treenode, circle, red, draw=red, 
+		text width=1.5em, very thick},
+	node_s/.style = {treenode, circle, black, draw=black, 
+		text width=1.5em, very thick},
+	node_nil/.style = {treenode, rectangle, draw=black,
+		minimum width=0.5em, minimum height=0.5em}
+}
 
-\begin{frame}[fragile]{Exemplo}
-\setbeamercovered{invisible}
-Deleção do nodo com chave = 5
 \begin{center}
-\includegraphics[scale=.3]{arv10.png} 
-\end{center}
+	\resizebox{!}{4cm}{\begin{tikzpicture}[->,>=stealth',level/.style={sibling distance = 5cm/#1, level distance = 1.5cm}] 
+		\node [node_s] {10}
+		child{ node [node_s, fill=gray] {5}
+			child{ node [node_s, xshift=-30pt, fill=red] {1}
+			child{ node [node_s, ] {0}}
+				%child{ node [node_s] {6}}
+				child{ node [node_s,] {2}}
+			}
+		}
+		child{ node [node_s, fill=gray] {15}
+			child{ node [node_s,fill=red,xshift=-30pt] {14}
+				child { node [node_s,xshift=30pt] {13}}	
+			}
+			%child{ node [node_s, ] {20}
+			%	child{ node [node_s, fill=red] {16}}   
+			%	child{ node [node_s] {21}}   
+			%}
+		}
+		
+		; 
+		\end{tikzpicture}}
+	\hspace{.5cm} 
+%	\resizebox{!}{3cm}{\begin{tikzpicture}[->,>=stealth',level/.style={sibling distance = 5cm/#1, level distance = 1.5cm}] 
+%		\node [node_s] {10}
+%		child{ node [node_s, fill=gray] {5}
+%			%child{ node [node_s] {1}}
+%			child{ node [node_s, fill=red,xshift=30pt] {7}
+%				%child{ node [node_s] {6}}
+%				child{ node [node_s, xshift=30pt] {9}}
+%			}
+%		}
+%		child{ node [node_s, fill=gray] {15}
+%			%child{ node [node_s] {14}}
+%			child{ node [node_s, xshift=30pt] {20}
+%				child{ node [node_s, fill=red] {16}}   
+%				child{ node [node_s] {21}}   
+%			}
+%		}
+%		
+%		; 
+%		\end{tikzpicture}}
+	
+\end{center}         
+         
 \end{frame}
 
-\begin{frame}[fragile]{Exemplo}
-\setbeamercovered{invisible}
-Deleção do nodo com chave = 5
-\begin{center}
-\includegraphics[scale=.3]{arv11.png} 
-\end{center}
-\end{frame}
 
-\begin{frame}[fragile]{Exemplo}
-\setbeamercovered{invisible}
-Deleção do nodo com chave = 5
-\begin{center}
-\includegraphics[scale=.3]{arv12.png} 
-\end{center}
-\end{frame}
 
-\begin{frame}[fragile]{Deleção em uma Arvore de Busca Binária}
+\begin{frame}[fragile]{Deleção em uma Árvore de Busca Binária}
 \lstset{language=C++,
           keywordstyle=\color{blue}\ttfamily,
           stringstyle=\color{red}\ttfamily,
@@ -1036,13 +1263,70 @@ Deleção do nodo com chave = 5
           basicstyle=\ttfamily\footnotesize
           }
           \begin{itemize}
-          \item Se o nodo possuir duas subárvores filhas:
+          \item Se o nodo a ser removido possui subárvore à direita:
 		  \begin{itemize}
-		  \item Se o filho à direita não possui subárvore esquerda, é ele quem ocupa o seu lugar;
-		  \item Se possuir uma subárvore esquerda, a raiz desta será movida para cima e assim por diante;
-		  \item A estratégia geral (Mark Allen Weiss) é sempre substituir a chave retirada pela menor chave da subárvore direita.
+		  	\item A estratégia geral (Mark Allen Weiss) é sempre substituir a \textcolor{gray}{\textbf{chave retirada}} pela \textit{\underline{menor}} chave da subárvore direita.
+		  \item Se o \textcolor{red}{filho à direita} não possui subárvore esquerda, é ele quem ocupa o seu lugar;
+		  \item Se possuir uma subárvore esquerda, a \textcolor{blue}{raiz desta} será movida para cima e assim por diante;
 		  \end{itemize}
        	  \end{itemize}
+         
+\tikzset{
+	treenode/.style = {align=center, inner sep=0pt, text centered,
+		font=\sffamily},
+	node_b/.style = {treenode, circle, white, font=\sffamily\bfseries, draw=black,
+		fill=black, text width=1.5em},
+	node_r/.style = {treenode, circle, red, draw=red, 
+		text width=1.5em, very thick},
+	node_s/.style = {treenode, circle, black, draw=black, 
+		text width=1.5em, very thick},
+	node_nil/.style = {treenode, rectangle, draw=black,
+		minimum width=0.5em, minimum height=0.5em}
+}
+
+\begin{center}
+	\resizebox{!}{3cm}{\begin{tikzpicture}[->,>=stealth',level/.style={sibling distance = 5cm/#1, level distance = 1.5cm}] 
+		\node [node_s, ] {10}
+		child{ node [node_s, fill=gray] {5}
+			child{ node [node_s] {1}}
+			child{ node [node_s, fill=red] {7}
+				%child{ node [node_s] {6}}
+				child{ node [node_s, xshift=30pt] {9}}
+			}
+		}
+		child{ node [node_s, fill=gray] {15}
+			%child{ node [node_s, fill=blue!70] {14}}
+			child{ node [node_s,xshift=30pt,fill=red ] {20}
+				child{ node [node_s,fill=blue!70] {16}}   
+				child{ node [node_s] {21}}   
+			}
+		}; 
+		\end{tikzpicture}}
+\end{center}                  
+\end{frame}
+
+\begin{frame}[fragile]{Exemplo}
+	\setbeamercovered{invisible}
+	Deleção do nodo com chave = 5
+	\begin{center}
+		\includegraphics[scale=.3]{arv10.png} 
+	\end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Exemplo}
+	\setbeamercovered{invisible}
+	Deleção do nodo com chave = 5
+	\begin{center}
+		\includegraphics[scale=.3]{arv11.png} 
+	\end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Exemplo}
+	\setbeamercovered{invisible}
+	Deleção do nodo com chave = 5
+	\begin{center}
+		\includegraphics[scale=.3]{arv12.png} 
+	\end{center}
 \end{frame}
 
 \begin{frame}[fragile]{Exemplo}
@@ -1070,6 +1354,172 @@ Deleção do nodo com chave = 5
 \end{frame}
 
 \begin{frame}[fragile]{Algoritmo de Deleção}
+	\begin{enumerate}
+		\item Localize o nodo que tem o dado a ser removido
+		\item Se o nodo for folha:
+		\begin{enumerate}
+			\item Desaloque o nodo
+			\item Atualize seu pai anulando ponteiro para nodo desalocado
+		\end{enumerate}
+		\item Caso contrário:
+		\begin{enumerate}
+			\item Localize o substituto
+			\item Substituir nodo pelo substituto segundo uma estratégia:
+			\begin{enumerate}
+			\item Atualizar ponteiros (solução iterativa); ou
+			\item Atualizar dados (solução recursiva)
+			\end{enumerate}
+		\end{enumerate}
+			\item Retorne dado do nodo excluído
+	\end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]{Algoritmo de Deleção Atualizando Ponteiros}
+	\begin{enumerate}
+		\item Se nodo a excluir não é raiz, seu pai deverá apontar para nodo substituto
+		\item Filho do substituto pode virar filho do avô
+		\item O substituto herdará os filhos do nodo a excluir (cuidado se nodo a excluir é pai do substituto)
+		\item Desaloque nodo a ser excluído (cuidado se o nodo for raiz para não perder referência à raiz da árvore)
+	\end{enumerate}
+
+\tikzset{
+	treenode/.style = {align=center, inner sep=0pt, text centered,
+		font=\sffamily},
+	node_b/.style = {treenode, circle, white, font=\sffamily\bfseries, draw=black,
+		fill=black, text width=1.5em},
+	node_r/.style = {treenode, circle, red, draw=red, 
+		text width=1.5em, very thick},
+	node_s/.style = {treenode, circle, black, draw=black, 
+		text width=1.5em, very thick},
+	node_nil/.style = {treenode, rectangle, draw=black,
+		minimum width=0.5em, minimum height=0.5em}
+}
+
+
+\begin{center}
+	\resizebox{!}{2.5cm}{\begin{tikzpicture}[->,>=stealth',level/.style={sibling distance = 5cm/#1, level distance = 1.5cm}] 
+		\node [node_s, fill=gray] {10}
+		child{ node [node_s, ] {5}
+			child{ node [node_s, xshift=-30pt, ] {1}
+				child{ node [node_s, ] {0}}
+				%child{ node [node_s] {6}}
+				child{ node [node_s,] {2}}
+			}
+		}
+		child{  node [node_s,] {15}
+			child{ node [node_s,fill=red] {14}
+				child { node [node_s,xshift=30pt,fill=blue!60] {13}}	
+			}
+			child{ node [node_s, ] {20}
+			%	child{ node [node_s, fill=red] {16}}   
+			%	child{ node [node_s] {21}}   
+			}
+		}		; 
+		\end{tikzpicture}}
+	\hspace{.5cm} 
+	\resizebox{!}{2.5cm}{\begin{tikzpicture}[->,>=stealth',level/.style={sibling distance = 5cm/#1, level distance = 1.5cm}] 
+		\node [node_s, fill=red] {14}
+		child{ node [node_s, ] {5}
+			child{ node [node_s, xshift=-30pt, ] {1}
+				child{ node [node_s, ] {0}}
+				%child{ node [node_s] {6}}
+				child{ node [node_s,] {2}}
+			}
+		}
+		child{  node [node_s,] {15}
+			child{ node [node_s,fill=red, fill=blue!60] {13}
+				%child { node [node_s,xshift=30pt,fill=blue!60] {13}}	
+			}
+			child{ node [node_s, ] {20}
+				%	child{ node [node_s, fill=red] {16}}   
+				%	child{ node [node_s] {21}}   
+			}
+		}		; 
+		\end{tikzpicture}}
+\end{center}         
+\end{frame}
+
+\begin{frame}[fragile]{Algoritmo de Deleção Atualizando Dados}
+	\begin{enumerate}
+		\item Atualize dado do nodo a ser excluído com dado do substituto
+		\item Remover substítuto via chamada recursiva
+		\item Recursão termina quando substituto for uma folha
+	\end{enumerate}
+	
+	\tikzset{
+		treenode/.style = {align=center, inner sep=0pt, text centered,
+			font=\sffamily},
+		node_b/.style = {treenode, circle, white, font=\sffamily\bfseries, draw=black,
+			fill=black, text width=1.5em},
+		node_r/.style = {treenode, circle, red, draw=red, 
+			text width=1.5em, very thick},
+		node_s/.style = {treenode, circle, black, draw=black, 
+			text width=1.5em, very thick},
+		node_nil/.style = {treenode, rectangle, draw=black,
+			minimum width=0.5em, minimum height=0.5em}
+	}
+	
+	
+	\begin{center}
+		\resizebox{!}{2.5cm}{\begin{tikzpicture}[->,>=stealth',level/.style={sibling distance = 5cm/#1, level distance = 1.5cm}] 
+			\node [node_s, fill=gray] {10}
+			child{ node [node_s, ] {5}
+				child{ node [node_s, xshift=-30pt, ] {1}
+					child{ node [node_s, ] {0}}
+					%child{ node [node_s] {6}}
+					child{ node [node_s,] {2}}
+				}
+			}
+			child{  node [node_s,] {15}
+				child{ node [node_s,fill=red] {14}
+					child { node [node_s,xshift=30pt,] {13}}	
+				}
+				child{ node [node_s, ] {20}
+					%	child{ node [node_s, fill=red] {16}}   
+					%	child{ node [node_s] {21}}   
+				}
+			}		; 
+			\end{tikzpicture}}
+		\hspace{.5cm} 
+		\resizebox{!}{2.5cm}{\begin{tikzpicture}[->,>=stealth',level/.style={sibling distance = 5cm/#1, level distance = 1.5cm}] 
+			\node [node_s, ] {14}
+			child{ node [node_s, ] {5}
+				child{ node [node_s, xshift=-30pt, ] {1}
+					child{ node [node_s, ] {0}}
+					%child{ node [node_s] {6}}
+					child{ node [node_s,] {2}}
+				}
+			}
+			child{  node [node_s,] {15}
+				child{ node [node_s,fill=red, fill=gray] {14}
+					child { node [node_s,xshift=30pt,fill=red] {13}}	
+				}
+				child{ node [node_s, ] {20}
+					%	child{ node [node_s, fill=red] {16}}   
+					%	child{ node [node_s] {21}}   
+				}
+			}		; 
+			\end{tikzpicture}}
+	\end{center}         
+\end{frame}
+
+\begin{frame}[fragile]{Custo do Algoritmo de Deleção}
+	\begin{itemize}
+		\item Se árvore tem altura $h\geq 0$ e o nodo substituto está em uma das folhas mais distantes da raiz, então o custo é $O(h)=O(\lfloor \log_2n \rfloor) = O(\log_2n)$
+		\item Os custos \textbf{assintóticos} das estratégia vistas são $O(\log_2n)$, mas a estratégia com recursão possui constante maior $c>0$ e portanto custo $c\log_2n$ maior.
+		
+	\end{itemize}
+\end{frame}
+
+%\begin{frame}[fragile]{Algoritmo de Deleção}
+	%\begin{itemize}
+		%\item Se nodo a excluir não é raiz, atualizar seu pai quanto ao novo filho (nodo substituto)
+		%\item Atualizar pai do nodo substituto quanto a perda do filho
+		%\item Atualizar nodo substituto para herdar filhos do nodo excluído
+	%\end{itemize}
+%\end{frame}	
+
+\begin{frame}<0>[fragile]{Algoritmo de Deleção}
 \lstset{language=C++,
           keywordstyle=\color{blue}\ttfamily,
           stringstyle=\color{red}\ttfamily,
@@ -1078,28 +1528,28 @@ Deleção do nodo com chave = 5
           basicstyle=\ttfamily\scriptsize
           }
           \begin{lstlisting}
-tNodo* delete(info: tInfo, arv: *tNodo)
- tmp, filho: *tNodo;
+Nodo* remover(T dado, Nodo* raiz)
+ Nodo *tmp, *filho;
  início
-  se (arv = NULO) então retorne arv
+  se (raiz = NULO) então retorne raiz
   senão
-   se (info < arv->info) // Vá à esquerda.
-    arv->filhoÀEsquerda <- delete(info, arv->filhoÀEsquerda);
-    retorne arv;
+   se (dado < raiz->_dado) // Vá à esquerda.
+    raiz->_filhoEsquerda <- remover(dado, raiz->_filhoEsquerda);
+    retorne raiz;
    senão
-    se (info > arv->info) // Vá à direita.
-     arv->filhoÀDireita <- delete(info, arv->filhoÀDireita);
-     retorne arv;
+    se (dado > raiz->_dado) // Vá à direita.
+     raiz->_filhoDireita <- remover(dado, raiz->_filhoDireita);
+     retorne raiz;
     senão // Encontrei elemento que quero deletar.
-     se (arv->filhoÀDireita~=NULO E arv->filhoÀEsquerda~=NULO)//2 filhos.
-      tmp <- mínimo(arv->filhoÀDireita); arv->info <- tmp->info;
-      arv->filhoÀDireita <-delete(arv->info,arv->filhoÀDireita);
-      retorne arv;
+     se (raiz->_filhoDireita!=NULO E raiz->_filhoEsquerda!=NULO)//2 filhos.
+      tmp<-mínimo(raiz->_filhoDireita);raiz->_dado<- tmp->_dado;
+      raiz->_filhoDireita <- remover(raiz->_dado, raiz->_filhoDireita);
+      retorne raiz;
       //(CONTINUA NO PROX SLIDE)
-		  \end{lstlisting}
+\end{lstlisting}
 \end{frame} 
 
-\begin{frame}[fragile]{Algoritmo de Deleção}
+\begin{frame}<0>[fragile]{Algoritmo de Deleção}
 \lstset{language=C++,
           keywordstyle=\color{blue}\ttfamily,
           stringstyle=\color{red}\ttfamily,
@@ -1109,14 +1559,14 @@ tNodo* delete(info: tInfo, arv: *tNodo)
           }
           \begin{lstlisting}
      senão // 1 filho.
-      tmp <- arv;
-      se (arv->filhoÀDireita ~= NULO) então // Filho à direita.
-      filho <- arv->filhoÀDireita; retorne filho;
+      tmp <- raiz;
+      se (raiz->_filhoDireita != NULO) então // Filho à direita.
+       filho <- raiz->_filhoDireita; retorne filho;
      senão
-      se (arv->filhoÀEsquerda ~= NULO) então // Filho à esquerda.
-      filho <- arv->filhoÀEsquerda; retorne filho;
+      se (raiz->_filhoEsquerda != NULO) então // Filho à esquerda.
+       filho <- raiz->_filhoEsquerda; retorne filho;
      senão // Folha.
-      libere arv;
+      desaloque raiz;
       retorne NULO;
      fim se 
      fim se
@@ -1124,11 +1574,10 @@ tNodo* delete(info: tInfo, arv: *tNodo)
     fim se 
    fim se
   fim se
- fim
-		  \end{lstlisting}
+ fim\end{lstlisting}
 \end{frame} 
 
-\begin{frame}[fragile]{Problemas com Arvores de Busca Binária}
+\begin{frame}[fragile]{Problemas com Árvores de Busca Binária}
 \lstset{language=C++,
           keywordstyle=\color{blue}\ttfamily,
           stringstyle=\color{red}\ttfamily,
@@ -1137,15 +1586,15 @@ tNodo* delete(info: tInfo, arv: *tNodo)
           basicstyle=\ttfamily\footnotesize
           }
           \begin{itemize}
-          \item Deterioração:
+          \item Desbalanceamento:
 		  \begin{itemize}
-		  \item Quando inserimos utilizando a inserção simples, dependendo da distribuição de dados, pode haver deterioração;
+		  \item Quando inserimos utilizando a inserção simples, dependendo da distribuição de dados, pode haver desbalanceamento;
 		  \item Árvores deterioradas perdem a característica de eficiência de busca.
 		  \end{itemize}
        	  \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Problemas com Arvores de Busca Binária}
+\begin{frame}[fragile]{Problemas com Árvores de Busca Binária}
 \setbeamercovered{invisible}
 \begin{center}
 \includegraphics[scale=.35]{deter1.png} 
@@ -1153,7 +1602,7 @@ tNodo* delete(info: tInfo, arv: *tNodo)
 \end{frame}
 
 
-\begin{frame}[fragile]{Trabalho}
+\begin{frame}<0>[fragile]{Trabalho}
 \lstset{language=C++,
           keywordstyle=\color{blue}\ttfamily,
           stringstyle=\color{red}\ttfamily,
@@ -1163,7 +1612,7 @@ tNodo* delete(info: tInfo, arv: *tNodo)
           }
 \begin{itemize}
 \item Implemente uma classe NoBinario para representar a sua árvore;
-\item Implemente a arvore usando Templates;
+\item Implemente a Árvore usando Templates;
 \item Use as melhores práticas de orientação a objetos;
 \item Documente todas as classes, métodos e atributos;
 \item Aplique os testes unitários disponíveis no moodle da disciplina para validar sua estrutura de dados;

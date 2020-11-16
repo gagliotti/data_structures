@@ -575,8 +575,8 @@ tNodo* constróiÁrvore(inteiro númeroDeNodos)
   ler(info);
   aloque(novoNodo);
   novoNodo->info <- info;
-  novoNodo->filhoEsquerda <- constróiÁrvore(nodosÀEsquerda);
-  novoNodo->filhoDireita <- constróiÁrvore(nodosÀDireita);
+  novoNodo->_filhoEsquerda <- constróiÁrvore(nodosÀEsquerda);
+  novoNodo->_filhoDireita <- constróiÁrvore(nodosÀDireita);
   retorna novoNodo;
  fim
 		  \end{lstlisting}
@@ -860,9 +860,9 @@ Nodo* busca (T dado, Nodo* raiz)
   enquanto(raiz != NULO E raiz->_dado != dado) faça
    // Esquerda ou direita.
    se (raiz->_dado < dado) então
-    raiz <- raiz->filhoDireita
+    raiz <- raiz->_filhoDireita
    senão
-    raiz <- raiz->filhoEsquerda;
+    raiz <- raiz->_filhoEsquerda;
    fim se
   fim enquanto
   retorne raiz;
@@ -1016,19 +1016,19 @@ void inserir(Nodo* raiz, T* dado)
   // Inserção à esquerda.
    se (raiz->_filhoEsquerda = NULO) então
     Nodo* oNovo <- aloque(Nodo); oNovo->_dado <- dado;
-    oNovo->filhoEsquerda <- NULO; oNovo->filhoDireita <- NULO;
+    oNovo->_filhoEsquerda <- NULO; oNovo->_filhoDireita <- NULO;
     raiz->_filhoEsquerda <- oNovo;
    senão
     inserir(raiz->_filhoEsquerda, dado);
    fim se
    senão
     // Inserção à direita.
-   se (raiz->filhoDireita = NULO) então
+   se (raiz->_filhoDireita = NULO) então
     Nodo* oNovo <- aloque(Nodo); oNovo->_dado <- dado;
-    oNovo->filhoEsquerda <- NULO; oNovo->filhoDireita <- NULO;
+    oNovo->_filhoEsquerda <- NULO; oNovo->_filhoDireita <- NULO;
     raiz->_filhoDireita <- oNovo;
    senão
-    inserir(raiz->filhoDireita, dado);
+    inserir(raiz->_filhoDireita, dado);
    fim se
   fim se  
  fim

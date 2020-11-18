@@ -1,5 +1,5 @@
 \documentclass[12pt,table,xcolor={dvipsnames}]{beamer}
-\usetheme{Pittsburgh}
+%\usetheme{Pittsburgh}
 \usecolortheme{seagull}
 %\usepackage[utf8]{inputenc}
 \usepackage{fontspec}
@@ -7,32 +7,47 @@
 \usepackage{amsmath}
 \usepackage{listings}
 \usepackage{tikz}
-\usetikzlibrary{calc,shapes.multipart,chains,arrows, positioning, automata}
+\usetikzlibrary{calc,chains,arrows, positioning, positioning,topaths, shapes, bending}
 \usepackage{multirow}
 \usepackage{amsfonts}
 \usepackage{amssymb}
-\usepackage{lstlinebgrd}
+%\usepackage{lstlinebgrd}
 \usepackage{graphicx}
-\author{Árvores AVL}
+\usepackage{wasysym}
+\subtitle{Árvores AVL}
 \title{Estruturas de Dados}
 %\setbeamercovered{transparent}
 \setbeamertemplate{navigation symbols}{}
 %\logo{\includegraphics[scale=0.015]{Brasao_UFSC.png}\includegraphics[scale=0.2]{brasao_PPGCC.jpg}}
-\institute{Departamento de Informática e de Estatística \\ Prof. Jean Everson Martina \\ Prof. Aldo von Wangenheim}
-\date{2016.2}
+\institute{Departamento de Computação \\ Prof. Martín Vigil \\ Adaptado de prof. Jean Martina e Aldo Wangenheim}
+\date{2020.1}
 \subject{}
 \usebackgroundtemplate{\includegraphics[width=\paperwidth,
-height=\paperheight]{../reusable_images/fundo_UFSC.png}}
+	height=\paperheight]{../reusable_images/fundo_UFSC.png}}
 \begin{document}
-
-{
-\usebackgroundtemplate{\includegraphics[width=\paperwidth,
-height=\paperheight]{../reusable_images/fundo_capa.png}}
-\begin{frame}
-\titlepage
-\includegraphics[scale=0.3]{../reusable_images/brasao_INE.png}
-\end{frame}
-}
+	
+	{
+		\usebackgroundtemplate{\includegraphics[width=\paperwidth,
+			height=\paperheight]{../reusable_images/fundo_capa.png}}
+		\begin{frame}
+			\titlepage
+			%\includegraphics[scale=0.3]{../reusable_images/brasao_INE.png}
+		\end{frame}
+	}
+	
+	\AtBeginSection[]{
+		\begin{frame}
+			\vfill
+			\centering
+			\begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+				\usebeamerfont{title}\insertsectionhead\par%
+			\end{beamercolorbox}
+			\vfill
+		\end{frame}
+	}
+	
+	
+%\section{Introdução a Árvores}
 
 \begin{frame}[fragile]{Histórico}
 \lstset{language=C++,
@@ -105,14 +120,14 @@ Yevgeniy Mikhailovich Landis (Kharkov, Ucrânia, 1921)
 \begin{itemize}
 \item Estrutura de um nodo na árvore AVL 
 \begin{lstlisting}
-Class nodoAVL {         
- info    :	tipo_info;
- esq     :	*nodoAVL;    
- dir     :	*nodoAVL;     
- alt     : 	inteiro; 
+estrutura nodoAVL {         
+ T*       _dado;
+ nodoAVL* _esq;    
+ nodoAVL* _dir;     
+ int      _alt; 
 };
 \end{lstlisting}
-\item O campo \textbf{alt} deve ser atualizado recursivamente quando um nodo for inserido ou deletado.
+\item O campo \textbf{\_alt} deve ser atualizado recursivamente quando um nodo for inserido ou deletado.
 \end{itemize}
 \end{frame}
 
@@ -126,16 +141,16 @@ Class nodoAVL {
           }
 \begin{itemize}
 \item Para o retorno da altura de uma subárvore necessitamos de um método especial;
-\item Um nodo pode não ter um ou ambos os filhos;
+\item Um nodo pode ter 0, 1 ou 2 filho(s);
 \item Lembre-se que a pesquisa para garantir a condição-AVL é realizada perguntando-se a altura das duas subárvores.
 \begin{lstlisting}
-inteiro altura( subárvore *nodoAVL) 
+int altura(nodoAVL* subárvore) 
 início                 
- se (subárvore for NULO)                         
+ se (subárvore == NULO)                         
   retorne -1; /* A altura de uma subárvore 
               inexistente é definida como -1 */
  senão                         
-  retorne subárvore->alt;                 
+  retorne subárvore->_alt;                 
  fim se         
 fim
 \end{lstlisting}
@@ -166,7 +181,7 @@ fim
 }
 		  Exemplo de rebalanceamento:
           \begin{itemize}
-          \item O nodo com chave 6.5 desequilibrou a árvore no nodo 8. Com a rotação da subárvore em torno do nodo 7, rebalanceamos.
+          \item O nodo com chave \textcolor{red}{6.5} desequilibrou a árvore no nodo \textcolor{blue}{8}. Com a \textcolor{magenta}{rotação} da subárvore em torno do nodo 7 (\textcolor{magenta}{rotação simples à esquerda}), rebalanceamos.
           \end{itemize}
 \begin{columns}
 \column{.45\textwidth}
@@ -179,14 +194,16 @@ fim
 		 child[missing]{ node [node_s] {}}
    	   }
    }
-   child{ node [node_g] {8}
-	   child{ node [node_s] {7} 
-    	   child{ node [node_s] {6.5}} 
+   child{ node (8)[node_g, color=blue] {8}
+	   child{ node (7) [node_s] {7} 
+    	   child{ node [node_s, color=red] {6.5}} 
     	   child[missing]{ node [node_nil] {}}
 	   } 
 	   child[missing]{ node [node_nil] {}}  
    }
 ; 
+%\draw [->, bend left=45, magenta, thick] (7.west) to (7.south east);
+\draw[-latex,magenta, thick] (7.north)+(-10pt,2pt) arc (135:-45:.6);
 \end{tikzpicture}
 \column{.1\textwidth}
 {\color{red} $\rightarrow$}
@@ -200,9 +217,9 @@ fim
 		 child[missing]{ node [node_s] {}}
    	   }
    }
-   child{ node [node_s] {7}
-	   child{ node [node_s] {6.5} } 
-	   child{ node [node_s] {8}}  
+   child{ node (7) [node_s] {7}
+	   child{ node [node_s,color=red] {6.5} } 
+	   child{ node (8) [node_s,color=blue] {8}}  
    }
 ; 
 \end{tikzpicture}
@@ -235,8 +252,8 @@ Algoritmo básico:
 \begin{itemize}
 \item Partimos do nodo inserido e subimos a árvore;
 \item Atualizamos a informação do balanceamento em cada nodo (na árvore AVL, cada nodo conhece a sua altura);
-\item Se chegamos à raiz sem encontrar nada errado, terminamos;
-\item Saso encontremos um nodo desbalanceado  \textbf{(|altesq - altdir| < 2 ferida)}, realizamos a rotação no primeiro nodo desbalanceado encontrado;
+\item Se chegamos à raiz sem encontrar algo errado, terminamos;
+\item Saso encontremos um nodo desbalanceado  \textbf{(|altesq - altdir| > 1)}, realizamos a rotação no primeiro nodo desbalanceado encontrado;
 \item No exemplo anterior, isto significa que, depois da inserção de 6.5, o nodo 8 ficou desbalanceado.
 \end{itemize}      
 \end{frame} 
@@ -266,7 +283,7 @@ Algoritmo básico:
           \begin{itemize}
           \item O primeiro problema ocorre quando inserimos o 3;
           \item A condição-AVL foi violada;
-		  \item Executamos uma rotação simples entre a raiz (cuja condição-AVL está violada) e seu filho da direita.
+		  \item Executamos uma \textcolor{magenta}{rotação} simples entre a raiz (cuja condição-AVL está violada) e seu filho da direita (\textcolor{magenta}{rotação simples à direita}.)
           \end{itemize}
 \begin{columns}
 \column{.45\textwidth}
@@ -274,11 +291,12 @@ Algoritmo básico:
 \begin{tikzpicture}[->,>=stealth',level/.style={sibling distance = 1.5cm/#1, level distance = 1.2cm}] 
 \node [node_s] {1}
    child[missing]{ node [node_s] {}}
-   child{ node [node_s] {2}
+   child{ node (2) [node_s] {2}
     child[missing]{ node [node_s] {}}
     child{ node [node_g] {3}}
    }
 ; 
+\draw[-latex,magenta, thick] (2.south)+(11pt,-3pt) arc (-45:150:.6);
 \end{tikzpicture}
 \end{center}
 \column{.1\textwidth}
@@ -330,15 +348,17 @@ Algoritmo básico:
 \begin{tikzpicture}[->,>=stealth',level/.style={sibling distance = 1.5cm/#1, level distance = 1.2cm}] 
 \node [node_s] {2}
    child {node [node_s] {1}}
-   child {node [node_g] {3}
+   child {node [node_g,blue] {3}
     child [missing]{node [node_s] {}}
-    child {node [node_s] {4}
+    child {node (4) [node_s] {4}
      child [missing]{node [node_s] {}}
      child {node [node_s] {5}}
     }
    }
 
 ; 
+
+\draw[-latex,magenta, thick] (4.south)+(10pt,-2pt) arc (-45:135:.6);
 \end{tikzpicture}
 \end{center}
 \column{.1\textwidth}
@@ -387,15 +407,15 @@ Algoritmo básico:
           \item subárvore direita tem altura 0;
 		  \item subárvore esquerda tem altura 2;
           \end{itemize}
-		  \item Rotacionamos na raiz entre 2 e 4.
+		  \item Rotacionamos na raiz entre 2 e 4 (\textcolor{magenta}{rotação simples à direita}.)
           \end{itemize}
 \begin{columns}
 \column{.45\textwidth}
 \begin{center}
 \begin{tikzpicture}[->,>=stealth',level/.style={sibling distance = 2cm/#1, level distance = 1.2cm}] 
-\node [node_g] {2}
+\node [node_g, blue] {2}
    child {node [node_s] {1}}
-   child {node [node_s] {4}
+   child {node (4) [node_s] {4}
     child {node [node_s] {3}}
     child {node [node_s] {5}
      child [missing] {node [node_s] {}}
@@ -404,6 +424,7 @@ Algoritmo básico:
    }
 
 ; 
+\draw[-latex,magenta, thick] (4.south)+(10pt,-2pt) arc (-45:135:.6);
 \end{tikzpicture}
 \end{center}
 \column{.1\textwidth}
@@ -453,7 +474,7 @@ Algoritmo básico:
           \item A inclusão de um nodo com chave 7 causa uma rotação como já havíamos visto antes:
           \begin{itemize}
           \item O 5 fica desequilibrado;
-          \item Rotacionamos em 6.
+          \item Rotacionamos em 6 (\textcolor{magenta}{rotação simples à direita}).
           \end{itemize}
           \end{itemize}
 \begin{columns}
@@ -465,15 +486,16 @@ Algoritmo básico:
     child {node [node_s] {1}}
     child {node [node_s] {3}}   
    }
-   child {node [node_g] {5}
+   child {node [node_g,blue] {5}
     child [missing] {node [node_s] {}}
-    child {node [node_s] {6}
+    child {node (6) [node_s] {6}
      child [missing] {node [node_s] {}}
      child {node [node_s] {7}}    
     }
    }
 
 ; 
+\draw[-latex,magenta, thick] (6.south)+(10pt,-2pt) arc (-45:135:.6);
 \end{tikzpicture}
 \end{center}
 \column{.1\textwidth}
@@ -558,7 +580,7 @@ fim
 \begin{itemize}
 \item Existem casos onde ele não basta para consertar a árvore após uma inclusão ou exclusão;
 \end{itemize}
-\item Exemplo: inserimos as chaves 8 a 15, em ordem inversa, na árvore anterior:
+\item Exemplo: inserimos as chaves 15 e 14, nesta ordem, na árvore anterior:
 \begin{itemize}
 \item A inserção de 15 não provoca problemas, nem desbalanceia a árvore;
 \item A inserção de 14, por sua vez, faz o rebalanceamento falhar.

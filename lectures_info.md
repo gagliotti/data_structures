@@ -1,0 +1,21 @@
+# Conteúdo dos Slides
+
+- Lecture 1 - Apresentação e Programa da Disciplina
+- Lecture 2 - Introdução ao C++
+- Lecture 3 - Pilhas e Filas Utilizando Vetores
+- Lecture 4 - Programação C++
+- Lecture 5 - Listas Utilizando Vetores
+- Lecture 6 - Ponteiros, Modelo de execução de Funções, Debugging e Testes
+- Lecture 7 - Lista Encadeada
+- Lecture 8 - Pilha Encadeada e Fila
+- Lecture 9 - Listas Circulares
+- Lecture 10 - Trabalho de Implementação I: Simulação de um Supermercado
+- Lecture 11 - Complexidade de Algorítimos
+- Lecture 12 - Árvores
+- Lecture 13 - Árvores AVL
+- Lecture 14 - Exercício
+- Lecture 15 - Igual ao 14
+- Lecture 16 - Igual ao 14
+- Lecture 17 - Igual ao 14
+- Lecture 18 - Igual ao 14
+- Lecture 19 - Igual ao 14
